@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "skillmesh": {
+      "command": "/absolute/path/to/.venv/bin/skillmesh-mcp",
+      "args": [],
+      "env": {
+        "SKILLMESH_REGISTRY": "/absolute/path/to/SkillMesh/examples/registry/tools.json"
+      }
+    }
+  }
+}

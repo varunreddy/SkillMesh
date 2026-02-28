@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "skillgate"
+name = "skillmesh"
 version = "0.1.0"
 description = "A retrieval-gated skill architecture for LLM agents that scales to hundreds of tools by exposing only the top-K relevant capabilities per request."
 readme = "README.md"
@@ -20,10 +20,12 @@ dependencies = [
 
 [project.optional-dependencies]
 dense = ["sentence-transformers>=2.7.0"]
+mcp = ["mcp>=1.0.0"]
 dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.6.0"]
 
 [project.scripts]
-skill-rag = "skill_registry_rag.cli:main"
+skillmesh = "skill_registry_rag.cli:main"
+skillmesh-mcp = "skill_registry_rag.mcp_server:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

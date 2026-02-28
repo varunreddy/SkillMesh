@@ -2,7 +2,7 @@
 
 from .backends import RetrievalBackend
 from .backends.memory import InMemoryBackend
-from .models import ExpertCard, RetrievalHit
+from .models import ExpertCard, RetrievalHit, ToolCard
 from .registry import load_registry
 from .retriever import SkillRetriever
 
@@ -12,5 +12,6 @@ __all__ = [
     "RetrievalBackend",
     "RetrievalHit",
     "SkillRetriever",
+    "ToolCard",
     "load_registry",
 ]

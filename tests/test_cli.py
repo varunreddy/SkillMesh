@@ -10,7 +10,7 @@ from skill_registry_rag.cli import main
 
 def test_cli_retrieve_emits_enriched_fields():
     root = Path(__file__).resolve().parents[1]
-    registry = root / "examples" / "registry" / "tools.enriched.json"
+    registry = root / "examples" / "registry" / "tools.json"
 
     buf = StringIO()
     with redirect_stdout(buf):
@@ -37,7 +37,7 @@ def test_cli_retrieve_emits_enriched_fields():
 
 def test_cli_index_creates_collection():
     root = Path(__file__).resolve().parents[1]
-    registry = root / "examples" / "registry" / "tools.enriched.json"
+    registry = root / "examples" / "registry" / "tools.json"
 
     buf = StringIO()
     with redirect_stdout(buf):
@@ -57,7 +57,7 @@ def test_cli_index_creates_collection():
 
 def test_cli_retrieve_with_backend_flag():
     root = Path(__file__).resolve().parents[1]
-    registry = root / "examples" / "registry" / "tools.enriched.json"
+    registry = root / "examples" / "registry" / "tools.json"
 
     buf = StringIO()
     with redirect_stdout(buf):
@@ -82,7 +82,7 @@ def test_cli_retrieve_with_backend_flag():
 
 def test_cli_retrieve_security_expert():
     root = Path(__file__).resolve().parents[1]
-    registry = root / "examples" / "registry" / "tools.enriched.json"
+    registry = root / "examples" / "registry" / "tools.json"
 
     buf = StringIO()
     with redirect_stdout(buf):

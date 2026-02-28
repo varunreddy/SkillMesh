@@ -12,11 +12,11 @@ def _trim(text: str, n: int) -> str:
 
 def render_claude_context(query: str, hits: list[RetrievalHit], *, instruction_chars: int = 700) -> str:
     lines: list[str] = []
-    lines.append("<retrieved_experts>")
+    lines.append("<retrieved_cards>")
     lines.append(f"  <query>{query}</query>")
     for hit in hits:
         c = hit.card
-        lines.append("  <expert>")
+        lines.append("  <card>")
         lines.append(f"    <id>{c.id}</id>")
         lines.append(f"    <title>{c.title}</title>")
         lines.append(f"    <domain>{c.domain}</domain>")
@@ -35,6 +35,6 @@ def render_claude_context(query: str, hits: list[RetrievalHit], *, instruction_c
         lines.append("    <instructions>")
         lines.append(_trim(c.instruction_text, instruction_chars))
         lines.append("    </instructions>")
-        lines.append("  </expert>")
-    lines.append("</retrieved_experts>")
+        lines.append("  </card>")
+    lines.append("</retrieved_cards>")
     return "\n".join(lines) + "\n"

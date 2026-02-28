@@ -1,4 +1,4 @@
-experts:
+tools:
 - id: viz.matplotlib-seaborn
   title: Visualization with Matplotlib and Seaborn
   domain: visualization
@@ -1137,3 +1137,497 @@ experts:
   examples:
   - Fine-tune text classifier with LoRA and evaluation metrics
   - Run QLoRA on constrained GPU memory with stable checkpoints
+- id: role.data-analyst
+  title: Data Analyst Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/data-analyst.md
+  description: Role expert that orchestrates profiling, cleaning, EDA, baseline modeling,
+    and visualization for tabular analytics tasks.
+  tags:
+  - role
+  - data-analyst
+  - eda
+  - pandas
+  - visualization
+  - baseline-modeling
+  tool_hints:
+  - data.pandas-advanced
+  - data.sql-queries
+  - viz.matplotlib-seaborn
+  - ml.sklearn-modeling
+  - stats.scipy-statsmodels
+  examples:
+  - Profile messy dataset, clean it, and deliver insight dashboard
+  - Run EDA plus baseline prediction with leakage-safe validation
+- id: role.financial-analyst
+  title: Financial Analyst Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/financial-analyst.md
+  description: Role expert for financial KPI analysis, scenario modeling, forecasting,
+    and risk-aware recommendations.
+  tags:
+  - role
+  - financial-analyst
+  - finance
+  - forecasting
+  - scenario-analysis
+  - risk
+  tool_hints:
+  - data.pandas-advanced
+  - data.time-series
+  - stats.scipy-statsmodels
+  - finance.financial-modeling
+  - finance.quantitative
+  - viz.matplotlib-seaborn
+  examples:
+  - Build base/upside/downside forecast with sensitivity analysis
+  - Produce financial trend report with assumptions and risk notes
+- id: ml.sklearn-pipeline-ops
+  title: Scikit-learn Pipeline Ops
+  domain: machine_learning
+  instruction_file: instructions/sklearn-pipeline-ops.md
+  description: Retrieve this expert for production-grade sklearn pipelines, calibration,
+    thresholding, packaging, and monitoring-ready outputs.
+  tags:
+  - sklearn
+  - pipeline
+  - columntransformer
+  - calibration
+  - thresholding
+  - model-ops
+  tool_hints:
+  - sklearn.pipeline
+  - sklearn.compose
+  - sklearn.calibration
+  - joblib
+  examples:
+  - Build deployment-ready pipeline with preprocessing parity checks
+  - Tune decision threshold with precision-recall tradeoff analysis
+- id: stats.experiment-design
+  title: Statistical Experiment Design and A/B Testing
+  domain: statistics
+  instruction_file: instructions/stats-experiment-design.md
+  description: Retrieve this expert for experiment planning, power analysis, sample-size
+    estimation, and robust A/B test interpretation.
+  tags:
+  - statistics
+  - ab-testing
+  - power-analysis
+  - sample-size
+  - hypothesis-testing
+  - effect-size
+  tool_hints:
+  - scipy.stats
+  - statsmodels.stats.power
+  - numpy
+  - pandas
+  examples:
+  - Design A/B experiment with MDE and power targets
+  - Validate sample ratio mismatch and run robust significance checks
+- id: stats.model-diagnostics
+  title: Statistical Model Diagnostics
+  domain: statistics
+  instruction_file: instructions/stats-model-diagnostics.md
+  description: Retrieve this expert for residual diagnostics, calibration assessment,
+    cohort error analysis, and model reliability checks.
+  tags:
+  - statistics
+  - diagnostics
+  - residuals
+  - calibration
+  - drift
+  - reliability
+  tool_hints:
+  - statsmodels
+  - scipy.stats
+  - sklearn.calibration
+  - matplotlib
+  examples:
+  - Run residual and heteroskedasticity checks for regression model
+  - Evaluate classification calibration and subgroup error stability
+- id: role.machine-learning-engineer
+  title: Machine Learning Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/machine-learning-engineer.md
+  description: Role expert for end-to-end ML delivery across feature pipelines, training,
+    diagnostics, packaging, and deployment handoff.
+  tags:
+  - role
+  - machine-learning-engineer
+  - mlops
+  - sklearn
+  - evaluation
+  - deployment
+  tool_hints:
+  - data.pandas-advanced
+  - ml.feature-engineering
+  - ml.sklearn-modeling
+  - ml.sklearn-pipeline-ops
+  - ml.hyperparameter-tuning
+  - ml.gradient-boosting
+  - stats.scipy-statsmodels
+  - stats.experiment-design
+  - stats.model-diagnostics
+  - ml.model-export
+  - viz.matplotlib-seaborn
+  dependencies:
+  - data.pandas-advanced
+  - ml.feature-engineering
+  - ml.sklearn-modeling
+  - ml.sklearn-pipeline-ops
+  - ml.hyperparameter-tuning
+  - ml.gradient-boosting
+  - stats.scipy-statsmodels
+  - stats.experiment-design
+  - stats.model-diagnostics
+  - ml.model-export
+  - viz.matplotlib-seaborn
+  quality_checks:
+  - baseline_before_tuning
+  - leakage_controls_verified
+  - calibration_or_residual_checks_present
+  - export_compatibility_verified
+  constraints:
+  - do_not_report_train_only_metrics
+  - include_segment_level_performance
+  - require_reproducibility_metadata
+  examples:
+  - Build production-ready ML pipeline with diagnostics and export artifacts
+  - Deliver model handoff with monitoring plan and rollback triggers
+- id: role.data-engineer
+  title: Data Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/data-engineer.md
+  description: Role expert for scalable data pipelines, quality enforcement, and production-ready
+    data platform delivery.
+  tags:
+  - role
+  - data-engineer
+  - spark
+  - sql
+  - dbt
+  - pipelines
+  tool_hints:
+  - data.spark
+  - data.sql-queries
+  - data.dbt
+  - data.pandas-advanced
+  - web.sqlalchemy
+  - cloud.docker
+  - cloud.kubernetes
+  - cloud.terraform
+  dependencies:
+  - data.spark
+  - data.sql-queries
+  - data.dbt
+  - data.pandas-advanced
+  - web.sqlalchemy
+  - cloud.docker
+  - cloud.kubernetes
+  - cloud.terraform
+  quality_checks:
+  - schema_evolution_handled
+  - idempotent_pipeline_design
+  - partition_strategy_documented
+  - data_quality_checks_embedded
+  constraints:
+  - avoid_unbounded_scans_on_large_tables
+  - require_lineage_and_freshness_documentation
+  examples:
+  - Build warehouse-ready pipeline with quality checks and observability
+  - Design Spark plus dbt workflow with replay and backfill procedures
+- id: role.ml-researcher
+  title: ML Researcher Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/ml-researcher.md
+  description: Role expert for hypothesis-driven ML research, ablations, diagnostics,
+    and reproducible experimental reporting.
+  tags:
+  - role
+  - ml-researcher
+  - experimentation
+  - ablation
+  - pytorch
+  - transformers
+  tool_hints:
+  - dl.pytorch-training
+  - dl.transformers-finetuning
+  - ml.hyperparameter-tuning
+  - ml.gradient-boosting
+  - stats.experiment-design
+  - stats.model-diagnostics
+  - stats.scipy-statsmodels
+  - data.pandas-advanced
+  - viz.matplotlib-seaborn
+  dependencies:
+  - dl.pytorch-training
+  - dl.transformers-finetuning
+  - ml.hyperparameter-tuning
+  - ml.gradient-boosting
+  - stats.experiment-design
+  - stats.model-diagnostics
+  - stats.scipy-statsmodels
+  - data.pandas-advanced
+  - viz.matplotlib-seaborn
+  quality_checks:
+  - baseline_plus_ablation_required
+  - uncertainty_and_variance_reported
+  - subgroup_or_slice_behavior_reviewed
+  constraints:
+  - avoid_single_run_claims
+  - avoid_sota_claims_without_comparable_baselines
+  examples:
+  - Run structured model ablations with reproducible experiment tracking
+  - Produce research report with confidence intervals and failure analysis
+- id: bi.dashboard-design
+  title: BI Dashboard Design and Storytelling
+  domain: business_intelligence
+  instruction_file: instructions/bi-dashboard-design.md
+  description: Retrieve this expert for KPI-driven dashboard architecture, chart selection,
+    stakeholder communication, and adoption-focused BI reporting.
+  tags:
+  - business-intelligence
+  - dashboard
+  - kpi
+  - storytelling
+  - reporting
+  - executive-view
+  tool_hints:
+  - matplotlib
+  - seaborn
+  - tableau
+  - power bi
+  examples:
+  - Design executive and analyst dashboard pages with drill-down structure
+  - Define KPI cards and trend visuals for weekly business review
+- id: bi.metric-semantic-modeling
+  title: BI Metric and Semantic Modeling
+  domain: business_intelligence
+  instruction_file: instructions/bi-metric-semantic-modeling.md
+  description: Retrieve this expert for semantic layer design, metric governance,
+    dimensional modeling, and trusted KPI standardization.
+  tags:
+  - business-intelligence
+  - semantic-layer
+  - metric-governance
+  - dimensional-modeling
+  - star-schema
+  - kpi
+  tool_hints:
+  - sql
+  - dbt
+  - metrics layer
+  - lineage docs
+  examples:
+  - Define canonical metric dictionary with grain and owner
+  - Design star-schema marts for BI dashboards and ad hoc analysis
+- id: role.bi-analyst
+  title: BI Analyst Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/bi-analyst.md
+  description: Role expert for KPI-centric business analysis, dashboard planning,
+    and governed reporting outputs for stakeholders.
+  tags:
+  - role
+  - bi-analyst
+  - business-intelligence
+  - dashboard
+  - kpi
+  - reporting
+  tool_hints:
+  - bi.dashboard-design
+  - bi.metric-semantic-modeling
+  - data.sql-queries
+  - data.dbt
+  - data.pandas-advanced
+  - stats.scipy-statsmodels
+  - viz.matplotlib-seaborn
+  dependencies:
+  - bi.dashboard-design
+  - bi.metric-semantic-modeling
+  - data.sql-queries
+  - data.dbt
+  - data.pandas-advanced
+  - stats.scipy-statsmodels
+  - viz.matplotlib-seaborn
+  quality_checks:
+  - kpi_dictionary_defined
+  - grain_consistency_validated
+  - dashboard_refresh_and_ownership_defined
+  constraints:
+  - avoid_mixed_grain_metrics
+  - require_lineage_and_metric_definition_for_published_kpis
+  examples:
+  - Build BI reporting spec with governed KPI definitions
+  - Produce stakeholder dashboard blueprint with drill-down analysis paths
+- id: bi.tableau-authoring
+  title: Tableau Authoring and Governance
+  domain: business_intelligence
+  instruction_file: instructions/bi-tableau-authoring.md
+  description: Retrieve this expert for Tableau dashboard design, interaction patterns,
+    performance tuning, and governed publishing workflows.
+  tags:
+  - business-intelligence
+  - tableau
+  - dashboard
+  - interactions
+  - governance
+  - publish
+  tool_hints:
+  - tableau desktop
+  - tableau server
+  - tableau cloud
+  - extracts
+  examples:
+  - Design Tableau dashboard with action filters and KPI drill paths
+  - Optimize workbook extract and publish workflow for stakeholders
+- id: bi.powerbi-modeling
+  title: Power BI Modeling and DAX
+  domain: business_intelligence
+  instruction_file: instructions/bi-powerbi-modeling.md
+  description: Retrieve this expert for Power BI data modeling, DAX measure design,
+    row-level security, and refresh strategy.
+  tags:
+  - business-intelligence
+  - powerbi
+  - dax
+  - semantic-model
+  - rls
+  - refresh
+  tool_hints:
+  - power bi desktop
+  - power bi service
+  - dax
+  - incremental refresh
+  examples:
+  - Build Power BI semantic model with reusable DAX measures
+  - Configure RLS and incremental refresh for production reporting
+- id: bi.looker-modeling
+  title: Looker Modeling and LookML
+  domain: business_intelligence
+  instruction_file: instructions/bi-looker-modeling.md
+  description: Retrieve this expert for LookML model design, explore governance, and
+    performant semantic delivery in Looker.
+  tags:
+  - business-intelligence
+  - looker
+  - lookml
+  - semantic-layer
+  - explores
+  - governance
+  tool_hints:
+  - lookml
+  - looker explores
+  - pdt
+  - aggregate tables
+  examples:
+  - Design LookML explores with governed measures and dimensions
+  - Tune Looker semantic model using PDT and aggregate strategies
+- id: role.analytics-engineer
+  title: Analytics Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/analytics-engineer.md
+  description: Role expert for governed analytics delivery across semantic modeling,
+    tested transformations, and BI platform implementation.
+  tags:
+  - role
+  - analytics-engineer
+  - semantic-layer
+  - dbt
+  - bi-platforms
+  - metric-governance
+  tool_hints:
+  - bi.metric-semantic-modeling
+  - bi.dashboard-design
+  - bi.tableau-authoring
+  - bi.powerbi-modeling
+  - bi.looker-modeling
+  - data.dbt
+  - data.sql-queries
+  - data.pandas-advanced
+  - stats.scipy-statsmodels
+  - viz.matplotlib-seaborn
+  dependencies:
+  - bi.metric-semantic-modeling
+  - bi.dashboard-design
+  - bi.tableau-authoring
+  - bi.powerbi-modeling
+  - bi.looker-modeling
+  - data.dbt
+  - data.sql-queries
+  - data.pandas-advanced
+  - stats.scipy-statsmodels
+  - viz.matplotlib-seaborn
+  quality_checks:
+  - semantic_grain_defined
+  - metric_parity_verified_across_tools
+  - lineage_refresh_and_access_governed
+  constraints:
+  - avoid_dashboard_specific_metric_forks_without_approval
+  - require_tested_transformations_before_publish
+  examples:
+  - Build analytics engineering plan for dbt plus BI semantic delivery
+  - Deliver governed KPI model across Tableau, Power BI, and Looker
+- id: cloud.azure-storage
+  title: Azure Storage and Data Lake
+  domain: cloud_infrastructure
+  instruction_file: instructions/azure-storage.md
+  description: Retrieve this expert for Azure Blob and ADLS Gen2 architecture, data
+    layout, access policy, and lifecycle governance.
+  tags:
+  - azure
+  - storage
+  - adls
+  - blob
+  - data-lake
+  - cloud
+  tool_hints:
+  - azure blob storage
+  - adls gen2
+  - managed identity
+  - azure rbac
+  examples:
+  - Design raw to curated ADLS layout with partitioning policy
+  - Configure secure data lake access model for analytics teams
+- id: cloud.azure-data-factory
+  title: Azure Data Factory Pipelines
+  domain: cloud_infrastructure
+  instruction_file: instructions/azure-data-factory.md
+  description: Retrieve this expert for Azure Data Factory pipeline orchestration,
+    ETL scheduling, retries, and operational reliability patterns.
+  tags:
+  - azure
+  - data-factory
+  - orchestration
+  - etl
+  - scheduling
+  - pipelines
+  tool_hints:
+  - azure data factory
+  - copy activity
+  - mapping data flows
+  - triggers
+  examples:
+  - Build parameterized ADF ingestion and transformation workflows
+  - Define retry and backfill strategy with data quality gates
+- id: cloud.azure-synapse
+  title: Azure Synapse Analytics
+  domain: cloud_infrastructure
+  instruction_file: instructions/azure-synapse.md
+  description: Retrieve this expert for Synapse SQL and Spark architecture, serving
+    model design, and BI-facing optimization.
+  tags:
+  - azure
+  - synapse
+  - sql-pool
+  - spark
+  - analytics
+  - warehouse
+  tool_hints:
+  - azure synapse
+  - dedicated sql pool
+  - serverless sql
+  - synapse spark
+  examples:
+  - Choose Synapse workload architecture for BI and ML consumers
+  - Optimize Synapse serving model for dashboard latency and cost

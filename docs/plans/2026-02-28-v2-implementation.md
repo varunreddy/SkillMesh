@@ -1216,7 +1216,7 @@ Update description to mention ChromaDB and scale.
 - Add `--backend` flag documentation
 - Update expert count from 15 to ~57
 - Update install instructions to mention chromadb dependency
-- Rename all "SkillGate" references to "SkillMesh"
+- Complete branding references migration to SkillMesh
 
 **Step 3: Final full test run**
 

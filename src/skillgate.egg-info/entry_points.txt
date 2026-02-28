@@ -1,2 +1,0 @@
-[console_scripts]
-skill-rag = skill_registry_rag.cli:main

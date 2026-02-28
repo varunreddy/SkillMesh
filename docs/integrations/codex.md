@@ -1,11 +1,11 @@
 # Codex Integration
 
-Install SkillGate as a native Codex skill and route large task requests to top-K experts.
+Install SkillMesh as a native Codex skill and route large task requests to top-K cards.
 
 ## 1) Install the stable skill bundle
 
 ```bash
-$skill-installer install https://github.com/varunreddy/SkillGate/tree/main/skills/skillgate-router
+$skill-installer install https://github.com/varunreddy/SkillMesh/tree/main/skills/skillmesh
 ```
 
 Restart Codex after install.
@@ -13,13 +13,13 @@ Restart Codex after install.
 ## 2) Configure a registry path (recommended)
 
 ```bash
-export SKILLGATE_REGISTRY=/absolute/path/to/tools.enriched.json
+export SKILLMESH_REGISTRY=/absolute/path/to/tools.json
 ```
 
-## 3) Route requests with SkillGate
+## 3) Route requests with SkillMesh
 
 ```bash
-~/.codex/skills/skillgate-router/scripts/route.sh \
+~/.codex/skills/skillmesh/scripts/route.sh \
   --provider codex \
   --backend auto \
   --query "build a secure FastAPI service with JWT auth and SQLAlchemy" \
@@ -29,11 +29,11 @@ export SKILLGATE_REGISTRY=/absolute/path/to/tools.enriched.json
 ## 4) Continue with routed context only
 
 - Keep the emitted context block in the conversation.
-- Ask Codex to proceed using only the returned expert cards.
+- Ask Codex to proceed using only the returned cards.
 
 ## Optional flags
 
-- `--registry <path>`: Override `SKILLGATE_REGISTRY`.
+- `--registry <path>`: Override `SKILLMESH_REGISTRY`.
 - `--backend auto|memory|chroma`: Choose retrieval backend.
 - `--dense`: Enable optional dense reranking.
-- `--instruction-chars <n>`: Cap instruction snippet length per expert.
+- `--instruction-chars <n>`: Cap instruction snippet length per card.

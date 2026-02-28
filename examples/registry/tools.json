@@ -2,7 +2,7 @@
   "registry_name": "skillmesh-tool-catalog",
   "version": "0.4.0",
   "updated_at": "2026-02-28",
-  "experts": [
+  "tools": [
     {
       "id": "viz.matplotlib-seaborn",
       "title": "Visualization with Matplotlib and Seaborn",
@@ -3352,6 +3352,1227 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "role.data-analyst",
+      "title": "Data Analyst Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/data-analyst.md",
+      "description": "Role expert that orchestrates profiling, cleaning, EDA, baseline modeling, and visualization for tabular analytics tasks.",
+      "tags": [
+        "role",
+        "data-analyst",
+        "eda",
+        "pandas",
+        "visualization",
+        "baseline-modeling"
+      ],
+      "tool_hints": [
+        "data.pandas-advanced",
+        "data.sql-queries",
+        "viz.matplotlib-seaborn",
+        "ml.sklearn-modeling",
+        "stats.scipy-statsmodels"
+      ],
+      "examples": [
+        "Profile messy dataset, clean it, and deliver insight dashboard",
+        "Run EDA plus baseline prediction with leakage-safe validation"
+      ],
+      "aliases": [
+        "role-data-analyst",
+        "analytics-orchestrator"
+      ],
+      "dependencies": [
+        "data.pandas-advanced",
+        "data.sql-queries",
+        "viz.matplotlib-seaborn",
+        "ml.sklearn-modeling",
+        "stats.scipy-statsmodels"
+      ],
+      "input_contract": {
+        "required": "tabular dataset and analysis objective",
+        "optional": "target metric, business context, and prediction requirement"
+      },
+      "output_artifacts": [
+        "data_profile_summary",
+        "eda_findings",
+        "visual_report",
+        "baseline_model_report"
+      ],
+      "quality_checks": [
+        "missingness_and_dtype_audit_completed",
+        "insights_backed_by_numeric_evidence",
+        "charts_have_labels_units_and_titles"
+      ],
+      "constraints": [
+        "no_causal_claims_from_correlation_only",
+        "use_only_allowed_dependencies_unless_explicitly_authorized"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "roles",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "role.financial-analyst",
+      "title": "Financial Analyst Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/financial-analyst.md",
+      "description": "Role expert for financial KPI analysis, scenario modeling, forecasting, and risk-aware recommendations.",
+      "tags": [
+        "role",
+        "financial-analyst",
+        "finance",
+        "forecasting",
+        "scenario-analysis",
+        "risk"
+      ],
+      "tool_hints": [
+        "data.pandas-advanced",
+        "data.time-series",
+        "stats.scipy-statsmodels",
+        "finance.financial-modeling",
+        "finance.quantitative",
+        "viz.matplotlib-seaborn"
+      ],
+      "examples": [
+        "Build base/upside/downside forecast with sensitivity analysis",
+        "Produce financial trend report with assumptions and risk notes"
+      ],
+      "aliases": [
+        "role-financial-analyst",
+        "finance-orchestrator"
+      ],
+      "dependencies": [
+        "data.pandas-advanced",
+        "data.time-series",
+        "stats.scipy-statsmodels",
+        "finance.financial-modeling",
+        "finance.quantitative",
+        "viz.matplotlib-seaborn"
+      ],
+      "input_contract": {
+        "required": "financial dataset with timeframe and target question",
+        "optional": "scenario assumptions, risk tolerance, and reporting horizon"
+      },
+      "output_artifacts": [
+        "assumptions_table",
+        "financial_kpi_summary",
+        "scenario_analysis_output",
+        "risk_and_limitations_report"
+      ],
+      "quality_checks": [
+        "assumptions_explicitly_documented",
+        "time_alignment_and_units_validated",
+        "forecast_errors_and_uncertainty_reported"
+      ],
+      "constraints": [
+        "do_not_present_estimates_as_certainty",
+        "separate_observed_facts_from_modeled_assumptions",
+        "use_only_allowed_dependencies_unless_explicitly_authorized"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "roles",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "ml.sklearn-pipeline-ops",
+      "title": "Scikit-learn Pipeline Ops",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-pipeline-ops.md",
+      "description": "Retrieve this expert for production-grade sklearn pipelines, calibration, thresholding, packaging, and monitoring-ready outputs.",
+      "tags": [
+        "sklearn",
+        "pipeline",
+        "columntransformer",
+        "calibration",
+        "thresholding",
+        "model-ops"
+      ],
+      "tool_hints": [
+        "sklearn.pipeline",
+        "sklearn.compose",
+        "sklearn.calibration",
+        "joblib"
+      ],
+      "examples": [
+        "Build deployment-ready pipeline with preprocessing parity checks",
+        "Tune decision threshold with precision-recall tradeoff analysis"
+      ],
+      "aliases": [
+        "ml-sklearn-pipeline-ops",
+        "sklearn-production-pipelines"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "pandas",
+        "numpy",
+        "joblib"
+      ],
+      "input_contract": {
+        "required": "training dataset with target variable and deployment objective",
+        "optional": "class imbalance profile, threshold policy, and serving constraints"
+      },
+      "output_artifacts": [
+        "fitted_sklearn_pipeline",
+        "calibration_threshold_report",
+        "deployment_readiness_notes"
+      ],
+      "quality_checks": [
+        "preprocessing_parity_train_vs_inference",
+        "baseline_vs_candidate_comparison_present",
+        "metric_selection_aligned_to_objective"
+      ],
+      "constraints": [
+        "no_untracked_manual_preprocessing",
+        "no_train_only_metric_reporting"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "stats.experiment-design",
+      "title": "Statistical Experiment Design and A/B Testing",
+      "domain": "statistics",
+      "instruction_file": "instructions/stats-experiment-design.md",
+      "description": "Retrieve this expert for experiment planning, power analysis, sample-size estimation, and robust A/B test interpretation.",
+      "tags": [
+        "statistics",
+        "ab-testing",
+        "power-analysis",
+        "sample-size",
+        "hypothesis-testing",
+        "effect-size"
+      ],
+      "tool_hints": [
+        "scipy.stats",
+        "statsmodels.stats.power",
+        "numpy",
+        "pandas"
+      ],
+      "examples": [
+        "Design A/B experiment with MDE and power targets",
+        "Validate sample ratio mismatch and run robust significance checks"
+      ],
+      "aliases": [
+        "stats-experiment-design",
+        "ab-test-design"
+      ],
+      "dependencies": [
+        "scipy",
+        "statsmodels",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "primary metric, hypothesis, and experiment constraints",
+        "optional": "historical variance, expected effect size, and traffic allocation"
+      },
+      "output_artifacts": [
+        "experiment_plan",
+        "power_sample_size_sheet",
+        "decision_summary_with_uncertainty"
+      ],
+      "quality_checks": [
+        "primary_metric_pre_registered",
+        "multiple_testing_or_peeking_risks_addressed",
+        "effect_size_and_confidence_intervals_reported"
+      ],
+      "constraints": [
+        "avoid_p_value_only_conclusions",
+        "separate_statistical_and_practical_significance"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "stats.model-diagnostics",
+      "title": "Statistical Model Diagnostics",
+      "domain": "statistics",
+      "instruction_file": "instructions/stats-model-diagnostics.md",
+      "description": "Retrieve this expert for residual diagnostics, calibration assessment, cohort error analysis, and model reliability checks.",
+      "tags": [
+        "statistics",
+        "diagnostics",
+        "residuals",
+        "calibration",
+        "drift",
+        "reliability"
+      ],
+      "tool_hints": [
+        "statsmodels",
+        "scipy.stats",
+        "sklearn.calibration",
+        "matplotlib"
+      ],
+      "examples": [
+        "Run residual and heteroskedasticity checks for regression model",
+        "Evaluate classification calibration and subgroup error stability"
+      ],
+      "aliases": [
+        "stats-model-diagnostics",
+        "model-reliability-diagnostics"
+      ],
+      "dependencies": [
+        "statsmodels",
+        "scipy",
+        "scikit-learn",
+        "matplotlib"
+      ],
+      "input_contract": {
+        "required": "trained model outputs, targets, and feature context",
+        "optional": "cohort definitions, drift windows, and operating thresholds"
+      },
+      "output_artifacts": [
+        "diagnostics_report",
+        "cohort_error_breakdown",
+        "risk_mitigation_actions"
+      ],
+      "quality_checks": [
+        "diagnostic_tests_match_model_type",
+        "influential_points_or_outliers_reviewed",
+        "subgroup_instability_assessed"
+      ],
+      "constraints": [
+        "avoid_global_metric_only_evaluation",
+        "avoid_action_recommendations_without_evidence"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "role.machine-learning-engineer",
+      "title": "Machine Learning Engineer Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/machine-learning-engineer.md",
+      "description": "Role expert for end-to-end ML delivery across feature pipelines, training, diagnostics, packaging, and deployment handoff.",
+      "tags": [
+        "role",
+        "machine-learning-engineer",
+        "mlops",
+        "sklearn",
+        "evaluation",
+        "deployment"
+      ],
+      "tool_hints": [
+        "data.pandas-advanced",
+        "ml.feature-engineering",
+        "ml.sklearn-modeling",
+        "ml.sklearn-pipeline-ops",
+        "ml.hyperparameter-tuning",
+        "ml.gradient-boosting",
+        "stats.scipy-statsmodels",
+        "stats.experiment-design",
+        "stats.model-diagnostics",
+        "ml.model-export",
+        "viz.matplotlib-seaborn"
+      ],
+      "examples": [
+        "Build production-ready ML pipeline with diagnostics and export artifacts",
+        "Deliver model handoff with monitoring plan and rollback triggers"
+      ],
+      "aliases": [
+        "role-ml-engineer",
+        "ml-engineering-orchestrator"
+      ],
+      "dependencies": [
+        "data.pandas-advanced",
+        "ml.feature-engineering",
+        "ml.sklearn-modeling",
+        "ml.sklearn-pipeline-ops",
+        "ml.hyperparameter-tuning",
+        "ml.gradient-boosting",
+        "stats.scipy-statsmodels",
+        "stats.experiment-design",
+        "stats.model-diagnostics",
+        "ml.model-export",
+        "viz.matplotlib-seaborn"
+      ],
+      "input_contract": {
+        "required": "dataset, target objective, and model success metric",
+        "optional": "latency constraints, deployment target, and compliance requirements"
+      },
+      "output_artifacts": [
+        "problem_contract",
+        "pipeline_spec",
+        "evaluation_report",
+        "model_artifacts",
+        "deployment_notes"
+      ],
+      "quality_checks": [
+        "baseline_before_tuning",
+        "leakage_controls_verified",
+        "calibration_or_residual_checks_present",
+        "export_compatibility_verified"
+      ],
+      "constraints": [
+        "do_not_report_train_only_metrics",
+        "include_segment_level_performance",
+        "require_reproducibility_metadata",
+        "use_only_allowed_dependencies_unless_explicitly_authorized"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "roles",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "role.data-engineer",
+      "title": "Data Engineer Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/data-engineer.md",
+      "description": "Role expert for scalable data pipelines, quality enforcement, and production-ready data platform delivery.",
+      "tags": [
+        "role",
+        "data-engineer",
+        "spark",
+        "sql",
+        "dbt",
+        "pipelines"
+      ],
+      "tool_hints": [
+        "data.spark",
+        "data.sql-queries",
+        "data.dbt",
+        "data.pandas-advanced",
+        "web.sqlalchemy",
+        "cloud.docker",
+        "cloud.kubernetes",
+        "cloud.terraform"
+      ],
+      "examples": [
+        "Build warehouse-ready pipeline with quality checks and observability",
+        "Design Spark plus dbt workflow with replay and backfill procedures"
+      ],
+      "aliases": [
+        "role-data-engineer",
+        "data-platform-orchestrator"
+      ],
+      "dependencies": [
+        "data.spark",
+        "data.sql-queries",
+        "data.dbt",
+        "data.pandas-advanced",
+        "web.sqlalchemy",
+        "cloud.docker",
+        "cloud.kubernetes",
+        "cloud.terraform"
+      ],
+      "input_contract": {
+        "required": "source datasets, target schema, and freshness expectations",
+        "optional": "lineage requirements, cost constraints, and backfill policy"
+      },
+      "output_artifacts": [
+        "pipeline_contract",
+        "transformation_assets",
+        "quality_report",
+        "deployment_bundle",
+        "operations_plan"
+      ],
+      "quality_checks": [
+        "schema_evolution_handled",
+        "idempotent_pipeline_design",
+        "partition_strategy_documented",
+        "data_quality_checks_embedded"
+      ],
+      "constraints": [
+        "avoid_unbounded_scans_on_large_tables",
+        "require_lineage_and_freshness_documentation",
+        "use_only_allowed_dependencies_unless_explicitly_authorized"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "roles",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "role.ml-researcher",
+      "title": "ML Researcher Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/ml-researcher.md",
+      "description": "Role expert for hypothesis-driven ML research, ablations, diagnostics, and reproducible experimental reporting.",
+      "tags": [
+        "role",
+        "ml-researcher",
+        "experimentation",
+        "ablation",
+        "pytorch",
+        "transformers"
+      ],
+      "tool_hints": [
+        "dl.pytorch-training",
+        "dl.transformers-finetuning",
+        "ml.hyperparameter-tuning",
+        "ml.gradient-boosting",
+        "stats.experiment-design",
+        "stats.model-diagnostics",
+        "stats.scipy-statsmodels",
+        "data.pandas-advanced",
+        "viz.matplotlib-seaborn"
+      ],
+      "examples": [
+        "Run structured model ablations with reproducible experiment tracking",
+        "Produce research report with confidence intervals and failure analysis"
+      ],
+      "aliases": [
+        "role-ml-researcher",
+        "research-orchestrator"
+      ],
+      "dependencies": [
+        "dl.pytorch-training",
+        "dl.transformers-finetuning",
+        "ml.hyperparameter-tuning",
+        "ml.gradient-boosting",
+        "stats.experiment-design",
+        "stats.model-diagnostics",
+        "stats.scipy-statsmodels",
+        "data.pandas-advanced",
+        "viz.matplotlib-seaborn"
+      ],
+      "input_contract": {
+        "required": "research objective, target metric, and baseline definition",
+        "optional": "compute budget, experiment matrix, and publication criteria"
+      },
+      "output_artifacts": [
+        "research_plan",
+        "training_log_summary",
+        "results_table",
+        "diagnostics",
+        "next_experiments"
+      ],
+      "quality_checks": [
+        "baseline_plus_ablation_required",
+        "uncertainty_and_variance_reported",
+        "subgroup_or_slice_behavior_reviewed"
+      ],
+      "constraints": [
+        "avoid_single_run_claims",
+        "avoid_sota_claims_without_comparable_baselines",
+        "use_only_allowed_dependencies_unless_explicitly_authorized"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "roles",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "bi.dashboard-design",
+      "title": "BI Dashboard Design and Storytelling",
+      "domain": "business_intelligence",
+      "instruction_file": "instructions/bi-dashboard-design.md",
+      "description": "Retrieve this expert for KPI-driven dashboard architecture, chart selection, stakeholder communication, and adoption-focused BI reporting.",
+      "tags": [
+        "business-intelligence",
+        "dashboard",
+        "kpi",
+        "storytelling",
+        "reporting",
+        "executive-view"
+      ],
+      "tool_hints": [
+        "matplotlib",
+        "seaborn",
+        "tableau",
+        "power bi"
+      ],
+      "examples": [
+        "Design executive and analyst dashboard pages with drill-down structure",
+        "Define KPI cards and trend visuals for weekly business review"
+      ],
+      "aliases": [
+        "bi-dashboard-design",
+        "dashboard-storytelling"
+      ],
+      "dependencies": [
+        "data.sql-queries",
+        "data.dbt",
+        "viz.matplotlib-seaborn"
+      ],
+      "input_contract": {
+        "required": "business objective, audience, and target KPIs",
+        "optional": "dashboard tool choice, refresh cadence, and governance constraints"
+      },
+      "output_artifacts": [
+        "dashboard_blueprint",
+        "kpi_layout_spec",
+        "interaction_and_filter_plan"
+      ],
+      "quality_checks": [
+        "chart_types_match_business_questions",
+        "kpi_cards_have_definition_and_owner",
+        "time_window_and_filters_are_explicit"
+      ],
+      "constraints": [
+        "avoid_visual_clutter_without_decision_value",
+        "avoid_unlabeled_or_ambiguous_kpis"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "bi.metric-semantic-modeling",
+      "title": "BI Metric and Semantic Modeling",
+      "domain": "business_intelligence",
+      "instruction_file": "instructions/bi-metric-semantic-modeling.md",
+      "description": "Retrieve this expert for semantic layer design, metric governance, dimensional modeling, and trusted KPI standardization.",
+      "tags": [
+        "business-intelligence",
+        "semantic-layer",
+        "metric-governance",
+        "dimensional-modeling",
+        "star-schema",
+        "kpi"
+      ],
+      "tool_hints": [
+        "sql",
+        "dbt",
+        "metrics layer",
+        "lineage docs"
+      ],
+      "examples": [
+        "Define canonical metric dictionary with grain and owner",
+        "Design star-schema marts for BI dashboards and ad hoc analysis"
+      ],
+      "aliases": [
+        "bi-metric-semantic-modeling",
+        "semantic-metric-layer"
+      ],
+      "dependencies": [
+        "data.sql-queries",
+        "data.dbt",
+        "data.pandas-advanced"
+      ],
+      "input_contract": {
+        "required": "entity definitions, required KPIs, and analysis grain",
+        "optional": "lineage tool, SCD policy, and ownership model"
+      },
+      "output_artifacts": [
+        "semantic_model_blueprint",
+        "metric_dictionary",
+        "quality_test_matrix"
+      ],
+      "quality_checks": [
+        "metric_grain_is_explicit",
+        "join_paths_prevent_double_counting",
+        "kpi_time_window_semantics_defined"
+      ],
+      "constraints": [
+        "avoid_implicit_metric_definitions",
+        "avoid_untracked_schema_changes"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "role.bi-analyst",
+      "title": "BI Analyst Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/bi-analyst.md",
+      "description": "Role expert for KPI-centric business analysis, dashboard planning, and governed reporting outputs for stakeholders.",
+      "tags": [
+        "role",
+        "bi-analyst",
+        "business-intelligence",
+        "dashboard",
+        "kpi",
+        "reporting"
+      ],
+      "tool_hints": [
+        "bi.dashboard-design",
+        "bi.metric-semantic-modeling",
+        "data.sql-queries",
+        "data.dbt",
+        "data.pandas-advanced",
+        "stats.scipy-statsmodels",
+        "viz.matplotlib-seaborn"
+      ],
+      "examples": [
+        "Build BI reporting spec with governed KPI definitions",
+        "Produce stakeholder dashboard blueprint with drill-down analysis paths"
+      ],
+      "aliases": [
+        "role-bi-analyst",
+        "business-intelligence-orchestrator"
+      ],
+      "dependencies": [
+        "bi.dashboard-design",
+        "bi.metric-semantic-modeling",
+        "data.sql-queries",
+        "data.dbt",
+        "data.pandas-advanced",
+        "stats.scipy-statsmodels",
+        "viz.matplotlib-seaborn"
+      ],
+      "input_contract": {
+        "required": "business questions, KPI scope, and audience",
+        "optional": "tooling preferences, refresh cadence, and governance policy"
+      },
+      "output_artifacts": [
+        "business_questions",
+        "kpi_dictionary",
+        "analysis_summary",
+        "dashboard_blueprint",
+        "governance_notes"
+      ],
+      "quality_checks": [
+        "kpi_dictionary_defined",
+        "grain_consistency_validated",
+        "dashboard_refresh_and_ownership_defined"
+      ],
+      "constraints": [
+        "avoid_mixed_grain_metrics",
+        "require_lineage_and_metric_definition_for_published_kpis",
+        "use_only_allowed_dependencies_unless_explicitly_authorized"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "roles",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "bi.tableau-authoring",
+      "title": "Tableau Authoring and Governance",
+      "domain": "business_intelligence",
+      "instruction_file": "instructions/bi-tableau-authoring.md",
+      "description": "Retrieve this expert for Tableau dashboard design, interaction patterns, performance tuning, and governed publishing workflows.",
+      "tags": [
+        "business-intelligence",
+        "tableau",
+        "dashboard",
+        "interactions",
+        "governance",
+        "publish"
+      ],
+      "tool_hints": [
+        "tableau desktop",
+        "tableau server",
+        "tableau cloud",
+        "extracts"
+      ],
+      "examples": [
+        "Design Tableau dashboard with action filters and KPI drill paths",
+        "Optimize workbook extract and publish workflow for stakeholders"
+      ],
+      "aliases": [
+        "bi-tableau-authoring",
+        "tableau-governance"
+      ],
+      "dependencies": [
+        "data.sql-queries",
+        "data.dbt",
+        "bi.metric-semantic-modeling"
+      ],
+      "input_contract": {
+        "required": "target business KPIs and dashboard audience",
+        "optional": "publish environment, refresh cadence, and permission model"
+      },
+      "output_artifacts": [
+        "tableau_blueprint",
+        "interaction_map",
+        "publish_governance_checklist"
+      ],
+      "quality_checks": [
+        "kpi_lineage_to_source_verified",
+        "dashboard_interaction_defaults_defined",
+        "publish_ownership_documented"
+      ],
+      "constraints": [
+        "avoid_unmanaged_published_workbooks",
+        "avoid_ambiguous_kpi_calculations"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "bi.powerbi-modeling",
+      "title": "Power BI Modeling and DAX",
+      "domain": "business_intelligence",
+      "instruction_file": "instructions/bi-powerbi-modeling.md",
+      "description": "Retrieve this expert for Power BI data modeling, DAX measure design, row-level security, and refresh strategy.",
+      "tags": [
+        "business-intelligence",
+        "powerbi",
+        "dax",
+        "semantic-model",
+        "rls",
+        "refresh"
+      ],
+      "tool_hints": [
+        "power bi desktop",
+        "power bi service",
+        "dax",
+        "incremental refresh"
+      ],
+      "examples": [
+        "Build Power BI semantic model with reusable DAX measures",
+        "Configure RLS and incremental refresh for production reporting"
+      ],
+      "aliases": [
+        "bi-powerbi-modeling",
+        "powerbi-dax"
+      ],
+      "dependencies": [
+        "data.sql-queries",
+        "data.dbt",
+        "bi.metric-semantic-modeling"
+      ],
+      "input_contract": {
+        "required": "business KPIs, source schema, and report objectives",
+        "optional": "security requirements, workspace policy, and refresh windows"
+      },
+      "output_artifacts": [
+        "powerbi_model_spec",
+        "dax_measure_catalog",
+        "security_and_refresh_plan"
+      ],
+      "quality_checks": [
+        "dax_filter_context_validated",
+        "relationship_cardinality_reviewed",
+        "rls_and_refresh_policy_documented"
+      ],
+      "constraints": [
+        "avoid_ambiguous_model_relationships",
+        "avoid_unvalidated_dax_measures"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "bi.looker-modeling",
+      "title": "Looker Modeling and LookML",
+      "domain": "business_intelligence",
+      "instruction_file": "instructions/bi-looker-modeling.md",
+      "description": "Retrieve this expert for LookML model design, explore governance, and performant semantic delivery in Looker.",
+      "tags": [
+        "business-intelligence",
+        "looker",
+        "lookml",
+        "semantic-layer",
+        "explores",
+        "governance"
+      ],
+      "tool_hints": [
+        "lookml",
+        "looker explores",
+        "pdt",
+        "aggregate tables"
+      ],
+      "examples": [
+        "Design LookML explores with governed measures and dimensions",
+        "Tune Looker semantic model using PDT and aggregate strategies"
+      ],
+      "aliases": [
+        "bi-looker-modeling",
+        "looker-lookml"
+      ],
+      "dependencies": [
+        "data.sql-queries",
+        "data.dbt",
+        "bi.metric-semantic-modeling"
+      ],
+      "input_contract": {
+        "required": "entity model, metric requirements, and explore needs",
+        "optional": "access policy, PDT strategy, and deployment workflow"
+      },
+      "output_artifacts": [
+        "lookml_model_blueprint",
+        "explore_design_spec",
+        "governance_and_deploy_checklist"
+      ],
+      "quality_checks": [
+        "measure_logic_matches_kpi_dictionary",
+        "explore_join_fanout_risks_reviewed",
+        "access_and_ownership_policy_documented"
+      ],
+      "constraints": [
+        "avoid_unreviewed_semantic_model_changes",
+        "avoid_duplicate_measure_definitions"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "role.analytics-engineer",
+      "title": "Analytics Engineer Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/analytics-engineer.md",
+      "description": "Role expert for governed analytics delivery across semantic modeling, tested transformations, and BI platform implementation.",
+      "tags": [
+        "role",
+        "analytics-engineer",
+        "semantic-layer",
+        "dbt",
+        "bi-platforms",
+        "metric-governance"
+      ],
+      "tool_hints": [
+        "bi.metric-semantic-modeling",
+        "bi.dashboard-design",
+        "bi.tableau-authoring",
+        "bi.powerbi-modeling",
+        "bi.looker-modeling",
+        "data.dbt",
+        "data.sql-queries",
+        "data.pandas-advanced",
+        "stats.scipy-statsmodels",
+        "viz.matplotlib-seaborn"
+      ],
+      "examples": [
+        "Build analytics engineering plan for dbt plus BI semantic delivery",
+        "Deliver governed KPI model across Tableau, Power BI, and Looker"
+      ],
+      "aliases": [
+        "role-analytics-engineer",
+        "semantic-delivery-orchestrator"
+      ],
+      "dependencies": [
+        "bi.metric-semantic-modeling",
+        "bi.dashboard-design",
+        "bi.tableau-authoring",
+        "bi.powerbi-modeling",
+        "bi.looker-modeling",
+        "data.dbt",
+        "data.sql-queries",
+        "data.pandas-advanced",
+        "stats.scipy-statsmodels",
+        "viz.matplotlib-seaborn"
+      ],
+      "input_contract": {
+        "required": "business metric scope, source systems, and target BI platform",
+        "optional": "governance constraints, ownership model, and release cadence"
+      },
+      "output_artifacts": [
+        "semantic_contract",
+        "transformation_spec",
+        "bi_delivery_plan",
+        "governance_pack",
+        "acceptance_checks"
+      ],
+      "quality_checks": [
+        "semantic_grain_defined",
+        "metric_parity_verified_across_tools",
+        "lineage_refresh_and_access_governed"
+      ],
+      "constraints": [
+        "avoid_dashboard_specific_metric_forks_without_approval",
+        "require_tested_transformations_before_publish",
+        "use_only_allowed_dependencies_unless_explicitly_authorized"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "roles",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "cloud.azure-storage",
+      "title": "Azure Storage and Data Lake",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/azure-storage.md",
+      "description": "Retrieve this expert for Azure Blob and ADLS Gen2 architecture, data layout, access policy, and lifecycle governance.",
+      "tags": [
+        "azure",
+        "storage",
+        "adls",
+        "blob",
+        "data-lake",
+        "cloud"
+      ],
+      "tool_hints": [
+        "azure blob storage",
+        "adls gen2",
+        "managed identity",
+        "azure rbac"
+      ],
+      "examples": [
+        "Design raw to curated ADLS layout with partitioning policy",
+        "Configure secure data lake access model for analytics teams"
+      ],
+      "aliases": [
+        "cloud-azure-storage",
+        "azure-data-lake"
+      ],
+      "dependencies": [
+        "azure storage",
+        "adls gen2",
+        "managed identity"
+      ],
+      "input_contract": {
+        "required": "data domains, retention policy, and access requirements",
+        "optional": "cost constraints, lifecycle policy, and downstream consumers"
+      },
+      "output_artifacts": [
+        "storage_architecture_blueprint",
+        "security_and_access_plan",
+        "partitioning_and_layout_spec"
+      ],
+      "quality_checks": [
+        "partitioning_conventions_defined",
+        "least_privilege_access_modeled",
+        "retention_and_deletion_policies_documented"
+      ],
+      "constraints": [
+        "avoid_flat_unpartitioned_data_lakes",
+        "avoid_unmanaged_public_access"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "cloud.azure-data-factory",
+      "title": "Azure Data Factory Pipelines",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/azure-data-factory.md",
+      "description": "Retrieve this expert for Azure Data Factory pipeline orchestration, ETL scheduling, retries, and operational reliability patterns.",
+      "tags": [
+        "azure",
+        "data-factory",
+        "orchestration",
+        "etl",
+        "scheduling",
+        "pipelines"
+      ],
+      "tool_hints": [
+        "azure data factory",
+        "copy activity",
+        "mapping data flows",
+        "triggers"
+      ],
+      "examples": [
+        "Build parameterized ADF ingestion and transformation workflows",
+        "Define retry and backfill strategy with data quality gates"
+      ],
+      "aliases": [
+        "cloud-azure-data-factory",
+        "adf-pipelines"
+      ],
+      "dependencies": [
+        "azure data factory",
+        "azure storage",
+        "data.sql-queries"
+      ],
+      "input_contract": {
+        "required": "source and target systems with freshness SLA",
+        "optional": "retry policy, backfill windows, and quality threshold rules"
+      },
+      "output_artifacts": [
+        "pipeline_topology_design",
+        "retry_and_failure_policy",
+        "monitoring_and_alerting_plan"
+      ],
+      "quality_checks": [
+        "idempotency_strategy_defined",
+        "quality_gates_before_publish",
+        "alert_ownership_and_thresholds_set"
+      ],
+      "constraints": [
+        "avoid_non_recoverable_pipeline_steps",
+        "avoid_hidden_environment_specific_logic"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "cloud.azure-synapse",
+      "title": "Azure Synapse Analytics",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/azure-synapse.md",
+      "description": "Retrieve this expert for Synapse SQL and Spark architecture, serving model design, and BI-facing optimization.",
+      "tags": [
+        "azure",
+        "synapse",
+        "sql-pool",
+        "spark",
+        "analytics",
+        "warehouse"
+      ],
+      "tool_hints": [
+        "azure synapse",
+        "dedicated sql pool",
+        "serverless sql",
+        "synapse spark"
+      ],
+      "examples": [
+        "Choose Synapse workload architecture for BI and ML consumers",
+        "Optimize Synapse serving model for dashboard latency and cost"
+      ],
+      "aliases": [
+        "cloud-azure-synapse",
+        "synapse-analytics"
+      ],
+      "dependencies": [
+        "cloud.azure-storage",
+        "data.sql-queries",
+        "data.spark"
+      ],
+      "input_contract": {
+        "required": "workload latency goals, concurrency profile, and source systems",
+        "optional": "cost budget, security boundaries, and BI serving targets"
+      },
+      "output_artifacts": [
+        "synapse_architecture_recommendation",
+        "query_optimization_plan",
+        "bi_integration_strategy"
+      ],
+      "quality_checks": [
+        "architecture_matches_workload_profile",
+        "security_boundaries_documented",
+        "serving_grain_and_metric_consistency_verified"
+      ],
+      "constraints": [
+        "avoid_unbounded_compute_without_cost_guardrails",
+        "avoid_ambiguous_serving_models"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
       }
     }
   ]

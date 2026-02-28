@@ -5,7 +5,7 @@ from typing import Any, Optional
 
 
 @dataclass(slots=True)
-class ExpertCard:
+class ToolCard:
     id: str
     title: str
     domain: str
@@ -28,7 +28,11 @@ class ExpertCard:
 
 @dataclass(slots=True)
 class RetrievalHit:
-    card: ExpertCard
+    card: ToolCard
     score: float
     sparse_score: float
     dense_score: Optional[float] = None
+
+
+# Backward-compatible alias for older imports.
+ExpertCard = ToolCard

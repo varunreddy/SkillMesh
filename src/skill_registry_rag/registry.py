@@ -6,11 +6,11 @@ from typing import Any
 
 import yaml
 
-from .models import ExpertCard
+from .models import ToolCard
 
 
 class RegistryError(ValueError):
-    """Raised when the expert registry is invalid."""
+    """Raised when the tool/role registry is invalid."""
 
 
 def _validate_schema(raw: Any, registry_path: Path, schema_path: Path | None) -> None:
@@ -59,10 +59,19 @@ def _read_structured(path: Path) -> Any:
 def _normalize_entries(raw: Any) -> list[dict[str, Any]]:
     if isinstance(raw, list):
         entries = raw
-    elif isinstance(raw, dict) and isinstance(raw.get("experts"), list):
-        entries = raw["experts"]
+    elif isinstance(raw, dict):
+        if isinstance(raw.get("tools"), list):
+            entries = raw["tools"]
+        elif isinstance(raw.get("roles"), list):
+            entries = raw["roles"]
+        else:
+            raise RegistryError(
+                "Registry object must contain one of: 'tools' or 'roles'."
+            )
     else:
-        raise RegistryError("Registry must be a list or an object with 'experts'.")
+        raise RegistryError(
+            "Registry must be a list or an object with 'tools'/'roles'."
+        )
 
     out: list[dict[str, Any]] = []
     for i, row in enumerate(entries):
@@ -114,7 +123,7 @@ def load_registry(
     *,
     validate_schema: bool = True,
     schema_path: str | Path | None = None,
-) -> list[ExpertCard]:
+) -> list[ToolCard]:
     path = Path(registry_path).expanduser().resolve()
     if not path.exists():
         raise RegistryError(f"Registry not found: {path}")
@@ -128,7 +137,7 @@ def load_registry(
         )
     entries = _normalize_entries(raw)
 
-    cards: list[ExpertCard] = []
+    cards: list[ToolCard] = []
     seen_ids: set[str] = set()
     root = path.parent
 
@@ -147,7 +156,7 @@ def load_registry(
                 f"Instruction file missing for '{card_id}': {instruction_path}"
             )
 
-        card = ExpertCard(
+        card = ToolCard(
             id=card_id,
             title=str(row["title"]).strip(),
             domain=str(row["domain"]).strip(),

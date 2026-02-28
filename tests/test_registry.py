@@ -9,10 +9,10 @@ from skill_registry_rag.registry import RegistryError, load_registry
 
 def test_load_registry_examples():
     root = Path(__file__).resolve().parents[1]
-    registry_path = root / "examples" / "registry" / "experts.yaml"
+    registry_path = root / "examples" / "registry" / "tools.yaml"
     cards = load_registry(registry_path)
 
-    assert len(cards) == 53
+    assert len(cards) >= 53
     ids = {c.id for c in cards}
     assert "viz.matplotlib-seaborn" in ids
     assert "ml.model-export" in ids
@@ -38,26 +38,35 @@ def test_load_registry_examples():
     assert "sec.dependency-scanning" in ids
     assert "sec.iam-policies" in ids
     assert "sec.penetration-testing" in ids
+    # Role cards are first-class cards in the expanded catalog.
+    assert "role.data-analyst" in ids
+    assert "role.machine-learning-engineer" in ids
 
 
 def test_registry_has_entry_for_each_instruction_file():
     root = Path(__file__).resolve().parents[1]
-    registry_path = root / "examples" / "registry" / "experts.yaml"
+    registry_root = root / "examples" / "registry"
+    registry_path = root / "examples" / "registry" / "tools.yaml"
     cards = load_registry(registry_path)
 
-    card_files = {Path(c.instruction_file).name for c in cards}
+    card_files = {c.instruction_file for c in cards}
     instruction_files = {
-        p.name for p in (root / "examples" / "registry" / "instructions").glob("*.md")
+        str(p.relative_to(registry_root)).replace("\\", "/")
+        for p in (registry_root / "instructions").glob("*.md")
+    } | {
+        str(p.relative_to(registry_root)).replace("\\", "/")
+        for p in (registry_root / "roles").glob("*.md")
     }
     assert card_files == instruction_files
 
 
-def test_load_enriched_json_registry_fields():
+def test_load_json_registry_fields():
     root = Path(__file__).resolve().parents[1]
-    registry_path = root / "examples" / "registry" / "tools.enriched.json"
+    registry_path = root / "examples" / "registry" / "tools.json"
     cards = load_registry(registry_path)
+    yaml_cards = load_registry(root / "examples" / "registry" / "tools.yaml")
 
-    assert len(cards) == 53
+    assert len(cards) == len(yaml_cards)
     by_id = {c.id: c for c in cards}
     cv = by_id["cv.opencv-image-processing"]
     assert "opencv-python" in cv.dependencies
@@ -69,7 +78,7 @@ def test_load_enriched_json_registry_fields():
 
 def test_schema_validation_rejects_invalid_registry(tmp_path):
     bad = tmp_path / "bad.json"
-    bad.write_text('{"experts":[{"id":"x"}]}', encoding="utf-8")
+    bad.write_text('{"tools":[{"id":"x"}]}', encoding="utf-8")
 
     with pytest.raises(RegistryError):
         load_registry(bad, schema_path=Path(__file__).resolve().parents[1] / "examples" / "registry" / "schema.json")

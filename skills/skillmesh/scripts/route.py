@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 def _find_repo_root() -> Path | None:
-    markers = ("src/skill_registry_rag/__main__.py", "examples/registry/tools.enriched.json")
+    markers = ("src/skill_registry_rag/__main__.py", "examples/registry/tools.json")
     starts = [Path.cwd(), Path(__file__).resolve()]
     for start in starts:
         for candidate in [start, *start.parents]:
@@ -26,17 +26,18 @@ def _existing_path(value: str) -> str:
 
 
 def _default_registry() -> str:
-    for env_key in ("SKILLGATE_REGISTRY", "SKILLMESH_REGISTRY"):
-        env = os.getenv(env_key, "").strip()
-        if env:
-            return env
+    env = os.getenv("SKILLMESH_REGISTRY", "").strip()
+    if env:
+        return env
 
     repo_root = _find_repo_root()
     if repo_root is not None:
-        return str((repo_root / "examples" / "registry" / "tools.enriched.json").resolve())
+        primary = repo_root / "examples" / "registry" / "tools.json"
+        if primary.exists():
+            return str(primary.resolve())
 
     # Best-effort fallback for users invoking from another checkout.
-    cwd_candidate = _existing_path("examples/registry/tools.enriched.json")
+    cwd_candidate = _existing_path("examples/registry/tools.json")
     if cwd_candidate:
         return cwd_candidate
     return ""
@@ -44,8 +45,8 @@ def _default_registry() -> str:
 
 def _build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        prog="skillgate-route",
-        description="Emit top-k SkillGate context for Codex/Claude.",
+        prog="skillmesh-route",
+        description="Emit top-k SkillMesh context for Codex/Claude.",
     )
     p.add_argument("--provider", default="codex", choices=["codex", "claude"])
     p.add_argument("--registry", default=_default_registry())
@@ -69,7 +70,7 @@ def main(argv: list[str] | None = None) -> int:
     registry = str(args.registry or "").strip()
     if not registry:
         print(
-            "Error: Missing registry path. Pass --registry or set SKILLGATE_REGISTRY.",
+            "Error: Missing registry path. Pass --registry or set SKILLMESH_REGISTRY.",
             file=sys.stderr,
         )
         return 2
@@ -79,7 +80,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     cmd = [
-        "skill-rag",
+        "skillmesh",
         "emit",
         "--provider",
         args.provider,
@@ -99,7 +100,7 @@ def main(argv: list[str] | None = None) -> int:
 
     # Fallback to module invocation when CLI script is not on PATH.
     env = os.environ.copy()
-    if shutil.which("skill-rag") is None:
+    if shutil.which("skillmesh") is None:
         repo_root = _find_repo_root()
         if repo_root is not None:
             src_path = repo_root / "src"
@@ -131,8 +132,8 @@ def main(argv: list[str] | None = None) -> int:
     except FileNotFoundError:
         pretty = " ".join(shlex.quote(c) for c in cmd)
         print(
-            "Error: SkillGate CLI is not installed.\n"
-            "Install with `pip install -e .` from the SkillGate repo,\n"
+            "Error: SkillMesh CLI is not installed.\n"
+            "Install with `pip install -e .` from the SkillMesh repo,\n"
             "or run from a checkout with:\n"
             f"  {pretty}",
             file=sys.stderr,

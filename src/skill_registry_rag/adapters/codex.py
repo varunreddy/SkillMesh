@@ -12,7 +12,7 @@ def _trim(text: str, n: int) -> str:
 
 def render_codex_context(query: str, hits: list[RetrievalHit], *, instruction_chars: int = 700) -> str:
     lines: list[str] = []
-    lines.append("# Retrieved Skill Experts")
+    lines.append("# Retrieved SkillMesh Cards")
     lines.append(f"Query: {query}")
     lines.append("")
     for idx, hit in enumerate(hits, start=1):

@@ -1,0 +1,84 @@
+registry_name: skillmesh-data-engineering-catalog
+version: 0.1.0
+updated_at: '2026-02-28'
+tools:
+- id: role.data-engineer
+  title: Data Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/data-engineer.md
+  tags:
+  - role
+  - data-engineer
+  - pipelines
+- id: data.spark
+  title: Apache Spark Distributed Data Processing
+  domain: data_engineering
+  instruction_file: instructions/spark.md
+  tags:
+  - spark
+  - pyspark
+  - distributed
+- id: data.sql-queries
+  title: SQL Query Design and Optimization
+  domain: data_engineering
+  instruction_file: instructions/sql-queries.md
+  tags:
+  - sql
+  - query-optimization
+  - cte
+- id: data.dbt
+  title: dbt Analytics Engineering
+  domain: data_engineering
+  instruction_file: instructions/dbt.md
+  tags:
+  - dbt
+  - transformation
+  - testing
+- id: data.schema-normalization
+  title: Data Cleaning and Schema Normalization
+  domain: data_engineering
+  instruction_file: instructions/data-cleaning.md
+  tags:
+  - data-cleaning
+  - schema
+  - normalization
+- id: data.pandas-advanced
+  title: Advanced Pandas Data Workflows
+  domain: data_engineering
+  instruction_file: instructions/pandas-advanced.md
+  tags:
+  - pandas
+  - dataframe
+  - profiling
+- id: web.sqlalchemy
+  title: SQLAlchemy ORM and Sessions
+  domain: web_api
+  instruction_file: instructions/sqlalchemy.md
+  tags:
+  - sqlalchemy
+  - orm
+  - database
+- id: cloud.docker
+  title: Docker Containerization Workflows
+  domain: cloud_infrastructure
+  instruction_file: instructions/docker.md
+  tags:
+  - docker
+  - container
+  - runtime
+- id: cloud.kubernetes
+  title: Kubernetes Deployment and Operations
+  domain: cloud_infrastructure
+  instruction_file: instructions/kubernetes.md
+  tags:
+  - kubernetes
+  - deployment
+  - operations
+- id: cloud.terraform
+  title: Terraform Infrastructure as Code
+  domain: cloud_infrastructure
+  instruction_file: instructions/terraform.md
+  tags:
+  - terraform
+  - iac
+  - cloud

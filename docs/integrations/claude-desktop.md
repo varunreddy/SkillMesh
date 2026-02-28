@@ -1,36 +1,70 @@
 # Claude Desktop Integration
 
-Claude Desktop integration is MCP-based. SkillGate can be used today in two ways:
+SkillMesh ships a native MCP server (`skillmesh-mcp`) for Claude Desktop.
 
-## Option A: Manual (works immediately)
-
-1. Run SkillGate router in Claude format:
+## 1) Install MCP support
 
 ```bash
-skill-rag emit \
-  --provider claude \
-  --registry /absolute/path/to/tools.enriched.json \
-  --query "your request" \
-  --top-k 5
+pip install -e .[mcp]
 ```
 
-2. Paste the emitted block into Claude Desktop.
-3. Continue prompting with: "Use only the above top-5 capabilities."
-
-## Option B: MCP wrapper (recommended for full tooling)
-
-Build a thin MCP server that wraps:
+Set your default registry:
 
 ```bash
-skill-rag emit --provider claude --registry <path> --query <query> --top-k 5
+export SKILLMESH_REGISTRY=/absolute/path/to/tools.json
 ```
 
-Expose one MCP tool, e.g. `route_with_skillgate(query, top_k=5)`.
+## 2) Add SkillMesh MCP server to Claude Desktop
 
-Then add that MCP server to Claude Desktop config and call it from chat.
+Edit Claude Desktop MCP config (platform path may vary) and add:
+
+```json
+{
+  "mcpServers": {
+    "skillmesh": {
+      "command": "/absolute/path/to/.venv/bin/skillmesh-mcp",
+      "args": [],
+      "env": {
+        "SKILLMESH_REGISTRY": "/absolute/path/to/tools.json"
+      }
+    }
+  }
+}
+```
+
+Ready-to-copy templates:
+
+- `examples/mcp/claude-desktop.macos.json`
+- `examples/mcp/claude-desktop.linux.json`
+- `examples/mcp/claude-desktop.windows.json`
+
+Typical config locations:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Linux: `~/.config/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\\Claude\\claude_desktop_config.json`
+
+Alternative command if you prefer module execution:
+
+```json
+{
+  "command": "/absolute/path/to/.venv/bin/python",
+  "args": ["-m", "skill_registry_rag.mcp_server"]
+}
+```
+
+## 3) Restart Claude Desktop
+
+After restart, Claude can call these MCP tools:
+
+- `route_with_skillmesh(query, top_k=5, provider="claude")`
+- `retrieve_skillmesh_cards(query, top_k=5)`
+
+## 4) Example prompt in Claude Desktop
+
+`Use route_with_skillmesh for: clean noisy sales data, train a baseline model, and create charts.`
 
 ## Notes
 
-- Keep registry paths absolute in desktop environments.
-- Use `tools.enriched.json` for best routing quality.
-- Version-control your registry so routing stays deterministic.
+- Registry can be set per tool call (`registry=...`) or globally via `SKILLMESH_REGISTRY`.
+- For local/testing only, set `SKILLMESH_MCP_TRANSPORT` if you need a transport other than `stdio`.

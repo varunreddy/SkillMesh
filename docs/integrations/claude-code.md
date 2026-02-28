@@ -1,11 +1,11 @@
 # Claude Code Integration
 
-SkillGate can be used in Claude Code by calling the router script and asking Claude to follow only returned top-K capabilities.
+SkillMesh can be used in Claude Code by calling the router script and asking Claude to follow only returned top-K capabilities.
 
 ## 1) Install the skill bundle in Codex-style layout
 
 ```bash
-$skill-installer install https://github.com/varunreddy/SkillGate/tree/main/skills/skillgate-router
+$skill-installer install https://github.com/varunreddy/SkillMesh/tree/main/skills/skillmesh
 ```
 
 Restart Codex after install.
@@ -13,10 +13,10 @@ Restart Codex after install.
 ## 2) Route for Claude output format
 
 ```bash
-~/.codex/skills/skillgate-router/scripts/route.sh \
+~/.codex/skills/skillmesh/scripts/route.sh \
   --provider claude \
   --backend auto \
-  --registry /absolute/path/to/tools.enriched.json \
+  --registry /absolute/path/to/tools.json \
   --query "build an opencv contour pipeline" \
   --top-k 5
 ```
@@ -25,16 +25,16 @@ Restart Codex after install.
 
 - Run the command above.
 - Paste the returned XML block into Claude Code.
-- Ask Claude to proceed using only those top-5 experts/tools.
+- Ask Claude to proceed using only those top-5 cards/tools.
 
 ## Optional helper alias
 
 ```bash
-alias skillgate-claude='~/.codex/skills/skillgate-router/scripts/route.sh --provider claude --top-k 5'
+alias skillmesh-claude='~/.codex/skills/skillmesh/scripts/route.sh --provider claude --top-k 5'
 ```
 
 Then run:
 
 ```bash
-skillgate-claude --registry /path/to/tools.enriched.json --query "your task"
+skillmesh-claude --registry /path/to/tools.json --query "your task"
 ```

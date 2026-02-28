@@ -1,0 +1,124 @@
+registry_name: skillmesh-ml-engineering-catalog
+version: 0.1.0
+updated_at: '2026-02-28'
+tools:
+- id: role.machine-learning-engineer
+  title: Machine Learning Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/machine-learning-engineer.md
+  tags:
+  - role
+  - machine-learning-engineer
+  - mlops
+- id: role.ml-researcher
+  title: ML Researcher Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/ml-researcher.md
+  tags:
+  - role
+  - ml-researcher
+  - research
+- id: data.pandas-advanced
+  title: Advanced Pandas Data Workflows
+  domain: data_engineering
+  instruction_file: instructions/pandas-advanced.md
+  tags:
+  - pandas
+  - dataframe
+  - data-cleaning
+- id: ml.feature-engineering
+  title: Feature Engineering for ML
+  domain: machine_learning
+  instruction_file: instructions/feature-engineering.md
+  tags:
+  - feature-engineering
+  - leakage
+  - tabular
+- id: ml.sklearn-modeling
+  title: Scikit-learn Modeling and Evaluation
+  domain: machine_learning
+  instruction_file: instructions/sklearn-modeling.md
+  tags:
+  - sklearn
+  - cross-validation
+  - metrics
+- id: ml.sklearn-pipeline-ops
+  title: Scikit-learn Pipeline Ops
+  domain: machine_learning
+  instruction_file: instructions/sklearn-pipeline-ops.md
+  tags:
+  - sklearn
+  - pipeline
+  - model-ops
+- id: ml.hyperparameter-tuning
+  title: Hyperparameter Tuning and Search
+  domain: machine_learning
+  instruction_file: instructions/hyperparameter-tuning.md
+  tags:
+  - hyperparameter
+  - tuning
+  - optimization
+- id: ml.gradient-boosting
+  title: Gradient Boosting with XGBoost and LightGBM
+  domain: machine_learning
+  instruction_file: instructions/gradient-boosting-xgb-lgbm.md
+  tags:
+  - xgboost
+  - lightgbm
+  - boosting
+- id: dl.pytorch-training
+  title: Deep Learning with PyTorch
+  domain: deep_learning
+  instruction_file: instructions/pytorch-training.md
+  tags:
+  - pytorch
+  - training-loop
+  - gpu
+- id: dl.transformers-finetuning
+  title: Transformers Fine-tuning
+  domain: deep_learning
+  instruction_file: instructions/transformers-finetuning.md
+  tags:
+  - transformers
+  - finetuning
+  - lora
+- id: stats.scipy-statsmodels
+  title: Statistical Inference with SciPy and Statsmodels
+  domain: statistics
+  instruction_file: instructions/statistics-scipy-statsmodels.md
+  tags:
+  - statistics
+  - inference
+  - diagnostics
+- id: stats.experiment-design
+  title: Statistical Experiment Design and A/B Testing
+  domain: statistics
+  instruction_file: instructions/stats-experiment-design.md
+  tags:
+  - ab-testing
+  - power-analysis
+  - experiment-design
+- id: stats.model-diagnostics
+  title: Statistical Model Diagnostics
+  domain: statistics
+  instruction_file: instructions/stats-model-diagnostics.md
+  tags:
+  - diagnostics
+  - calibration
+  - residuals
+- id: ml.model-export
+  title: Machine Learning Model Export and Packaging
+  domain: machine_learning
+  instruction_file: instructions/machine-learning-export.md
+  tags:
+  - model-export
+  - onnx
+  - joblib
+- id: viz.matplotlib-seaborn
+  title: Visualization with Matplotlib and Seaborn
+  domain: visualization
+  instruction_file: instructions/visualization-matplotlib-seaborn.md
+  tags:
+  - visualization
+  - matplotlib
+  - seaborn

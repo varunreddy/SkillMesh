@@ -1,0 +1,81 @@
+registry_name: skillmesh-roles-catalog
+version: 0.1.0
+updated_at: '2026-02-28'
+tools:
+- id: role.data-analyst
+  title: Data Analyst Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/data-analyst.md
+  description: Role expert that orchestrates profiling, cleaning, EDA, baseline modeling,
+    and visualization for tabular analytics tasks.
+  tags:
+  - role
+  - data-analyst
+  - analytics
+  - eda
+- id: role.financial-analyst
+  title: Financial Analyst Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/financial-analyst.md
+  description: Role expert for financial KPI analysis, scenario modeling, forecasting,
+    and risk-aware recommendations.
+  tags:
+  - role
+  - financial-analyst
+  - finance
+  - forecasting
+- id: role.machine-learning-engineer
+  title: Machine Learning Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/machine-learning-engineer.md
+  description: Role expert for end-to-end ML delivery across feature pipelines, training,
+    diagnostics, packaging, and deployment handoff.
+  tags:
+  - role
+  - machine-learning-engineer
+  - mlops
+  - deployment
+- id: role.data-engineer
+  title: Data Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/data-engineer.md
+  description: Role expert for scalable data pipelines, quality enforcement, and
+    production-ready data platform delivery.
+  tags:
+  - role
+  - data-engineer
+  - spark
+  - dbt
+- id: role.ml-researcher
+  title: ML Researcher Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/ml-researcher.md
+  description: Role expert for hypothesis-driven ML research, ablations, diagnostics,
+    and reproducible experimental reporting.
+  tags:
+  - role
+  - ml-researcher
+  - experimentation
+  - ablation
+- id: role.bi-analyst
+  title: BI Analyst Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/bi-analyst.md
+  description: Role expert for KPI-centric business analysis, dashboard planning,
+    and governed reporting outputs for stakeholders.
+  tags:
+  - role
+  - bi-analyst
+  - business-intelligence
+  - dashboard
+- id: role.analytics-engineer
+  title: Analytics Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/analytics-engineer.md
+  description: Role expert for governed analytics delivery across semantic modeling,
+    tested transformations, and BI platform implementation.
+  tags:
+  - role
+  - analytics-engineer
+  - semantic-layer
+  - dbt

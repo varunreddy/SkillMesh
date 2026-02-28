@@ -1,0 +1,7 @@
+interface:
+  display_name: "SkillMesh"
+  short_description: "Route tasks to top matching tool/role cards."
+  default_prompt: "Use $skillmesh to retrieve the top 5 cards for this request before continuing."
+
+policy:
+  allow_implicit_invocation: true

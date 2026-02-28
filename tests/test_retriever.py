@@ -8,13 +8,13 @@ from skill_registry_rag.retriever import SkillRetriever
 
 def _load_cards():
     root = Path(__file__).resolve().parents[1]
-    registry_path = root / "examples" / "registry" / "experts.yaml"
+    registry_path = root / "examples" / "registry" / "tools.yaml"
     return load_registry(registry_path)
 
 
 def _load_json_cards():
     root = Path(__file__).resolve().parents[1]
-    registry_path = root / "examples" / "registry" / "tools.enriched.json"
+    registry_path = root / "examples" / "registry" / "tools.json"
     return load_registry(registry_path)
 
 

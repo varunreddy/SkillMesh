@@ -1,0 +1,100 @@
+registry_name: skillmesh-bi-analytics-catalog
+version: 0.1.0
+updated_at: '2026-02-28'
+tools:
+- id: role.bi-analyst
+  title: BI Analyst Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/bi-analyst.md
+  tags:
+  - role
+  - bi-analyst
+  - dashboard
+- id: role.analytics-engineer
+  title: Analytics Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/analytics-engineer.md
+  tags:
+  - role
+  - analytics-engineer
+  - semantic-layer
+- id: bi.dashboard-design
+  title: BI Dashboard Design and Storytelling
+  domain: business_intelligence
+  instruction_file: instructions/bi-dashboard-design.md
+  tags:
+  - business-intelligence
+  - dashboard
+  - kpi
+- id: bi.metric-semantic-modeling
+  title: BI Metric and Semantic Modeling
+  domain: business_intelligence
+  instruction_file: instructions/bi-metric-semantic-modeling.md
+  tags:
+  - business-intelligence
+  - semantic-layer
+  - metric-governance
+- id: bi.tableau-authoring
+  title: Tableau Authoring and Governance
+  domain: business_intelligence
+  instruction_file: instructions/bi-tableau-authoring.md
+  tags:
+  - business-intelligence
+  - tableau
+  - dashboard
+- id: bi.powerbi-modeling
+  title: Power BI Modeling and DAX
+  domain: business_intelligence
+  instruction_file: instructions/bi-powerbi-modeling.md
+  tags:
+  - business-intelligence
+  - powerbi
+  - dax
+- id: bi.looker-modeling
+  title: Looker Modeling and LookML
+  domain: business_intelligence
+  instruction_file: instructions/bi-looker-modeling.md
+  tags:
+  - business-intelligence
+  - looker
+  - lookml
+- id: data.sql-queries
+  title: SQL Query Design and Optimization
+  domain: data_engineering
+  instruction_file: instructions/sql-queries.md
+  tags:
+  - sql
+  - analytics
+  - cte
+- id: data.dbt
+  title: dbt Analytics Engineering
+  domain: data_engineering
+  instruction_file: instructions/dbt.md
+  tags:
+  - dbt
+  - transformation
+  - testing
+- id: data.pandas-advanced
+  title: Advanced Pandas Data Workflows
+  domain: data_engineering
+  instruction_file: instructions/pandas-advanced.md
+  tags:
+  - pandas
+  - profiling
+  - dataframe
+- id: stats.scipy-statsmodels
+  title: Statistical Inference with SciPy and Statsmodels
+  domain: statistics
+  instruction_file: instructions/statistics-scipy-statsmodels.md
+  tags:
+  - statistics
+  - inference
+  - hypothesis-testing
+- id: viz.matplotlib-seaborn
+  title: Visualization with Matplotlib and Seaborn
+  domain: visualization
+  instruction_file: instructions/visualization-matplotlib-seaborn.md
+  tags:
+  - visualization
+  - matplotlib
+  - seaborn

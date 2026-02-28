@@ -3,13 +3,14 @@ from __future__ import annotations
 from pathlib import Path
 
 from skill_registry_rag.backends import RetrievalBackend
+from skill_registry_rag.backends.chroma import ChromaBackend
 from skill_registry_rag.backends.memory import InMemoryBackend
 from skill_registry_rag.registry import load_registry
 
 
 def _load_cards():
     root = Path(__file__).resolve().parents[1]
-    return load_registry(root / "examples" / "registry" / "experts.yaml")
+    return load_registry(root / "examples" / "registry" / "tools.yaml")
 
 
 def test_in_memory_backend_implements_protocol():
@@ -39,9 +40,6 @@ def test_in_memory_backend_sklearn_query():
     backend.index(cards)
     hits = backend.query("sklearn pipeline cross validation leakage safe", top_k=1)
     assert hits[0].card.id == "ml.sklearn-modeling"
-
-
-from skill_registry_rag.backends.chroma import ChromaBackend
 
 
 def test_chroma_backend_implements_protocol():

@@ -11,20 +11,20 @@ from .retriever import SkillRetriever
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="skill-rag",
-        description="Top-k skill expert retrieval for Codex/Claude style runtimes.",
+        prog="skillmesh",
+        description="Top-k SkillMesh tool/role card retrieval for Codex/Claude style runtimes.",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
     # index command
     index_cmd = sub.add_parser("index", help="Index registry into ChromaDB for persistent retrieval")
-    index_cmd.add_argument("--registry", required=True, help="Path to experts YAML/JSON")
+    index_cmd.add_argument("--registry", required=True, help="Path to tools/roles YAML/JSON")
     index_cmd.add_argument("--collection", default="skillmesh_experts", help="ChromaDB collection name")
     index_cmd.add_argument("--data-dir", default=None, help="ChromaDB persistence directory")
     index_cmd.add_argument("--ephemeral", action="store_true", help="Use ephemeral (in-memory) ChromaDB for testing")
 
-    retrieve = sub.add_parser("retrieve", help="Retrieve top-k experts for query")
-    retrieve.add_argument("--registry", required=True, help="Path to experts YAML/JSON")
+    retrieve = sub.add_parser("retrieve", help="Retrieve top-k cards for query")
+    retrieve.add_argument("--registry", required=True, help="Path to tools/roles YAML/JSON")
     retrieve.add_argument("--query", required=True, help="User query")
     retrieve.add_argument("--top-k", type=int, default=3, help="Top-k hits")
     retrieve.add_argument("--dense", action="store_true", help="Enable optional dense scoring")
@@ -32,7 +32,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     emit = sub.add_parser("emit", help="Emit provider-specific context block")
     emit.add_argument("--provider", required=True, choices=["codex", "claude"], help="Target provider")
-    emit.add_argument("--registry", required=True, help="Path to experts YAML/JSON")
+    emit.add_argument("--registry", required=True, help="Path to tools/roles YAML/JSON")
     emit.add_argument("--query", required=True, help="User query")
     emit.add_argument("--top-k", type=int, default=3, help="Top-k hits")
     emit.add_argument("--dense", action="store_true", help="Enable optional dense scoring")
@@ -94,7 +94,7 @@ def main(argv: list[str] | None = None) -> int:
             ephemeral=args.ephemeral,
         )
         backend.index(cards)
-        print(f"Indexed {len(cards)} experts into collection '{args.collection}'")
+        print(f"Indexed {len(cards)} cards into collection '{args.collection}'")
         return 0
 
     backend_choice = getattr(args, "backend", "auto")
