@@ -26,7 +26,8 @@ This gives you:
 - `src/skill_registry_rag/retriever.py`: BM25 + optional dense retrieval
 - `src/skill_registry_rag/adapters/`: provider formatters (`codex`, `claude`)
 - `src/skill_registry_rag/cli.py`: `skill-rag` CLI
-- `skills/.experimental/skillgate-router/`: Codex-installable skill bundle
+- `skills/skillgate-router/`: Codex-installable skill bundle (stable)
+- `skills/.experimental/skillgate-router/`: Legacy compatibility path
 
 ## Install
 
@@ -79,15 +80,21 @@ skill-rag emit \
 
 SkillGate ships a Codex-installable skill at:
 
-- `skills/.experimental/skillgate-router`
+- `skills/skillgate-router`
 
 Install via GitHub directory URL:
 
 ```bash
-$skill-installer install https://github.com/varunreddy/SkillGate/tree/main/skills/.experimental/skillgate-router
+$skill-installer install https://github.com/varunreddy/SkillGate/tree/main/skills/skillgate-router
 ```
 
 Restart Codex after installation.
+
+Legacy install URL (still supported):
+
+```bash
+$skill-installer install https://github.com/varunreddy/SkillGate/tree/main/skills/.experimental/skillgate-router
+```
 
 ## Use in Codex
 
@@ -102,6 +109,7 @@ export SKILLGATE_REGISTRY=/absolute/path/to/tools.enriched.json
 ```bash
 ~/.codex/skills/skillgate-router/scripts/route.sh \
   --provider codex \
+  --backend auto \
   --query "design a geospatial join workflow" \
   --top-k 5
 ```
@@ -111,6 +119,8 @@ You can also pass `--registry` directly if `SKILLGATE_REGISTRY` is not set.
 ### 3. Continue with top-K only
 
 Paste/keep the returned context block in Codex and proceed using only the surfaced capabilities.
+
+More details: `docs/integrations/codex.md`
 
 Direct CLI alternative:
 
@@ -125,6 +135,7 @@ skill-rag emit --provider codex --registry "$SKILLGATE_REGISTRY" --query "<task>
 ```bash
 ~/.codex/skills/skillgate-router/scripts/route.sh \
   --provider claude \
+  --backend auto \
   --registry /absolute/path/to/tools.enriched.json \
   --query "train a pytorch model with mixed precision and checkpoints" \
   --top-k 5

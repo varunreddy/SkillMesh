@@ -16,11 +16,19 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
+    # index command
+    index_cmd = sub.add_parser("index", help="Index registry into ChromaDB for persistent retrieval")
+    index_cmd.add_argument("--registry", required=True, help="Path to experts YAML/JSON")
+    index_cmd.add_argument("--collection", default="skillmesh_experts", help="ChromaDB collection name")
+    index_cmd.add_argument("--data-dir", default=None, help="ChromaDB persistence directory")
+    index_cmd.add_argument("--ephemeral", action="store_true", help="Use ephemeral (in-memory) ChromaDB for testing")
+
     retrieve = sub.add_parser("retrieve", help="Retrieve top-k experts for query")
     retrieve.add_argument("--registry", required=True, help="Path to experts YAML/JSON")
     retrieve.add_argument("--query", required=True, help="User query")
     retrieve.add_argument("--top-k", type=int, default=3, help="Top-k hits")
     retrieve.add_argument("--dense", action="store_true", help="Enable optional dense scoring")
+    retrieve.add_argument("--backend", choices=["auto", "memory", "chroma"], default="auto", help="Retrieval backend")
 
     emit = sub.add_parser("emit", help="Emit provider-specific context block")
     emit.add_argument("--provider", required=True, choices=["codex", "claude"], help="Target provider")
@@ -28,6 +36,7 @@ def _build_parser() -> argparse.ArgumentParser:
     emit.add_argument("--query", required=True, help="User query")
     emit.add_argument("--top-k", type=int, default=3, help="Top-k hits")
     emit.add_argument("--dense", action="store_true", help="Enable optional dense scoring")
+    emit.add_argument("--backend", choices=["auto", "memory", "chroma"], default="auto", help="Retrieval backend")
     emit.add_argument(
         "--instruction-chars",
         type=int,
@@ -76,7 +85,24 @@ def main(argv: list[str] | None = None) -> int:
         print(f"RegistryError: {exc}", file=sys.stderr)
         return 2
 
-    retriever = SkillRetriever(cards, use_dense=bool(getattr(args, "dense", False)))
+    if args.command == "index":
+        from .backends.chroma import ChromaBackend
+
+        backend = ChromaBackend(
+            collection_name=args.collection,
+            data_dir=args.data_dir,
+            ephemeral=args.ephemeral,
+        )
+        backend.index(cards)
+        print(f"Indexed {len(cards)} experts into collection '{args.collection}'")
+        return 0
+
+    backend_choice = getattr(args, "backend", "auto")
+    retriever = SkillRetriever(
+        cards,
+        use_dense=bool(getattr(args, "dense", False)),
+        backend=backend_choice,
+    )
     hits = retriever.retrieve(args.query, top_k=args.top_k)
 
     if args.command == "retrieve":

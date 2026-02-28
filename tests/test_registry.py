@@ -12,7 +12,7 @@ def test_load_registry_examples():
     registry_path = root / "examples" / "registry" / "experts.yaml"
     cards = load_registry(registry_path)
 
-    assert len(cards) == 15
+    assert len(cards) == 53
     ids = {c.id for c in cards}
     assert "viz.matplotlib-seaborn" in ids
     assert "ml.model-export" in ids
@@ -28,6 +28,28 @@ def test_load_registry_examples():
     assert "nlp.spacy-transformers" in ids
     assert "docs.pdf-generation" in ids
     assert "docs.slides-pptx" in ids
+    assert "cloud.aws-s3" in ids
+    assert "web.fastapi" in ids
+    assert "fe.react" in ids
+    assert "sys.rust" in ids
+    assert "sec.owasp-web" in ids
+    assert "sec.secrets-management" in ids
+    assert "sec.container-security" in ids
+    assert "sec.dependency-scanning" in ids
+    assert "sec.iam-policies" in ids
+    assert "sec.penetration-testing" in ids
+
+
+def test_registry_has_entry_for_each_instruction_file():
+    root = Path(__file__).resolve().parents[1]
+    registry_path = root / "examples" / "registry" / "experts.yaml"
+    cards = load_registry(registry_path)
+
+    card_files = {Path(c.instruction_file).name for c in cards}
+    instruction_files = {
+        p.name for p in (root / "examples" / "registry" / "instructions").glob("*.md")
+    }
+    assert card_files == instruction_files
 
 
 def test_load_enriched_json_registry_fields():
@@ -35,7 +57,7 @@ def test_load_enriched_json_registry_fields():
     registry_path = root / "examples" / "registry" / "tools.enriched.json"
     cards = load_registry(registry_path)
 
-    assert len(cards) >= 10
+    assert len(cards) == 53
     by_id = {c.id: c for c in cards}
     cv = by_id["cv.opencv-image-processing"]
     assert "opencv-python" in cv.dependencies

@@ -115,3 +115,36 @@ def test_retriever_json_registry_cv_query_returns_cv_expert():
 
     assert hits
     assert hits[0].card.id == "cv.opencv-image-processing"
+
+
+def test_retriever_owasp_query_returns_security_expert():
+    cards = _load_cards()
+    retriever = SkillRetriever(cards, use_dense=False)
+    hits = retriever.retrieve(
+        "owasp top 10 xss csrf sql injection security headers", top_k=2
+    )
+
+    assert hits
+    assert hits[0].card.id == "sec.owasp-web"
+
+
+def test_retriever_secrets_query_returns_security_expert():
+    cards = _load_cards()
+    retriever = SkillRetriever(cards, use_dense=False)
+    hits = retriever.retrieve(
+        "rotate api keys with vault kms and secret scanning in ci", top_k=2
+    )
+
+    assert hits
+    assert hits[0].card.id == "sec.secrets-management"
+
+
+def test_retriever_cloud_s3_query_returns_s3_expert():
+    cards = _load_cards()
+    retriever = SkillRetriever(cards, use_dense=False)
+    hits = retriever.retrieve(
+        "create s3 bucket lifecycle policy and presigned upload url", top_k=2
+    )
+
+    assert hits
+    assert hits[0].card.id == "cloud.aws-s3"

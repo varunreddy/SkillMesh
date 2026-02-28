@@ -1,26 +1,31 @@
 ---
 name: skillgate-router
-description: Retrieve top-5 relevant expert cards/tools from a registry and inject a Codex-ready context block.
+description: Retrieve the most relevant SkillGate expert cards from a registry and inject a Codex-ready context block before coding. Use when a task spans many domains and you want top-K routing instead of loading the full skill catalog.
 ---
+
+> This path is maintained for backward compatibility. Prefer installing from `skills/skillgate-router`.
 
 ## How to use
 - Ask: `Route this request with SkillGate: <your task>`
-- I will run the SkillGate retriever against the configured registry and return a context block.
-- Then I will proceed using only the returned top-5 tools/cards.
+- Run the router script to emit routed context.
+- Continue the task using only the returned top-K cards.
 
 ## Command
 Use `scripts/route.sh` (or `scripts/route.py`) to emit context:
 
 ```bash
-skill-rag emit --provider codex --registry <path> --query "<query>" --top-k 5
+scripts/route.sh --provider codex --registry <path> --query "<query>" --top-k 5
 ```
 
 ## Parameters
-- `--registry`: Path to your SkillGate registry (`experts.yaml` or `tools.enriched.json`).
+- `--registry`: Registry file path (`experts.yaml` or `tools.enriched.json`).
 - `--provider`: `codex` (default) or `claude`.
-- `--top-k`: Number of cards to retrieve (default `5`).
-- `--query`: User request to route.
+- `--top-k`: Number of experts to retrieve (default `5`).
+- `--backend`: `auto`, `memory`, or `chroma` (default `auto`).
+- `--dense`: Enable optional dense reranking.
+- `--instruction-chars`: Max instruction chars per expert (default `700`).
+- `--query`: User request text.
 
 ## Notes
-- If `--registry` is omitted, the router uses `SKILLGATE_REGISTRY` env var.
-- For Claude integrations, run with `--provider claude`.
+- If `--registry` is omitted, the router uses `SKILLGATE_REGISTRY` (or `SKILLMESH_REGISTRY`).
+- If `skill-rag` is not on `PATH`, the router falls back to `python -m skill_registry_rag`.

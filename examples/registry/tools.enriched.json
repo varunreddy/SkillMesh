@@ -1,6 +1,6 @@
 {
-  "registry_name": "skill-registry-rag-tool-catalog",
-  "version": "0.3.0",
+  "registry_name": "skillmesh-tool-catalog",
+  "version": "0.4.0",
   "updated_at": "2026-02-28",
   "experts": [
     {
@@ -9,24 +9,125 @@
       "domain": "visualization",
       "instruction_file": "instructions/visualization-matplotlib-seaborn.md",
       "description": "Publication-grade charting and statistical visualization workflows.",
-      "tags": ["matplotlib", "seaborn", "chart", "heatmap", "dashboard"],
-      "tool_hints": ["matplotlib.pyplot", "seaborn", "pandas"],
-      "examples": ["Build trend/distribution dashboard", "Export report-ready charts"],
-      "aliases": ["charting", "data-viz"],
-      "dependencies": ["matplotlib", "seaborn", "pandas"],
+      "tags": [
+        "matplotlib",
+        "seaborn",
+        "chart",
+        "heatmap",
+        "dashboard"
+      ],
+      "tool_hints": [
+        "matplotlib.pyplot",
+        "seaborn",
+        "pandas"
+      ],
+      "examples": [
+        "Build trend/distribution dashboard",
+        "Export report-ready charts"
+      ],
+      "aliases": [
+        "charting",
+        "data-viz"
+      ],
+      "dependencies": [
+        "matplotlib",
+        "seaborn",
+        "pandas"
+      ],
       "input_contract": {
         "required": "tabular dataframe or tidy data",
         "optional": "style palette, chart type hints"
       },
-      "output_artifacts": ["png_figures", "svg_figures", "figure_manifest"],
-      "quality_checks": ["axis_labels_present", "units_present", "legend_consistency"],
-      "constraints": ["avoid_axis_misleading_scales", "save_dpi_at_least_180"],
+      "output_artifacts": [
+        "png_figures",
+        "svg_figures",
+        "figure_manifest"
+      ],
+      "quality_checks": [
+        "axis_labels_present",
+        "units_present",
+        "legend_consistency"
+      ],
+      "constraints": [
+        "avoid_axis_misleading_scales",
+        "save_dpi_at_least_180"
+      ],
       "risk_level": "low",
       "maturity": "stable",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "viz",
         "owner": "community"
+      }
+    },
+    {
+      "id": "ml.model-export",
+      "title": "Machine Learning Model Export and Packaging",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/machine-learning-export.md",
+      "description": "Retrieve this expert for saving trained models with reproducible metadata and deployment-safe export formats.",
+      "tags": [
+        "machine-learning",
+        "model-export",
+        "pickle",
+        "joblib",
+        "onnx",
+        "sklearn",
+        "xgboost"
+      ],
+      "tool_hints": [
+        "joblib",
+        "pickle",
+        "skl2onnx",
+        "onnxruntime"
+      ],
+      "examples": [
+        "Export an sklearn pipeline with version metadata",
+        "Convert gradient-boosted model to ONNX for serving"
+      ],
+      "aliases": [
+        "ml-model-export",
+        "machine-learning-model-export-and-packaging"
+      ],
+      "dependencies": [
+        "joblib",
+        "onnxruntime",
+        "skl2onnx",
+        "xgboost",
+        "lightgbm"
+      ],
+      "input_contract": {
+        "required": "trained model/pipeline object and target serving environment",
+        "optional": "latency constraints, interoperability target (ONNX/joblib), and versioning policy"
+      },
+      "output_artifacts": [
+        "serialized_model_artifacts",
+        "inference_compatibility_report",
+        "model_metadata_manifest"
+      ],
+      "quality_checks": [
+        "model_reload_test_passes",
+        "inference_parity_validated",
+        "version_and_dependency_metadata_recorded"
+      ],
+      "constraints": [
+        "never_export_unvalidated_model",
+        "avoid_format_without_runtime_compatibility_check"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
       }
     },
     {
@@ -35,22 +136,56 @@
       "domain": "machine_learning",
       "instruction_file": "instructions/sklearn-modeling.md",
       "description": "Leakage-safe sklearn pipelines with CV, tuning, and diagnostics.",
-      "tags": ["sklearn", "pipeline", "cross-validation", "metrics", "classification", "regression"],
-      "tool_hints": ["sklearn.pipeline", "sklearn.model_selection", "sklearn.metrics"],
-      "examples": ["Train leakage-safe classifier", "Tune model with stratified CV"],
-      "aliases": ["classical-ml", "tabular-ml"],
-      "dependencies": ["scikit-learn", "pandas", "numpy"],
+      "tags": [
+        "sklearn",
+        "pipeline",
+        "cross-validation",
+        "metrics",
+        "classification",
+        "regression"
+      ],
+      "tool_hints": [
+        "sklearn.pipeline",
+        "sklearn.model_selection",
+        "sklearn.metrics"
+      ],
+      "examples": [
+        "Train leakage-safe classifier",
+        "Tune model with stratified CV"
+      ],
+      "aliases": [
+        "classical-ml",
+        "tabular-ml"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "pandas",
+        "numpy"
+      ],
       "input_contract": {
         "required": "feature matrix X and target y",
         "optional": "sample weights, groups for CV"
       },
-      "output_artifacts": ["trained_pipeline", "metrics_report", "cv_fold_scores"],
-      "quality_checks": ["train_validation_split", "no_data_leakage", "metric_variance_reported"],
-      "constraints": ["never_report_train_only_metric"],
+      "output_artifacts": [
+        "trained_pipeline",
+        "metrics_report",
+        "cv_fold_scores"
+      ],
+      "quality_checks": [
+        "train_validation_split",
+        "no_data_leakage",
+        "metric_variance_reported"
+      ],
+      "constraints": [
+        "never_report_train_only_metric"
+      ],
       "risk_level": "medium",
       "maturity": "stable",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "ml"
       }
     },
@@ -60,22 +195,58 @@
       "domain": "machine_learning",
       "instruction_file": "instructions/gradient-boosting-xgb-lgbm.md",
       "description": "High-performance boosting, tuning, and SHAP-based attribution.",
-      "tags": ["xgboost", "lightgbm", "catboost", "shap", "boosting"],
-      "tool_hints": ["xgboost", "lightgbm", "catboost", "shap"],
-      "examples": ["Tune XGBoost with early stopping", "Compare LightGBM vs CatBoost"],
-      "aliases": ["gbm", "tree-boosting"],
-      "dependencies": ["xgboost", "lightgbm", "catboost", "shap", "scikit-learn"],
+      "tags": [
+        "xgboost",
+        "lightgbm",
+        "catboost",
+        "shap",
+        "boosting"
+      ],
+      "tool_hints": [
+        "xgboost",
+        "lightgbm",
+        "catboost",
+        "shap"
+      ],
+      "examples": [
+        "Tune XGBoost with early stopping",
+        "Compare LightGBM vs CatBoost"
+      ],
+      "aliases": [
+        "gbm",
+        "tree-boosting"
+      ],
+      "dependencies": [
+        "xgboost",
+        "lightgbm",
+        "catboost",
+        "shap",
+        "scikit-learn"
+      ],
       "input_contract": {
         "required": "tabular train/validation datasets",
         "optional": "class weights and monotonic constraints"
       },
-      "output_artifacts": ["booster_model", "feature_importance", "shap_summary"],
-      "quality_checks": ["early_stopping_enabled", "class_imbalance_strategy", "feature_leakage_review"],
-      "constraints": ["consistent_validation_metric_across_models"],
+      "output_artifacts": [
+        "booster_model",
+        "feature_importance",
+        "shap_summary"
+      ],
+      "quality_checks": [
+        "early_stopping_enabled",
+        "class_imbalance_strategy",
+        "feature_leakage_review"
+      ],
+      "constraints": [
+        "consistent_validation_metric_across_models"
+      ],
       "risk_level": "medium",
       "maturity": "stable",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "boosting"
       }
     },
@@ -85,22 +256,58 @@
       "domain": "deep_learning",
       "instruction_file": "instructions/pytorch-training.md",
       "description": "PyTorch training loops with mixed precision, GPU, and checkpoints.",
-      "tags": ["pytorch", "torch", "cuda", "amp", "checkpoint", "dataloader"],
-      "tool_hints": ["torch", "torch.nn", "torch.utils.data", "torch.cuda.amp"],
-      "examples": ["Train CNN with AMP", "Checkpoint best model with patience"],
-      "aliases": ["deep-learning", "torch-training"],
-      "dependencies": ["torch", "torchvision", "numpy"],
+      "tags": [
+        "pytorch",
+        "torch",
+        "cuda",
+        "amp",
+        "checkpoint",
+        "dataloader"
+      ],
+      "tool_hints": [
+        "torch",
+        "torch.nn",
+        "torch.utils.data",
+        "torch.cuda.amp"
+      ],
+      "examples": [
+        "Train CNN with AMP",
+        "Checkpoint best model with patience"
+      ],
+      "aliases": [
+        "deep-learning",
+        "torch-training"
+      ],
+      "dependencies": [
+        "torch",
+        "torchvision",
+        "numpy"
+      ],
       "input_contract": {
         "required": "tensor-ready dataset and model definition",
         "optional": "scheduler and mixed precision flag"
       },
-      "output_artifacts": ["model_checkpoint", "training_history", "validation_report"],
-      "quality_checks": ["seed_set", "checkpoint_saved", "validation_evaluated"],
-      "constraints": ["do_not_skip_validation", "log_epoch_metrics"],
+      "output_artifacts": [
+        "model_checkpoint",
+        "training_history",
+        "validation_report"
+      ],
+      "quality_checks": [
+        "seed_set",
+        "checkpoint_saved",
+        "validation_evaluated"
+      ],
+      "constraints": [
+        "do_not_skip_validation",
+        "log_epoch_metrics"
+      ],
       "risk_level": "high",
       "maturity": "stable",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "deep-learning"
       }
     },
@@ -110,23 +317,124 @@
       "domain": "statistics",
       "instruction_file": "instructions/statistics-scipy-statsmodels.md",
       "description": "Hypothesis testing, ANOVA, and regression diagnostics.",
-      "tags": ["scipy", "statsmodels", "anova", "ols", "p-value", "diagnostics"],
-      "tool_hints": ["scipy.stats", "statsmodels.api", "statsmodels.formula.api"],
-      "examples": ["Run Welch t-test with effect size", "Fit OLS with robust errors"],
-      "aliases": ["inference", "classical-stats"],
-      "dependencies": ["scipy", "statsmodels", "pandas", "numpy"],
+      "tags": [
+        "scipy",
+        "statsmodels",
+        "anova",
+        "ols",
+        "p-value",
+        "diagnostics"
+      ],
+      "tool_hints": [
+        "scipy.stats",
+        "statsmodels.api",
+        "statsmodels.formula.api"
+      ],
+      "examples": [
+        "Run Welch t-test with effect size",
+        "Fit OLS with robust errors"
+      ],
+      "aliases": [
+        "inference",
+        "classical-stats"
+      ],
+      "dependencies": [
+        "scipy",
+        "statsmodels",
+        "pandas",
+        "numpy"
+      ],
       "input_contract": {
         "required": "well-defined hypotheses and structured sample groups",
         "optional": "multiple-testing correction strategy"
       },
-      "output_artifacts": ["test_results", "model_summary", "diagnostic_plots"],
-      "quality_checks": ["assumptions_checked", "effect_size_reported", "pvalue_reported"],
-      "constraints": ["avoid_causal_claim_for_observational_data"],
+      "output_artifacts": [
+        "test_results",
+        "model_summary",
+        "diagnostic_plots"
+      ],
+      "quality_checks": [
+        "assumptions_checked",
+        "effect_size_reported",
+        "pvalue_reported"
+      ],
+      "constraints": [
+        "avoid_causal_claim_for_observational_data"
+      ],
       "risk_level": "medium",
       "maturity": "stable",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "stats"
+      }
+    },
+    {
+      "id": "scipy.optimization-signal",
+      "title": "Scientific Computing with SciPy",
+      "domain": "scientific_computing",
+      "instruction_file": "instructions/scipy-optimization-signal.md",
+      "description": "Retrieve this expert for optimization, curve fitting, integration, ODE solving, and signal processing tasks.",
+      "tags": [
+        "scipy",
+        "optimize",
+        "curve-fit",
+        "ode",
+        "integration",
+        "interpolation",
+        "signal-processing",
+        "fft"
+      ],
+      "tool_hints": [
+        "scipy.optimize",
+        "scipy.integrate",
+        "scipy.interpolate",
+        "scipy.signal"
+      ],
+      "examples": [
+        "Calibrate nonlinear parameters with bounds and confidence estimates",
+        "Detect peaks and smooth noisy sensor time-series data"
+      ],
+      "aliases": [
+        "scipy-optimization-signal",
+        "scientific-computing-with-scipy"
+      ],
+      "dependencies": [
+        "scipy",
+        "numpy",
+        "matplotlib"
+      ],
+      "input_contract": {
+        "required": "mathematical objective, signal/data characteristics, and optimization constraints",
+        "optional": "initial parameter guesses, bounds, and noise assumptions"
+      },
+      "output_artifacts": [
+        "method_selection_rationale",
+        "optimized_parameters_or_signal_features",
+        "numerical_stability_notes"
+      ],
+      "quality_checks": [
+        "convergence_or_stopping_criteria_checked",
+        "residual_or_signal_quality_assessed",
+        "sensitivity_to_initial_conditions_reviewed"
+      ],
+      "constraints": [
+        "avoid_overinterpreting_unstable_numerical_results",
+        "document_parameter_sensitivity"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "scipy",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
       }
     },
     {
@@ -135,23 +443,123 @@
       "domain": "chemistry",
       "instruction_file": "instructions/chemistry-rdkit.md",
       "description": "SMILES parsing, descriptors, fingerprints, and similarity workflows.",
-      "tags": ["chemistry", "rdkit", "smiles", "fingerprints", "substructure"],
-      "tool_hints": ["rdkit.Chem", "rdkit.Chem.AllChem", "rdkit.DataStructs"],
-      "examples": ["Compute Morgan fingerprints", "Filter by Lipinski rules"],
-      "aliases": ["cheminformatics", "molecule-analytics"],
-      "dependencies": ["rdkit", "pandas", "numpy"],
+      "tags": [
+        "chemistry",
+        "rdkit",
+        "smiles",
+        "fingerprints",
+        "substructure"
+      ],
+      "tool_hints": [
+        "rdkit.Chem",
+        "rdkit.Chem.AllChem",
+        "rdkit.DataStructs"
+      ],
+      "examples": [
+        "Compute Morgan fingerprints",
+        "Filter by Lipinski rules"
+      ],
+      "aliases": [
+        "cheminformatics",
+        "molecule-analytics"
+      ],
+      "dependencies": [
+        "rdkit",
+        "pandas",
+        "numpy"
+      ],
       "input_contract": {
         "required": "canonical SMILES list",
         "optional": "substructure SMARTS query"
       },
-      "output_artifacts": ["descriptor_table", "fingerprint_matrix", "similarity_rankings"],
-      "quality_checks": ["invalid_smiles_reported", "sanitization_status_logged"],
-      "constraints": ["do_not_claim_biological_efficacy_without_experimental_data"],
+      "output_artifacts": [
+        "descriptor_table",
+        "fingerprint_matrix",
+        "similarity_rankings"
+      ],
+      "quality_checks": [
+        "invalid_smiles_reported",
+        "sanitization_status_logged"
+      ],
+      "constraints": [
+        "do_not_claim_biological_efficacy_without_experimental_data"
+      ],
       "risk_level": "high",
       "maturity": "beta",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "chemistry"
+      }
+    },
+    {
+      "id": "graph.networkx-analytics",
+      "title": "Graph Analytics with NetworkX",
+      "domain": "graph_analytics",
+      "instruction_file": "instructions/graph-networkx.md",
+      "description": "Retrieve this expert for graph construction, centrality analysis, community detection, and path-based reasoning tasks.",
+      "tags": [
+        "networkx",
+        "graph",
+        "centrality",
+        "community-detection",
+        "shortest-path",
+        "pagerank",
+        "node-link",
+        "knowledge-graph"
+      ],
+      "tool_hints": [
+        "networkx",
+        "scipy.sparse",
+        "pandas",
+        "matplotlib"
+      ],
+      "examples": [
+        "Compute centrality and detect communities in an interaction network",
+        "Analyze shortest paths and bottleneck nodes in a supply graph"
+      ],
+      "aliases": [
+        "graph-networkx-analytics",
+        "graph-analytics-with-networkx"
+      ],
+      "dependencies": [
+        "networkx",
+        "pandas",
+        "numpy",
+        "scipy",
+        "matplotlib"
+      ],
+      "input_contract": {
+        "required": "graph definition, node-edge semantics, and analysis objective",
+        "optional": "graph size characteristics, weighting rules, and output visualization needs"
+      },
+      "output_artifacts": [
+        "graph_construction_pipeline",
+        "network_metrics_and_paths",
+        "interpretability_summary"
+      ],
+      "quality_checks": [
+        "node_edge_integrity_validated",
+        "metric_choice_matches_business_question",
+        "large_graph_complexity_limits_noted"
+      ],
+      "constraints": [
+        "avoid_confusing_directed_vs_undirected_semantics",
+        "preserve_node_and_edge_identifier_integrity"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "graph",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
       }
     },
     {
@@ -160,22 +568,58 @@
       "domain": "computer_vision",
       "instruction_file": "instructions/opencv-image-processing.md",
       "description": "Image preprocessing, contour extraction, and edge/threshold pipelines.",
-      "tags": ["opencv", "cv2", "image-processing", "contour", "thresholding"],
-      "tool_hints": ["cv2", "numpy", "skimage", "pillow"],
-      "examples": ["Object counting via contours", "Document cleanup pipeline"],
-      "aliases": ["image-cv", "vision-preprocessing"],
-      "dependencies": ["opencv-python", "numpy", "scikit-image", "pillow"],
+      "tags": [
+        "opencv",
+        "cv2",
+        "image-processing",
+        "contour",
+        "thresholding"
+      ],
+      "tool_hints": [
+        "cv2",
+        "numpy",
+        "skimage",
+        "pillow"
+      ],
+      "examples": [
+        "Object counting via contours",
+        "Document cleanup pipeline"
+      ],
+      "aliases": [
+        "image-cv",
+        "vision-preprocessing"
+      ],
+      "dependencies": [
+        "opencv-python",
+        "numpy",
+        "scikit-image",
+        "pillow"
+      ],
       "input_contract": {
         "required": "image path(s) or ndarray",
         "optional": "ROI masks and confidence thresholds"
       },
-      "output_artifacts": ["processed_images", "contour_stats", "detection_overlay"],
-      "quality_checks": ["image_dimensions_valid", "contrast_assessed", "transform_params_logged"],
-      "constraints": ["preserve_original_images", "log_non_detected_cases"],
+      "output_artifacts": [
+        "processed_images",
+        "contour_stats",
+        "detection_overlay"
+      ],
+      "quality_checks": [
+        "image_dimensions_valid",
+        "contrast_assessed",
+        "transform_params_logged"
+      ],
+      "constraints": [
+        "preserve_original_images",
+        "log_non_detected_cases"
+      ],
       "risk_level": "medium",
       "maturity": "stable",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "cv"
       }
     },
@@ -185,22 +629,57 @@
       "domain": "geospatial",
       "instruction_file": "instructions/geospatial-geopandas.md",
       "description": "Spatial joins, CRS transforms, and map-ready geodata prep.",
-      "tags": ["geopandas", "shapely", "spatial-join", "crs", "choropleth"],
-      "tool_hints": ["geopandas", "shapely", "pyproj", "folium"],
-      "examples": ["Point-in-polygon joins", "Reproject and aggregate by region"],
-      "aliases": ["gis", "spatial-analytics"],
-      "dependencies": ["geopandas", "shapely", "pyproj", "fiona"],
+      "tags": [
+        "geopandas",
+        "shapely",
+        "spatial-join",
+        "crs",
+        "choropleth"
+      ],
+      "tool_hints": [
+        "geopandas",
+        "shapely",
+        "pyproj",
+        "folium"
+      ],
+      "examples": [
+        "Point-in-polygon joins",
+        "Reproject and aggregate by region"
+      ],
+      "aliases": [
+        "gis",
+        "spatial-analytics"
+      ],
+      "dependencies": [
+        "geopandas",
+        "shapely",
+        "pyproj",
+        "fiona"
+      ],
       "input_contract": {
         "required": "valid geometry columns with declared CRS",
         "optional": "boundary datasets and map styling"
       },
-      "output_artifacts": ["joined_geodataframe", "spatial_aggregate_table", "map_ready_layers"],
-      "quality_checks": ["crs_validated", "invalid_geometries_reported", "join_predicate_logged"],
-      "constraints": ["reproject_before_metric_distance_ops"],
+      "output_artifacts": [
+        "joined_geodataframe",
+        "spatial_aggregate_table",
+        "map_ready_layers"
+      ],
+      "quality_checks": [
+        "crs_validated",
+        "invalid_geometries_reported",
+        "join_predicate_logged"
+      ],
+      "constraints": [
+        "reproject_before_metric_distance_ops"
+      ],
       "risk_level": "medium",
       "maturity": "stable",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "geo"
       }
     },
@@ -210,22 +689,58 @@
       "domain": "nlp",
       "instruction_file": "instructions/nlp-spacy-transformers.md",
       "description": "NER, text classification, and embedding-backed NLP workflows.",
-      "tags": ["nlp", "spacy", "transformers", "ner", "classification", "embeddings"],
-      "tool_hints": ["spacy", "transformers", "sentence-transformers", "nltk"],
-      "examples": ["NER extraction pipeline", "Transformer text classification"],
-      "aliases": ["language-processing", "text-ml"],
-      "dependencies": ["spacy", "transformers", "sentence-transformers", "nltk"],
+      "tags": [
+        "nlp",
+        "spacy",
+        "transformers",
+        "ner",
+        "classification",
+        "embeddings"
+      ],
+      "tool_hints": [
+        "spacy",
+        "transformers",
+        "sentence-transformers",
+        "nltk"
+      ],
+      "examples": [
+        "NER extraction pipeline",
+        "Transformer text classification"
+      ],
+      "aliases": [
+        "language-processing",
+        "text-ml"
+      ],
+      "dependencies": [
+        "spacy",
+        "transformers",
+        "sentence-transformers",
+        "nltk"
+      ],
       "input_contract": {
         "required": "text corpus with language context",
         "optional": "label schema and confidence thresholds"
       },
-      "output_artifacts": ["entity_table", "classification_scores", "embedding_index"],
-      "quality_checks": ["model_version_logged", "confidence_thresholds_explicit"],
-      "constraints": ["flag_low_confidence_outputs", "preserve_source_text_references"],
+      "output_artifacts": [
+        "entity_table",
+        "classification_scores",
+        "embedding_index"
+      ],
+      "quality_checks": [
+        "model_version_logged",
+        "confidence_thresholds_explicit"
+      ],
+      "constraints": [
+        "flag_low_confidence_outputs",
+        "preserve_source_text_references"
+      ],
       "risk_level": "high",
       "maturity": "beta",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "nlp"
       }
     },
@@ -235,22 +750,54 @@
       "domain": "document_generation",
       "instruction_file": "instructions/pdf-creation.md",
       "description": "Deterministic markdown/HTML to PDF rendering for reports.",
-      "tags": ["pdf", "weasyprint", "reportlab", "markdown", "report"],
-      "tool_hints": ["weasyprint", "reportlab", "markdown"],
-      "examples": ["Render branded markdown report", "Export multi-page chart PDF"],
-      "aliases": ["pdf-rendering", "report-export"],
-      "dependencies": ["weasyprint", "reportlab", "markdown"],
+      "tags": [
+        "pdf",
+        "weasyprint",
+        "reportlab",
+        "markdown",
+        "report"
+      ],
+      "tool_hints": [
+        "weasyprint",
+        "reportlab",
+        "markdown"
+      ],
+      "examples": [
+        "Render branded markdown report",
+        "Export multi-page chart PDF"
+      ],
+      "aliases": [
+        "pdf-rendering",
+        "report-export"
+      ],
+      "dependencies": [
+        "weasyprint",
+        "reportlab",
+        "markdown"
+      ],
       "input_contract": {
         "required": "markdown/html content",
         "optional": "css overrides and output filename"
       },
-      "output_artifacts": ["pdf_report", "render_log"],
-      "quality_checks": ["pdf_generated", "file_size_nonzero", "tables_not_clipped"],
-      "constraints": ["include_failure_fallback_message"],
+      "output_artifacts": [
+        "pdf_report",
+        "render_log"
+      ],
+      "quality_checks": [
+        "pdf_generated",
+        "file_size_nonzero",
+        "tables_not_clipped"
+      ],
+      "constraints": [
+        "include_failure_fallback_message"
+      ],
       "risk_level": "low",
       "maturity": "stable",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "docs"
       }
     },
@@ -260,23 +807,2551 @@
       "domain": "presentation_generation",
       "instruction_file": "instructions/slide-creation.md",
       "description": "Narrative deck creation with PPTX output and chart integration.",
-      "tags": ["slides", "pptx", "python-pptx", "presentation", "storytelling"],
-      "tool_hints": ["python-pptx", "matplotlib", "pillow"],
-      "examples": ["Executive summary deck", "Findings deck with visuals"],
-      "aliases": ["deck-generation", "slide-authoring"],
-      "dependencies": ["python-pptx", "pillow", "matplotlib"],
+      "tags": [
+        "slides",
+        "pptx",
+        "python-pptx",
+        "presentation",
+        "storytelling"
+      ],
+      "tool_hints": [
+        "python-pptx",
+        "matplotlib",
+        "pillow"
+      ],
+      "examples": [
+        "Executive summary deck",
+        "Findings deck with visuals"
+      ],
+      "aliases": [
+        "deck-generation",
+        "slide-authoring"
+      ],
+      "dependencies": [
+        "python-pptx",
+        "pillow",
+        "matplotlib"
+      ],
       "input_contract": {
         "required": "structured storyline or slide outline",
         "optional": "brand template and theme colors"
       },
-      "output_artifacts": ["pptx_deck", "slide_outline", "speaker_notes_stub"],
-      "quality_checks": ["title_and_recommendation_slides_present", "visual_hierarchy_consistent"],
-      "constraints": ["one_core_message_per_slide"],
+      "output_artifacts": [
+        "pptx_deck",
+        "slide_outline",
+        "speaker_notes_stub"
+      ],
+      "quality_checks": [
+        "title_and_recommendation_slides_present",
+        "visual_hierarchy_consistent"
+      ],
+      "constraints": [
+        "one_core_message_per_slide"
+      ],
       "risk_level": "low",
       "maturity": "stable",
       "metadata": {
-        "provider_support": ["codex", "claude"],
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
         "install_extra": "slides"
+      }
+    },
+    {
+      "id": "data.schema-normalization",
+      "title": "Schema and Cleaning Specialist",
+      "domain": "data_engineering",
+      "instruction_file": "instructions/data-cleaning.md",
+      "description": "Retrieve this expert for payload normalization, dataframe conversion, and quarter/date alignment.",
+      "tags": [
+        "data-cleaning",
+        "schema",
+        "pandas",
+        "coercion",
+        "align-quarterly",
+        "null-handling"
+      ],
+      "tool_hints": [
+        "pandas",
+        "pyarrow",
+        "data_processing.cleaner.dict_to_dataframe"
+      ],
+      "examples": [
+        "Fix mixed dict/list payload before metric extraction",
+        "Align quarterly reports and coerce numeric columns safely"
+      ],
+      "aliases": [
+        "data-schema-normalization",
+        "schema-and-cleaning-specialist"
+      ],
+      "dependencies": [
+        "pandas",
+        "pyarrow",
+        "pandera",
+        "pydantic"
+      ],
+      "input_contract": {
+        "required": "raw payload/schema examples and expected canonical schema",
+        "optional": "null-handling rules, date/quarter alignment policy, and quality thresholds"
+      },
+      "output_artifacts": [
+        "normalized_dataset",
+        "schema_mapping_spec",
+        "data_quality_findings"
+      ],
+      "quality_checks": [
+        "type_coercions_logged",
+        "missing_and_outlier_handling_documented",
+        "schema_drift_flags_reported"
+      ],
+      "constraints": [
+        "avoid_silent_column_drops_or_renames",
+        "preserve_raw_to_normalized_lineage"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "data",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "fe.accessibility",
+      "title": "Web Accessibility (WCAG)",
+      "domain": "frontend",
+      "instruction_file": "instructions/accessibility.md",
+      "description": "Retrieve this expert for WCAG compliance, semantic HTML, keyboard navigation, and screen-reader safe UI patterns.",
+      "tags": [
+        "accessibility",
+        "wcag",
+        "aria",
+        "keyboard-navigation",
+        "screen-reader",
+        "contrast",
+        "frontend"
+      ],
+      "tool_hints": [
+        "axe-core",
+        "lighthouse",
+        "eslint-plugin-jsx-a11y",
+        "aria"
+      ],
+      "examples": [
+        "Audit React UI for WCAG 2.2 AA compliance",
+        "Fix keyboard traps and missing ARIA labels"
+      ],
+      "aliases": [
+        "fe-accessibility",
+        "web-accessibility-wcag",
+        "web-accessibility-(wcag)"
+      ],
+      "dependencies": [
+        "axe-core",
+        "lighthouse",
+        "eslint-plugin-jsx-a11y"
+      ],
+      "input_contract": {
+        "required": "UI feature intent, interaction states, and target device/browser requirements",
+        "optional": "design tokens, brand constraints, and accessibility/performance targets"
+      },
+      "output_artifacts": [
+        "component_or_layout_changes",
+        "accessibility_or_performance_notes",
+        "integration_usage_guidance"
+      ],
+      "quality_checks": [
+        "responsive_and_state_behaviors_verified",
+        "keyboard_and_screen_reader_baseline_checked",
+        "render_performance_considered"
+      ],
+      "constraints": [
+        "preserve_design_system_consistency",
+        "avoid_regressing_core_accessibility_paths"
+      ],
+      "risk_level": "low",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "frontend",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "web.auth-jwt",
+      "title": "JWT Authentication and Authorization",
+      "domain": "web_api",
+      "instruction_file": "instructions/auth-jwt.md",
+      "description": "Retrieve this expert for JWT token issuance, validation, refresh flows, RBAC claims, and secure auth middleware patterns.",
+      "tags": [
+        "jwt",
+        "authentication",
+        "authorization",
+        "rbac",
+        "refresh-token",
+        "web-security"
+      ],
+      "tool_hints": [
+        "pyjwt",
+        "fastapi security",
+        "passport-jwt",
+        "oauth2"
+      ],
+      "examples": [
+        "Implement short-lived access token with refresh rotation",
+        "Design role-based claims validation middleware"
+      ],
+      "aliases": [
+        "web-auth-jwt",
+        "jwt-authentication-and-authorization"
+      ],
+      "dependencies": [
+        "pyjwt",
+        "fastapi",
+        "authlib",
+        "oauthlib"
+      ],
+      "input_contract": {
+        "required": "API/auth objective, request-response expectations, and security requirements",
+        "optional": "backward-compatibility constraints, target clients, and deployment environment"
+      },
+      "output_artifacts": [
+        "api_or_auth_design",
+        "implementation_changes",
+        "validation_and_security_results"
+      ],
+      "quality_checks": [
+        "token_lifecycle_and_rotation_defined",
+        "signature_and_claim_validation_enforced",
+        "authz_scope_or_role_checks_covered"
+      ],
+      "constraints": [
+        "preserve_api_compatibility_or_version_explicitly",
+        "avoid_exposing_sensitive_data_in_logs"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "web",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "web.auth-oauth",
+      "title": "OAuth2 and OpenID Connect",
+      "domain": "web_api",
+      "instruction_file": "instructions/auth-oauth.md",
+      "description": "Retrieve this expert for OAuth2/OIDC authorization flows, PKCE, token exchange, and secure third-party identity integration.",
+      "tags": [
+        "oauth2",
+        "oidc",
+        "pkce",
+        "authorization-code",
+        "identity",
+        "sso"
+      ],
+      "tool_hints": [
+        "authlib",
+        "openid-connect",
+        "oauthlib",
+        "pkce"
+      ],
+      "examples": [
+        "Integrate OAuth2 Authorization Code + PKCE in SPA",
+        "Validate OIDC ID token and provider JWKS signatures"
+      ],
+      "aliases": [
+        "web-auth-oauth",
+        "oauth2-and-openid-connect"
+      ],
+      "dependencies": [
+        "authlib",
+        "oauthlib",
+        "pyjwt",
+        "openid-client"
+      ],
+      "input_contract": {
+        "required": "API/auth objective, request-response expectations, and security requirements",
+        "optional": "backward-compatibility constraints, target clients, and deployment environment"
+      },
+      "output_artifacts": [
+        "api_or_auth_design",
+        "implementation_changes",
+        "validation_and_security_results"
+      ],
+      "quality_checks": [
+        "oauth_flow_matches_client_type",
+        "pkce_and_state_validation_enabled",
+        "token_storage_and_revocation_controls_defined"
+      ],
+      "constraints": [
+        "preserve_api_compatibility_or_version_explicitly",
+        "avoid_exposing_sensitive_data_in_logs"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "web",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "cloud.aws-lambda",
+      "title": "AWS Lambda Serverless Workloads",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-lambda.md",
+      "description": "Retrieve this expert for Lambda handlers, cold-start optimization, packaging, observability, and event-driven serverless patterns.",
+      "tags": [
+        "aws",
+        "lambda",
+        "serverless",
+        "cold-start",
+        "event-driven",
+        "cloudwatch"
+      ],
+      "tool_hints": [
+        "aws lambda",
+        "boto3",
+        "sam",
+        "serverless framework"
+      ],
+      "examples": [
+        "Build event-triggered Lambda with DLQ and retries",
+        "Optimize Lambda memory/timeouts for lower latency"
+      ],
+      "aliases": [
+        "cloud-aws-lambda",
+        "aws-lambda-serverless-workloads"
+      ],
+      "dependencies": [
+        "boto3",
+        "aws-lambda-powertools",
+        "aws-sam-cli",
+        "awscli"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "timeout_memory_and_retry_policy_reviewed",
+        "cold_start_and_dependency_size_considered",
+        "observability_and_dlq_configured"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "cloud.aws-s3",
+      "title": "AWS S3 Bucket Operations",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-s3.md",
+      "description": "Retrieve this expert for S3 buckets, lifecycle policies, presigned URLs, encryption, and secure object storage architecture.",
+      "tags": [
+        "aws",
+        "s3",
+        "bucket",
+        "lifecycle",
+        "presigned-url",
+        "encryption",
+        "storage"
+      ],
+      "tool_hints": [
+        "aws s3",
+        "aws s3api",
+        "boto3 s3",
+        "cloudfront"
+      ],
+      "examples": [
+        "Create versioned encrypted bucket with lifecycle rules",
+        "Generate secure presigned upload/download URLs"
+      ],
+      "aliases": [
+        "cloud-aws-s3",
+        "aws-s3-bucket-operations"
+      ],
+      "dependencies": [
+        "boto3",
+        "awscli",
+        "terraform",
+        "cloudfront"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "bucket_policy_and_encryption_reviewed",
+        "lifecycle_and_versioning_config_validated",
+        "audit_logging_configuration_verified"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "cloud.aws-vpc",
+      "title": "AWS VPC Networking",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-vpc.md",
+      "description": "Retrieve this expert for VPC design, subnet routing, security groups, NAT, peering, and network segmentation decisions.",
+      "tags": [
+        "aws",
+        "vpc",
+        "subnet",
+        "security-group",
+        "nat-gateway",
+        "networking"
+      ],
+      "tool_hints": [
+        "aws ec2",
+        "aws vpc",
+        "terraform aws_vpc",
+        "flow logs"
+      ],
+      "examples": [
+        "Design multi-AZ private/public subnet layout",
+        "Harden VPC ingress/egress with least privilege"
+      ],
+      "aliases": [
+        "cloud-aws-vpc",
+        "aws-vpc-networking"
+      ],
+      "dependencies": [
+        "awscli",
+        "terraform",
+        "vpc-flow-logs",
+        "cloudwatch"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "subnet_route_and_nat_design_validated",
+        "security_group_and_nacl_rules_reviewed",
+        "multi_az_and_flow_logs_considered"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sys.concurrency",
+      "title": "Concurrency and Parallelism Patterns",
+      "domain": "systems",
+      "instruction_file": "instructions/concurrency.md",
+      "description": "Retrieve this expert for thread safety, async coordination, lock strategies, and race-condition resistant concurrent architectures.",
+      "tags": [
+        "concurrency",
+        "parallelism",
+        "threads",
+        "async",
+        "race-condition",
+        "synchronization"
+      ],
+      "tool_hints": [
+        "threading",
+        "asyncio",
+        "multiprocessing",
+        "locks"
+      ],
+      "examples": [
+        "Diagnose race condition in shared-state service",
+        "Choose async vs worker pool strategy for mixed workloads"
+      ],
+      "aliases": [
+        "sys-concurrency",
+        "concurrency-and-parallelism-patterns"
+      ],
+      "dependencies": [
+        "python-stdlib"
+      ],
+      "input_contract": {
+        "required": "runtime constraints, correctness requirements, and interface boundaries",
+        "optional": "throughput/latency goals, concurrency model, and platform targets"
+      },
+      "output_artifacts": [
+        "implementation_changes",
+        "profiling_or_benchmark_notes",
+        "safety_and_error_handling_summary"
+      ],
+      "quality_checks": [
+        "error_paths_and_boundary_conditions_tested",
+        "concurrency_or_memory_safety_reviewed",
+        "performance_tradeoffs_documented"
+      ],
+      "constraints": [
+        "avoid_undefined_behavior_and_hidden_global_state",
+        "prefer_deterministic_and_observable_failure_modes"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "systems",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sec.container-security",
+      "title": "Container Security and Hardening",
+      "domain": "security",
+      "instruction_file": "instructions/container-security.md",
+      "description": "Retrieve this expert for container image hardening, runtime controls, Kubernetes pod security, and CI vulnerability gates.",
+      "tags": [
+        "security",
+        "container-security",
+        "docker",
+        "kubernetes",
+        "trivy",
+        "seccomp",
+        "rootless"
+      ],
+      "tool_hints": [
+        "trivy",
+        "grype",
+        "cosign",
+        "kubernetes pod security"
+      ],
+      "examples": [
+        "Harden Dockerfile for non-root distroless runtime",
+        "Add image signing and vulnerability gates to CI pipeline"
+      ],
+      "aliases": [
+        "sec-container-security",
+        "container-security-and-hardening"
+      ],
+      "dependencies": [
+        "trivy",
+        "grype",
+        "cosign",
+        "kubernetes",
+        "docker"
+      ],
+      "input_contract": {
+        "required": "authorized scope, threat context, and assets under assessment",
+        "optional": "compliance framework mapping, risk tolerance, and remediation timeline"
+      },
+      "output_artifacts": [
+        "security_findings",
+        "prioritized_remediation_plan",
+        "control_verification_checklist"
+      ],
+      "quality_checks": [
+        "image_scan_gate_enforced",
+        "runtime_hardening_controls_verified",
+        "admission_or_signature_policy_defined"
+      ],
+      "constraints": [
+        "authorized_scope_only",
+        "omit_operational_exploit_detail_that_enables_misuse"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "security",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sys.cpp-modern",
+      "title": "Modern C++ (C++17/C++20)",
+      "domain": "systems",
+      "instruction_file": "instructions/cpp-modern.md",
+      "description": "Retrieve this expert for modern C++ architecture, RAII safety, move semantics, templates, and performance-aware systems code.",
+      "tags": [
+        "c++",
+        "modern-cpp",
+        "raii",
+        "smart-pointers",
+        "move-semantics",
+        "templates"
+      ],
+      "tool_hints": [
+        "clang++",
+        "cmake",
+        "sanitizers",
+        "gtest"
+      ],
+      "examples": [
+        "Refactor legacy pointer code to RAII and smart pointers",
+        "Implement generic performance-safe abstractions with templates"
+      ],
+      "aliases": [
+        "sys-cpp-modern",
+        "modern-c-c-17-c-20",
+        "modern-c++-(c++17/c++20)"
+      ],
+      "dependencies": [
+        "clang",
+        "cmake"
+      ],
+      "input_contract": {
+        "required": "runtime constraints, correctness requirements, and interface boundaries",
+        "optional": "throughput/latency goals, concurrency model, and platform targets"
+      },
+      "output_artifacts": [
+        "implementation_changes",
+        "profiling_or_benchmark_notes",
+        "safety_and_error_handling_summary"
+      ],
+      "quality_checks": [
+        "error_paths_and_boundary_conditions_tested",
+        "concurrency_or_memory_safety_reviewed",
+        "performance_tradeoffs_documented"
+      ],
+      "constraints": [
+        "avoid_undefined_behavior_and_hidden_global_state",
+        "prefer_deterministic_and_observable_failure_modes"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "systems",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "fe.css-architecture",
+      "title": "CSS Architecture and Design Systems",
+      "domain": "frontend",
+      "instruction_file": "instructions/css-architecture.md",
+      "description": "Retrieve this expert for scalable CSS systems, design tokens, component theming, and responsive layout strategies.",
+      "tags": [
+        "css",
+        "design-system",
+        "tailwind",
+        "css-modules",
+        "responsive",
+        "tokens"
+      ],
+      "tool_hints": [
+        "tailwindcss",
+        "postcss",
+        "css modules",
+        "stylelint"
+      ],
+      "examples": [
+        "Define token-based theming system across components",
+        "Refactor fragile CSS into predictable architecture layers"
+      ],
+      "aliases": [
+        "fe-css-architecture",
+        "css-architecture-and-design-systems"
+      ],
+      "dependencies": [
+        "react"
+      ],
+      "input_contract": {
+        "required": "UI feature intent, interaction states, and target device/browser requirements",
+        "optional": "design tokens, brand constraints, and accessibility/performance targets"
+      },
+      "output_artifacts": [
+        "component_or_layout_changes",
+        "accessibility_or_performance_notes",
+        "integration_usage_guidance"
+      ],
+      "quality_checks": [
+        "responsive_and_state_behaviors_verified",
+        "keyboard_and_screen_reader_baseline_checked",
+        "render_performance_considered"
+      ],
+      "constraints": [
+        "preserve_design_system_consistency",
+        "avoid_regressing_core_accessibility_paths"
+      ],
+      "risk_level": "low",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "frontend",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "data.dbt",
+      "title": "dbt Analytics Engineering",
+      "domain": "data_engineering",
+      "instruction_file": "instructions/dbt.md",
+      "description": "Retrieve this expert for dbt model layering, testing, documentation, and incremental transformation workflows.",
+      "tags": [
+        "dbt",
+        "analytics-engineering",
+        "sql",
+        "data-modeling",
+        "lineage",
+        "testing"
+      ],
+      "tool_hints": [
+        "dbt run",
+        "dbt test",
+        "dbt docs",
+        "dbt source freshness"
+      ],
+      "examples": [
+        "Design staging/intermediate/mart dbt model layers",
+        "Implement incremental models with schema tests and lineage"
+      ],
+      "aliases": [
+        "data-dbt",
+        "dbt-analytics-engineering"
+      ],
+      "dependencies": [
+        "dbt-core"
+      ],
+      "input_contract": {
+        "required": "source schema/data samples and transformation objectives",
+        "optional": "data volume profile, latency/SLA constraints, and governance rules"
+      },
+      "output_artifacts": [
+        "transformation_logic_or_queries",
+        "data_quality_report",
+        "lineage_or_execution_notes"
+      ],
+      "quality_checks": [
+        "schema_and_type_assumptions_verified",
+        "null_and_edge_cases_handled",
+        "reproducible_execution_documented"
+      ],
+      "constraints": [
+        "avoid_silent_schema_or_type_breakage",
+        "preserve_traceability_of_source_to_output"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "data",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sec.dependency-scanning",
+      "title": "Dependency Scanning and SCA",
+      "domain": "security",
+      "instruction_file": "instructions/dependency-scanning.md",
+      "description": "Retrieve this expert for CVE triage, software composition analysis, SBOM workflows, and secure dependency governance.",
+      "tags": [
+        "security",
+        "dependency-scanning",
+        "cve",
+        "sca",
+        "sbom",
+        "supply-chain"
+      ],
+      "tool_hints": [
+        "pip-audit",
+        "npm audit",
+        "trivy fs",
+        "dependabot"
+      ],
+      "examples": [
+        "Prioritize reachable critical CVEs and remediation plan",
+        "Generate and validate SBOM as CI artifact"
+      ],
+      "aliases": [
+        "sec-dependency-scanning",
+        "dependency-scanning-and-sca"
+      ],
+      "dependencies": [
+        "pip-audit",
+        "npm-audit",
+        "trivy",
+        "dependabot",
+        "cyclonedx"
+      ],
+      "input_contract": {
+        "required": "authorized scope, threat context, and assets under assessment",
+        "optional": "compliance framework mapping, risk tolerance, and remediation timeline"
+      },
+      "output_artifacts": [
+        "security_findings",
+        "prioritized_remediation_plan",
+        "control_verification_checklist"
+      ],
+      "quality_checks": [
+        "critical_and_high_cves_triaged",
+        "reachability_or_exploitability_reviewed",
+        "sbom_generation_and_storage_verified"
+      ],
+      "constraints": [
+        "authorized_scope_only",
+        "omit_operational_exploit_detail_that_enables_misuse"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "security",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "cloud.docker",
+      "title": "Docker Build and Runtime Patterns",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/docker.md",
+      "description": "Retrieve this expert for production Dockerfiles, multi-stage builds, secure runtime configs, and container image optimization.",
+      "tags": [
+        "docker",
+        "container",
+        "multi-stage",
+        "image-hardening",
+        "devops",
+        "build"
+      ],
+      "tool_hints": [
+        "docker build",
+        "docker compose",
+        "hadolint",
+        "trivy"
+      ],
+      "examples": [
+        "Convert monolithic Dockerfile to multi-stage minimal image",
+        "Implement non-root runtime with health checks and cache strategy"
+      ],
+      "aliases": [
+        "cloud-docker",
+        "docker-build-and-runtime-patterns"
+      ],
+      "dependencies": [
+        "trivy"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "least_privilege_reviewed",
+        "failure_and_rollback_path_defined",
+        "cost_and_scaling_implications_noted"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "web.fastapi",
+      "title": "FastAPI Async Web Services",
+      "domain": "web_api",
+      "instruction_file": "instructions/fastapi.md",
+      "description": "Retrieve this expert for FastAPI endpoint design, dependency injection, validation, middleware, and async API architecture.",
+      "tags": [
+        "fastapi",
+        "api",
+        "python",
+        "async",
+        "pydantic",
+        "web"
+      ],
+      "tool_hints": [
+        "fastapi",
+        "uvicorn",
+        "pydantic",
+        "httpx"
+      ],
+      "examples": [
+        "Build async REST API with strict request/response schemas",
+        "Structure FastAPI routers and auth dependencies for production"
+      ],
+      "aliases": [
+        "web-fastapi",
+        "fastapi-async-web-services"
+      ],
+      "dependencies": [
+        "fastapi",
+        "uvicorn",
+        "pydantic",
+        "httpx"
+      ],
+      "input_contract": {
+        "required": "API/auth objective, request-response expectations, and security requirements",
+        "optional": "backward-compatibility constraints, target clients, and deployment environment"
+      },
+      "output_artifacts": [
+        "api_or_auth_design",
+        "implementation_changes",
+        "validation_and_security_results"
+      ],
+      "quality_checks": [
+        "request_validation_and_error_contract_defined",
+        "authorization_rules_verified",
+        "logging_and_observability_considered"
+      ],
+      "constraints": [
+        "preserve_api_compatibility_or_version_explicitly",
+        "avoid_exposing_sensitive_data_in_logs"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "web",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "ml.feature-engineering",
+      "title": "Feature Engineering for ML",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/feature-engineering.md",
+      "description": "Retrieve this expert for robust feature design, leakage-safe transforms, encoding strategies, and model-ready feature pipelines.",
+      "tags": [
+        "feature-engineering",
+        "encoding",
+        "leakage",
+        "ml",
+        "tabular",
+        "feature-store"
+      ],
+      "tool_hints": [
+        "pandas",
+        "scikit-learn",
+        "featuretools",
+        "category encoders"
+      ],
+      "examples": [
+        "Build leakage-safe lag and rolling features",
+        "Design encoding pipeline for high-cardinality categoricals"
+      ],
+      "aliases": [
+        "ml-feature-engineering",
+        "feature-engineering-for-ml"
+      ],
+      "dependencies": [
+        "pandas",
+        "featuretools"
+      ],
+      "input_contract": {
+        "required": "problem definition, target variable, and evaluation metric",
+        "optional": "feature constraints, compute budget, and deployment target"
+      },
+      "output_artifacts": [
+        "modeling_or_feature_plan",
+        "evaluation_summary",
+        "reproducibility_metadata"
+      ],
+      "quality_checks": [
+        "data_leakage_review_completed",
+        "validation_strategy_aligned_to_problem",
+        "metrics_include_uncertainty_or_variance"
+      ],
+      "constraints": [
+        "avoid_training_test_contamination",
+        "record_model_data_and_seed_versions"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "finance.financial-modeling",
+      "title": "Financial Modeling and Valuation",
+      "domain": "finance",
+      "instruction_file": "instructions/financial-modeling.md",
+      "description": "Retrieve this expert for DCF/multiples modeling, scenario analysis, and financial forecasting with defensible assumptions.",
+      "tags": [
+        "finance",
+        "financial-modeling",
+        "dcf",
+        "valuation",
+        "forecasting",
+        "scenario-analysis"
+      ],
+      "tool_hints": [
+        "pandas",
+        "numpy",
+        "excel modeling",
+        "cash flow"
+      ],
+      "examples": [
+        "Build three-statement forecast with scenario toggles",
+        "Estimate equity value with DCF and comparable multiples"
+      ],
+      "aliases": [
+        "finance-financial-modeling",
+        "financial-modeling-and-valuation"
+      ],
+      "dependencies": [
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "financial objective, modeling assumptions, and data time horizon",
+        "optional": "scenario definitions, risk constraints, and benchmark references"
+      },
+      "output_artifacts": [
+        "assumption_framework",
+        "scenario_or_backtest_outputs",
+        "risk_and_sensitivity_summary"
+      ],
+      "quality_checks": [
+        "assumptions_and_units_are_explicit",
+        "sensitivity_or_stress_analysis_included",
+        "data_sources_and_methods_cited"
+      ],
+      "constraints": [
+        "not_investment_advice",
+        "avoid_unjustified_precision_or_causal_claims"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "finance",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "web.flask",
+      "title": "Flask Web Application Patterns",
+      "domain": "web_api",
+      "instruction_file": "instructions/flask.md",
+      "description": "Retrieve this expert for Flask app factory design, blueprints, extension wiring, and production-ready API/service patterns.",
+      "tags": [
+        "flask",
+        "python",
+        "web",
+        "blueprints",
+        "wsgi",
+        "api"
+      ],
+      "tool_hints": [
+        "flask",
+        "gunicorn",
+        "sqlalchemy",
+        "pytest"
+      ],
+      "examples": [
+        "Refactor Flask service to app-factory + blueprint architecture",
+        "Add robust error handling and testable dependency boundaries"
+      ],
+      "aliases": [
+        "web-flask",
+        "flask-web-application-patterns"
+      ],
+      "dependencies": [
+        "flask",
+        "gunicorn",
+        "sqlalchemy",
+        "pytest"
+      ],
+      "input_contract": {
+        "required": "API/auth objective, request-response expectations, and security requirements",
+        "optional": "backward-compatibility constraints, target clients, and deployment environment"
+      },
+      "output_artifacts": [
+        "api_or_auth_design",
+        "implementation_changes",
+        "validation_and_security_results"
+      ],
+      "quality_checks": [
+        "request_validation_and_error_contract_defined",
+        "authorization_rules_verified",
+        "logging_and_observability_considered"
+      ],
+      "constraints": [
+        "preserve_api_compatibility_or_version_explicitly",
+        "avoid_exposing_sensitive_data_in_logs"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "web",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "infra.github-actions",
+      "title": "GitHub Actions CI/CD Workflows",
+      "domain": "devops",
+      "instruction_file": "instructions/github-actions.md",
+      "description": "Retrieve this expert for GitHub Actions pipelines, caching, reusable workflows, secure secrets handling, and deployment automation.",
+      "tags": [
+        "github-actions",
+        "ci-cd",
+        "workflows",
+        "automation",
+        "secrets",
+        "devops"
+      ],
+      "tool_hints": [
+        "github actions",
+        "workflow yaml",
+        "actions/cache",
+        "gh cli"
+      ],
+      "examples": [
+        "Set up matrix test workflow with caching and artifacts",
+        "Harden CI secrets and pin action versions"
+      ],
+      "aliases": [
+        "infra-github-actions",
+        "github-actions-ci-cd-workflows",
+        "github-actions-ci/cd-workflows"
+      ],
+      "dependencies": [
+        "github-actions"
+      ],
+      "input_contract": {
+        "required": "pipeline objective, repository/workflow context, and deployment policy",
+        "optional": "runner constraints, cache strategy, and release gating rules"
+      },
+      "output_artifacts": [
+        "workflow_configuration",
+        "ci_validation_results",
+        "deployment_or_release_notes"
+      ],
+      "quality_checks": [
+        "secrets_handling_verified",
+        "artifact_and_cache_strategy_defined",
+        "failure_notifications_and_retries_configured"
+      ],
+      "constraints": [
+        "pin_external_actions_or_dependencies",
+        "avoid_unreviewed_auto_deploy_to_production"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "devops",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sys.go",
+      "title": "Go Systems Programming",
+      "domain": "systems",
+      "instruction_file": "instructions/go.md",
+      "description": "Retrieve this expert for idiomatic Go services, goroutine patterns, error handling discipline, and high-performance backend design.",
+      "tags": [
+        "go",
+        "golang",
+        "goroutines",
+        "channels",
+        "backend",
+        "systems"
+      ],
+      "tool_hints": [
+        "go test",
+        "go vet",
+        "pprof",
+        "context"
+      ],
+      "examples": [
+        "Design concurrent Go worker pool with context cancellation",
+        "Refactor error-prone Go service into idiomatic layered package"
+      ],
+      "aliases": [
+        "sys-go",
+        "go-systems-programming"
+      ],
+      "dependencies": [
+        "go"
+      ],
+      "input_contract": {
+        "required": "runtime constraints, correctness requirements, and interface boundaries",
+        "optional": "throughput/latency goals, concurrency model, and platform targets"
+      },
+      "output_artifacts": [
+        "implementation_changes",
+        "profiling_or_benchmark_notes",
+        "safety_and_error_handling_summary"
+      ],
+      "quality_checks": [
+        "error_paths_and_boundary_conditions_tested",
+        "concurrency_or_memory_safety_reviewed",
+        "performance_tradeoffs_documented"
+      ],
+      "constraints": [
+        "avoid_undefined_behavior_and_hidden_global_state",
+        "prefer_deterministic_and_observable_failure_modes"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "systems",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "ml.hyperparameter-tuning",
+      "title": "Hyperparameter Tuning and Search",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/hyperparameter-tuning.md",
+      "description": "Retrieve this expert for systematic hyperparameter search, tuning strategy design, and objective-driven model optimization.",
+      "tags": [
+        "hyperparameter-tuning",
+        "optuna",
+        "grid-search",
+        "bayesian-optimization",
+        "ml",
+        "cross-validation"
+      ],
+      "tool_hints": [
+        "optuna",
+        "sklearn.model_selection",
+        "ray tune",
+        "wandb sweeps"
+      ],
+      "examples": [
+        "Tune XGBoost with Bayesian optimization and early stopping",
+        "Choose search space and pruning strategy for constrained runtime"
+      ],
+      "aliases": [
+        "ml-hyperparameter-tuning",
+        "hyperparameter-tuning-and-search"
+      ],
+      "dependencies": [
+        "optuna",
+        "ray[tune]"
+      ],
+      "input_contract": {
+        "required": "problem definition, target variable, and evaluation metric",
+        "optional": "feature constraints, compute budget, and deployment target"
+      },
+      "output_artifacts": [
+        "modeling_or_feature_plan",
+        "evaluation_summary",
+        "reproducibility_metadata"
+      ],
+      "quality_checks": [
+        "data_leakage_review_completed",
+        "validation_strategy_aligned_to_problem",
+        "metrics_include_uncertainty_or_variance"
+      ],
+      "constraints": [
+        "avoid_training_test_contamination",
+        "record_model_data_and_seed_versions"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sec.iam-policies",
+      "title": "IAM Policies and Access Control",
+      "domain": "security",
+      "instruction_file": "instructions/iam-policies.md",
+      "description": "Retrieve this expert for least-privilege IAM design, policy boundaries, role trust rules, and cloud access governance.",
+      "tags": [
+        "security",
+        "iam",
+        "least-privilege",
+        "aws",
+        "access-control",
+        "rbac"
+      ],
+      "tool_hints": [
+        "aws iam",
+        "cloudtrail",
+        "access analyzer",
+        "sts assume-role"
+      ],
+      "examples": [
+        "Design least-privilege role policy for CI deployment",
+        "Audit and tighten wildcard IAM permissions with conditions"
+      ],
+      "aliases": [
+        "sec-iam-policies",
+        "iam-policies-and-access-control"
+      ],
+      "dependencies": [
+        "awscli",
+        "aws-iam-access-analyzer",
+        "cloudtrail",
+        "terraform"
+      ],
+      "input_contract": {
+        "required": "authorized scope, threat context, and assets under assessment",
+        "optional": "compliance framework mapping, risk tolerance, and remediation timeline"
+      },
+      "output_artifacts": [
+        "security_findings",
+        "prioritized_remediation_plan",
+        "control_verification_checklist"
+      ],
+      "quality_checks": [
+        "least_privilege_policy_scope_reviewed",
+        "wildcards_and_escalation_paths_checked",
+        "audit_logging_and_alerting_confirmed"
+      ],
+      "constraints": [
+        "authorized_scope_only",
+        "omit_operational_exploit_detail_that_enables_misuse"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "security",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "cloud.kubernetes",
+      "title": "Kubernetes Workload Operations",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/kubernetes.md",
+      "description": "Retrieve this expert for Kubernetes deployments, scaling, networking, RBAC, and production-grade cluster operations.",
+      "tags": [
+        "kubernetes",
+        "k8s",
+        "deployment",
+        "rbac",
+        "hpa",
+        "containers",
+        "cluster"
+      ],
+      "tool_hints": [
+        "kubectl",
+        "helm",
+        "kustomize",
+        "prometheus"
+      ],
+      "examples": [
+        "Deploy resilient service with probes and autoscaling",
+        "Harden pod security contexts and namespace policies"
+      ],
+      "aliases": [
+        "cloud-kubernetes",
+        "kubernetes-workload-operations"
+      ],
+      "dependencies": [
+        "kubectl",
+        "helm",
+        "kustomize",
+        "kubernetes"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "least_privilege_reviewed",
+        "failure_and_rollback_path_defined",
+        "cost_and_scaling_implications_noted"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "fe.nextjs",
+      "title": "Next.js Full-stack Applications",
+      "domain": "frontend",
+      "instruction_file": "instructions/nextjs.md",
+      "description": "Retrieve this expert for Next.js app/router architecture, SSR/SSG strategies, API routes, and performance optimization.",
+      "tags": [
+        "nextjs",
+        "react",
+        "ssr",
+        "ssg",
+        "app-router",
+        "frontend"
+      ],
+      "tool_hints": [
+        "next.js",
+        "react",
+        "vercel",
+        "edge runtime"
+      ],
+      "examples": [
+        "Choose SSR vs SSG per route with caching strategy",
+        "Implement Next.js app router with server/client boundaries"
+      ],
+      "aliases": [
+        "fe-nextjs",
+        "next-js-full-stack-applications",
+        "next.js-full-stack-applications"
+      ],
+      "dependencies": [
+        "next",
+        "react",
+        "vercel"
+      ],
+      "input_contract": {
+        "required": "UI feature intent, interaction states, and target device/browser requirements",
+        "optional": "design tokens, brand constraints, and accessibility/performance targets"
+      },
+      "output_artifacts": [
+        "component_or_layout_changes",
+        "accessibility_or_performance_notes",
+        "integration_usage_guidance"
+      ],
+      "quality_checks": [
+        "responsive_and_state_behaviors_verified",
+        "keyboard_and_screen_reader_baseline_checked",
+        "render_performance_considered"
+      ],
+      "constraints": [
+        "preserve_design_system_consistency",
+        "avoid_regressing_core_accessibility_paths"
+      ],
+      "risk_level": "low",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "frontend",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sec.owasp-web",
+      "title": "Web Application Security (OWASP Top 10)",
+      "domain": "security",
+      "instruction_file": "instructions/owasp-web.md",
+      "description": "Retrieve this expert for OWASP-aligned web security reviews, secure coding controls, and vulnerability remediation guidance.",
+      "tags": [
+        "security",
+        "owasp",
+        "xss",
+        "csrf",
+        "sqli",
+        "ssrf",
+        "secure-coding"
+      ],
+      "tool_hints": [
+        "owasp asvs",
+        "security headers",
+        "input validation",
+        "parameterized queries"
+      ],
+      "examples": [
+        "Harden API against XSS/CSRF/SQLi classes",
+        "Apply OWASP checklist to web service threat review"
+      ],
+      "aliases": [
+        "sec-owasp-web",
+        "web-application-security-owasp-top-10",
+        "web-application-security-(owasp-top-10)"
+      ],
+      "dependencies": [
+        "owasp-asvs",
+        "semgrep",
+        "zap",
+        "burp-suite"
+      ],
+      "input_contract": {
+        "required": "authorized scope, threat context, and assets under assessment",
+        "optional": "compliance framework mapping, risk tolerance, and remediation timeline"
+      },
+      "output_artifacts": [
+        "security_findings",
+        "prioritized_remediation_plan",
+        "control_verification_checklist"
+      ],
+      "quality_checks": [
+        "findings_mapped_to_owasp_categories",
+        "severity_and_repro_steps_documented",
+        "fixes_include_verification_strategy"
+      ],
+      "constraints": [
+        "authorized_scope_only",
+        "omit_operational_exploit_detail_that_enables_misuse"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "security",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "data.pandas-advanced",
+      "title": "Advanced Pandas Data Workflows",
+      "domain": "data_engineering",
+      "instruction_file": "instructions/pandas-advanced.md",
+      "description": "Retrieve this expert for high-performance pandas transformations, memory optimization, and robust dataframe pipeline design.",
+      "tags": [
+        "pandas",
+        "dataframe",
+        "data-engineering",
+        "groupby",
+        "merge",
+        "optimization"
+      ],
+      "tool_hints": [
+        "pandas",
+        "pyarrow",
+        "polars interop",
+        "numexpr"
+      ],
+      "examples": [
+        "Optimize large dataframe joins and aggregations",
+        "Refactor slow pandas pipeline into vectorized operations"
+      ],
+      "aliases": [
+        "data-pandas-advanced",
+        "advanced-pandas-data-workflows"
+      ],
+      "dependencies": [
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "source schema/data samples and transformation objectives",
+        "optional": "data volume profile, latency/SLA constraints, and governance rules"
+      },
+      "output_artifacts": [
+        "transformation_logic_or_queries",
+        "data_quality_report",
+        "lineage_or_execution_notes"
+      ],
+      "quality_checks": [
+        "schema_and_type_assumptions_verified",
+        "null_and_edge_cases_handled",
+        "reproducible_execution_documented"
+      ],
+      "constraints": [
+        "avoid_silent_schema_or_type_breakage",
+        "preserve_traceability_of_source_to_output"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "data",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sec.penetration-testing",
+      "title": "Penetration Testing Methodology (Authorized)",
+      "domain": "security",
+      "instruction_file": "instructions/penetration-testing.md",
+      "description": "Retrieve this expert for authorized penetration testing methodology, evidence collection, risk classification, and reporting.",
+      "tags": [
+        "security",
+        "penetration-testing",
+        "authorized",
+        "recon",
+        "vulnerability",
+        "reporting"
+      ],
+      "tool_hints": [
+        "nmap",
+        "burp suite",
+        "owasp testing guide",
+        "cwe"
+      ],
+      "examples": [
+        "Plan scoped authorized pentest with rules of engagement",
+        "Produce executive and technical findings report with remediation"
+      ],
+      "aliases": [
+        "sec-penetration-testing",
+        "penetration-testing-methodology-authorized",
+        "penetration-testing-methodology-(authori"
+      ],
+      "dependencies": [
+        "nmap",
+        "burp-suite",
+        "nikto",
+        "owasp-testing-guide",
+        "metasploit-framework"
+      ],
+      "input_contract": {
+        "required": "authorized scope, threat context, and assets under assessment",
+        "optional": "compliance framework mapping, risk tolerance, and remediation timeline"
+      },
+      "output_artifacts": [
+        "security_findings",
+        "prioritized_remediation_plan",
+        "control_verification_checklist"
+      ],
+      "quality_checks": [
+        "written_authorization_and_scope_verified",
+        "evidence_chain_preserved",
+        "findings_prioritized_with_business_impact"
+      ],
+      "constraints": [
+        "authorized_scope_only",
+        "omit_operational_exploit_detail_that_enables_misuse"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "security",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "finance.quantitative",
+      "title": "Quantitative Finance Modeling",
+      "domain": "finance",
+      "instruction_file": "instructions/quantitative-finance.md",
+      "description": "Retrieve this expert for portfolio optimization, factor analysis, backtesting controls, and quantitative risk evaluation.",
+      "tags": [
+        "quantitative-finance",
+        "portfolio",
+        "risk",
+        "backtesting",
+        "factor-models",
+        "finance"
+      ],
+      "tool_hints": [
+        "pandas",
+        "numpy",
+        "scipy optimize",
+        "statsmodels"
+      ],
+      "examples": [
+        "Construct and evaluate long-short factor portfolio",
+        "Compute drawdown, Sharpe, and exposure diagnostics"
+      ],
+      "aliases": [
+        "finance-quantitative",
+        "quantitative-finance-modeling"
+      ],
+      "dependencies": [
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "financial objective, modeling assumptions, and data time horizon",
+        "optional": "scenario definitions, risk constraints, and benchmark references"
+      },
+      "output_artifacts": [
+        "assumption_framework",
+        "scenario_or_backtest_outputs",
+        "risk_and_sensitivity_summary"
+      ],
+      "quality_checks": [
+        "assumptions_and_units_are_explicit",
+        "sensitivity_or_stress_analysis_included",
+        "data_sources_and_methods_cited"
+      ],
+      "constraints": [
+        "not_investment_advice",
+        "avoid_unjustified_precision_or_causal_claims"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "finance",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "fe.react-native",
+      "title": "React Native Mobile Development",
+      "domain": "frontend",
+      "instruction_file": "instructions/react-native.md",
+      "description": "Retrieve this expert for React Native navigation, platform APIs, performance optimization, and production mobile release patterns.",
+      "tags": [
+        "react-native",
+        "mobile",
+        "ios",
+        "android",
+        "navigation",
+        "performance"
+      ],
+      "tool_hints": [
+        "react native",
+        "expo",
+        "react navigation",
+        "metro"
+      ],
+      "examples": [
+        "Architect cross-platform mobile app with native module boundaries",
+        "Optimize React Native rendering and startup performance"
+      ],
+      "aliases": [
+        "fe-react-native",
+        "react-native-mobile-development"
+      ],
+      "dependencies": [
+        "react"
+      ],
+      "input_contract": {
+        "required": "UI feature intent, interaction states, and target device/browser requirements",
+        "optional": "design tokens, brand constraints, and accessibility/performance targets"
+      },
+      "output_artifacts": [
+        "component_or_layout_changes",
+        "accessibility_or_performance_notes",
+        "integration_usage_guidance"
+      ],
+      "quality_checks": [
+        "responsive_and_state_behaviors_verified",
+        "keyboard_and_screen_reader_baseline_checked",
+        "render_performance_considered"
+      ],
+      "constraints": [
+        "preserve_design_system_consistency",
+        "avoid_regressing_core_accessibility_paths"
+      ],
+      "risk_level": "low",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "frontend",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "fe.react",
+      "title": "React Component Architecture",
+      "domain": "frontend",
+      "instruction_file": "instructions/react.md",
+      "description": "Retrieve this expert for React component design, hook strategy, state boundaries, and performance-oriented UI architecture.",
+      "tags": [
+        "react",
+        "hooks",
+        "state-management",
+        "components",
+        "frontend",
+        "performance"
+      ],
+      "tool_hints": [
+        "react",
+        "tanstack query",
+        "redux toolkit",
+        "react profiler"
+      ],
+      "examples": [
+        "Split monolithic component tree into reusable architecture",
+        "Fix unnecessary re-renders with memoization strategy"
+      ],
+      "aliases": [
+        "fe-react",
+        "react-component-architecture"
+      ],
+      "dependencies": [
+        "react"
+      ],
+      "input_contract": {
+        "required": "UI feature intent, interaction states, and target device/browser requirements",
+        "optional": "design tokens, brand constraints, and accessibility/performance targets"
+      },
+      "output_artifacts": [
+        "component_or_layout_changes",
+        "accessibility_or_performance_notes",
+        "integration_usage_guidance"
+      ],
+      "quality_checks": [
+        "responsive_and_state_behaviors_verified",
+        "keyboard_and_screen_reader_baseline_checked",
+        "render_performance_considered"
+      ],
+      "constraints": [
+        "preserve_design_system_consistency",
+        "avoid_regressing_core_accessibility_paths"
+      ],
+      "risk_level": "low",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "frontend",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "web.rest-design",
+      "title": "REST API Design and Contracts",
+      "domain": "web_api",
+      "instruction_file": "instructions/rest-design.md",
+      "description": "Retrieve this expert for resource-oriented API design, pagination/error contracts, and durable REST interface conventions.",
+      "tags": [
+        "rest",
+        "api-design",
+        "http",
+        "pagination",
+        "versioning",
+        "contracts"
+      ],
+      "tool_hints": [
+        "openapi",
+        "http semantics",
+        "json schema",
+        "api governance"
+      ],
+      "examples": [
+        "Design REST endpoints with stable pagination and filtering",
+        "Standardize error response envelopes across API surface"
+      ],
+      "aliases": [
+        "web-rest-design",
+        "rest-api-design-and-contracts"
+      ],
+      "dependencies": [
+        "openapi"
+      ],
+      "input_contract": {
+        "required": "API/auth objective, request-response expectations, and security requirements",
+        "optional": "backward-compatibility constraints, target clients, and deployment environment"
+      },
+      "output_artifacts": [
+        "api_or_auth_design",
+        "implementation_changes",
+        "validation_and_security_results"
+      ],
+      "quality_checks": [
+        "request_validation_and_error_contract_defined",
+        "authorization_rules_verified",
+        "logging_and_observability_considered"
+      ],
+      "constraints": [
+        "preserve_api_compatibility_or_version_explicitly",
+        "avoid_exposing_sensitive_data_in_logs"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "web",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sys.rust",
+      "title": "Rust Systems Programming",
+      "domain": "systems",
+      "instruction_file": "instructions/rust.md",
+      "description": "Retrieve this expert for idiomatic Rust design, ownership-safe implementations, async runtime patterns, and performance tuning.",
+      "tags": [
+        "rust",
+        "systems",
+        "ownership",
+        "lifetimes",
+        "tokio",
+        "performance"
+      ],
+      "tool_hints": [
+        "cargo",
+        "rustfmt",
+        "clippy",
+        "tokio"
+      ],
+      "examples": [
+        "Refactor unsafe ownership flow into idiomatic borrowing",
+        "Design async Rust service with robust error boundaries"
+      ],
+      "aliases": [
+        "sys-rust",
+        "rust-systems-programming"
+      ],
+      "dependencies": [
+        "cargo",
+        "rustfmt",
+        "clippy",
+        "tokio"
+      ],
+      "input_contract": {
+        "required": "runtime constraints, correctness requirements, and interface boundaries",
+        "optional": "throughput/latency goals, concurrency model, and platform targets"
+      },
+      "output_artifacts": [
+        "implementation_changes",
+        "profiling_or_benchmark_notes",
+        "safety_and_error_handling_summary"
+      ],
+      "quality_checks": [
+        "error_paths_and_boundary_conditions_tested",
+        "concurrency_or_memory_safety_reviewed",
+        "performance_tradeoffs_documented"
+      ],
+      "constraints": [
+        "avoid_undefined_behavior_and_hidden_global_state",
+        "prefer_deterministic_and_observable_failure_modes"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "systems",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "sec.secrets-management",
+      "title": "Secrets Management and Rotation",
+      "domain": "security",
+      "instruction_file": "instructions/secrets-management.md",
+      "description": "Retrieve this expert for secure secret storage, rotation policy, CI/CD secret hygiene, and credential incident response.",
+      "tags": [
+        "security",
+        "secrets",
+        "vault",
+        "kms",
+        "rotation",
+        "credentials",
+        "devsecops"
+      ],
+      "tool_hints": [
+        "hashicorp vault",
+        "aws secrets manager",
+        "gitleaks",
+        "sops"
+      ],
+      "examples": [
+        "Design secret rotation and lease policy for production services",
+        "Harden CI pipelines to prevent credential leakage"
+      ],
+      "aliases": [
+        "sec-secrets-management",
+        "secrets-management-and-rotation"
+      ],
+      "dependencies": [
+        "hashicorp-vault",
+        "aws-secrets-manager",
+        "gitleaks",
+        "sops"
+      ],
+      "input_contract": {
+        "required": "authorized scope, threat context, and assets under assessment",
+        "optional": "compliance framework mapping, risk tolerance, and remediation timeline"
+      },
+      "output_artifacts": [
+        "security_findings",
+        "prioritized_remediation_plan",
+        "control_verification_checklist"
+      ],
+      "quality_checks": [
+        "secret_inventory_documented",
+        "rotation_and_revocation_paths_defined",
+        "exposure_monitoring_and_alerts_configured"
+      ],
+      "constraints": [
+        "authorized_scope_only",
+        "omit_operational_exploit_detail_that_enables_misuse"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "security",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "data.spark",
+      "title": "Apache Spark Distributed Data Processing",
+      "domain": "data_engineering",
+      "instruction_file": "instructions/spark.md",
+      "description": "Retrieve this expert for Spark data pipelines, partitioning strategy, performance tuning, and resilient distributed processing.",
+      "tags": [
+        "spark",
+        "pyspark",
+        "distributed",
+        "etl",
+        "partitioning",
+        "big-data"
+      ],
+      "tool_hints": [
+        "spark sql",
+        "pyspark",
+        "delta lake",
+        "airflow"
+      ],
+      "examples": [
+        "Tune Spark job with skew-aware partition strategy",
+        "Design fault-tolerant ETL on large-scale datasets"
+      ],
+      "aliases": [
+        "data-spark",
+        "apache-spark-distributed-data-processing"
+      ],
+      "dependencies": [
+        "pyspark"
+      ],
+      "input_contract": {
+        "required": "source schema/data samples and transformation objectives",
+        "optional": "data volume profile, latency/SLA constraints, and governance rules"
+      },
+      "output_artifacts": [
+        "transformation_logic_or_queries",
+        "data_quality_report",
+        "lineage_or_execution_notes"
+      ],
+      "quality_checks": [
+        "schema_and_type_assumptions_verified",
+        "null_and_edge_cases_handled",
+        "reproducible_execution_documented"
+      ],
+      "constraints": [
+        "avoid_silent_schema_or_type_breakage",
+        "preserve_traceability_of_source_to_output"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "data",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "data.sql-queries",
+      "title": "SQL Query Design and Optimization",
+      "domain": "data_engineering",
+      "instruction_file": "instructions/sql-queries.md",
+      "description": "Retrieve this expert for advanced SQL joins, CTE/window logic, query optimization, and analytical data retrieval patterns.",
+      "tags": [
+        "sql",
+        "queries",
+        "cte",
+        "window-functions",
+        "optimization",
+        "analytics"
+      ],
+      "tool_hints": [
+        "postgresql",
+        "sqlite",
+        "explain analyze",
+        "dbt sql"
+      ],
+      "examples": [
+        "Rewrite slow SQL query using proper indexes and windows",
+        "Build analytics query with layered CTEs and quality checks"
+      ],
+      "aliases": [
+        "data-sql-queries",
+        "sql-query-design-and-optimization"
+      ],
+      "dependencies": [
+        "postgresql",
+        "sqlite",
+        "dbt-core"
+      ],
+      "input_contract": {
+        "required": "source schema/data samples and transformation objectives",
+        "optional": "data volume profile, latency/SLA constraints, and governance rules"
+      },
+      "output_artifacts": [
+        "transformation_logic_or_queries",
+        "data_quality_report",
+        "lineage_or_execution_notes"
+      ],
+      "quality_checks": [
+        "schema_and_type_assumptions_verified",
+        "null_and_edge_cases_handled",
+        "reproducible_execution_documented"
+      ],
+      "constraints": [
+        "avoid_silent_schema_or_type_breakage",
+        "preserve_traceability_of_source_to_output"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "data",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "web.sqlalchemy",
+      "title": "SQLAlchemy ORM and Sessions",
+      "domain": "web_api",
+      "instruction_file": "instructions/sqlalchemy.md",
+      "description": "Retrieve this expert for SQLAlchemy model design, session lifecycle management, migrations, and ORM query correctness.",
+      "tags": [
+        "sqlalchemy",
+        "orm",
+        "python",
+        "database",
+        "migrations",
+        "sessions"
+      ],
+      "tool_hints": [
+        "sqlalchemy",
+        "alembic",
+        "async session",
+        "postgresql"
+      ],
+      "examples": [
+        "Design transactional unit-of-work session boundaries",
+        "Implement performant ORM queries with eager loading strategy"
+      ],
+      "aliases": [
+        "web-sqlalchemy",
+        "sqlalchemy-orm-and-sessions"
+      ],
+      "dependencies": [
+        "sqlalchemy",
+        "postgresql"
+      ],
+      "input_contract": {
+        "required": "API/auth objective, request-response expectations, and security requirements",
+        "optional": "backward-compatibility constraints, target clients, and deployment environment"
+      },
+      "output_artifacts": [
+        "api_or_auth_design",
+        "implementation_changes",
+        "validation_and_security_results"
+      ],
+      "quality_checks": [
+        "request_validation_and_error_contract_defined",
+        "authorization_rules_verified",
+        "logging_and_observability_considered"
+      ],
+      "constraints": [
+        "preserve_api_compatibility_or_version_explicitly",
+        "avoid_exposing_sensitive_data_in_logs"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "web",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "cloud.terraform",
+      "title": "Terraform Infrastructure as Code",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/terraform.md",
+      "description": "Retrieve this expert for Terraform module design, remote state safety, drift detection, and cloud IaC delivery workflows.",
+      "tags": [
+        "terraform",
+        "iac",
+        "infrastructure",
+        "state",
+        "modules",
+        "cloud"
+      ],
+      "tool_hints": [
+        "terraform plan",
+        "terraform apply",
+        "terraform state",
+        "terraform workspace"
+      ],
+      "examples": [
+        "Design reusable Terraform modules for multi-env deployment",
+        "Implement remote state locking and drift detection controls"
+      ],
+      "aliases": [
+        "cloud-terraform",
+        "terraform-infrastructure-as-code"
+      ],
+      "dependencies": [
+        "terraform"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "least_privilege_reviewed",
+        "failure_and_rollback_path_defined",
+        "cost_and_scaling_implications_noted"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "data.time-series",
+      "title": "Time Series Analysis and Forecasting",
+      "domain": "data_science",
+      "instruction_file": "instructions/time-series.md",
+      "description": "Retrieve this expert for stationarity checks, decomposition, forecasting model selection, and time-aware validation.",
+      "tags": [
+        "time-series",
+        "forecasting",
+        "arima",
+        "seasonality",
+        "stationarity",
+        "temporal-data"
+      ],
+      "tool_hints": [
+        "statsmodels tsa",
+        "prophet",
+        "scikit-learn timeseriessplit",
+        "pandas"
+      ],
+      "examples": [
+        "Build leakage-safe temporal cross-validation forecast pipeline",
+        "Compare ARIMA/SARIMA with ML lag-feature approach"
+      ],
+      "aliases": [
+        "data-time-series",
+        "time-series-analysis-and-forecasting"
+      ],
+      "dependencies": [
+        "prophet",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "source schema/data samples and transformation objectives",
+        "optional": "data volume profile, latency/SLA constraints, and governance rules"
+      },
+      "output_artifacts": [
+        "transformation_logic_or_queries",
+        "data_quality_report",
+        "lineage_or_execution_notes"
+      ],
+      "quality_checks": [
+        "schema_and_type_assumptions_verified",
+        "null_and_edge_cases_handled",
+        "reproducible_execution_documented"
+      ],
+      "constraints": [
+        "avoid_silent_schema_or_type_breakage",
+        "preserve_traceability_of_source_to_output"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "data",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      }
+    },
+    {
+      "id": "dl.transformers-finetuning",
+      "title": "Transformers Fine-tuning",
+      "domain": "deep_learning",
+      "instruction_file": "instructions/transformers-finetuning.md",
+      "description": "Retrieve this expert for HuggingFace transformer fine-tuning, LoRA/QLoRA adaptation, and GPU-efficient training workflows.",
+      "tags": [
+        "transformers",
+        "finetuning",
+        "huggingface",
+        "lora",
+        "qlora",
+        "nlp"
+      ],
+      "tool_hints": [
+        "transformers trainer",
+        "peft",
+        "bitsandbytes",
+        "datasets"
+      ],
+      "examples": [
+        "Fine-tune text classifier with LoRA and evaluation metrics",
+        "Run QLoRA on constrained GPU memory with stable checkpoints"
+      ],
+      "aliases": [
+        "dl-transformers-finetuning",
+        "transformers-fine-tuning"
+      ],
+      "dependencies": [
+        "transformers",
+        "peft",
+        "bitsandbytes",
+        "datasets"
+      ],
+      "input_contract": {
+        "required": "task definition, model family choice, and dataset readiness details",
+        "optional": "GPU memory budget, adapter strategy, and checkpoint cadence"
+      },
+      "output_artifacts": [
+        "training_configuration",
+        "model_or_adapter_artifacts",
+        "evaluation_and_limitations_summary"
+      ],
+      "quality_checks": [
+        "train_validation_split_strategy_documented",
+        "checkpoint_and_recovery_plan_defined",
+        "resource_constraints_accounted_for"
+      ],
+      "constraints": [
+        "avoid_overstating_generalization",
+        "track_dataset_model_and_prompt_versions"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "deep-learning",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
       }
     }
   ]

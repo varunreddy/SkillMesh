@@ -1,0 +1,7 @@
+interface:
+  display_name: "SkillGate Router"
+  short_description: "Route tasks to top matching expert cards."
+  default_prompt: "Use $skillgate-router to retrieve the top 5 expert cards for this request before continuing."
+
+policy:
+  allow_implicit_invocation: true

@@ -5,7 +5,7 @@ SkillGate can be used in Claude Code by calling the router script and asking Cla
 ## 1) Install the skill bundle in Codex-style layout
 
 ```bash
-$skill-installer install https://github.com/varunreddy/SkillGate/tree/main/skills/.experimental/skillgate-router
+$skill-installer install https://github.com/varunreddy/SkillGate/tree/main/skills/skillgate-router
 ```
 
 Restart Codex after install.
@@ -15,6 +15,7 @@ Restart Codex after install.
 ```bash
 ~/.codex/skills/skillgate-router/scripts/route.sh \
   --provider claude \
+  --backend auto \
   --registry /absolute/path/to/tools.enriched.json \
   --query "build an opencv contour pipeline" \
   --top-k 5
