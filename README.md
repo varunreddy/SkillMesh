@@ -1,6 +1,6 @@
-# expert-registry-rag
+# SkillGate
 
-`expert-registry-rag` is an instruction-first skills runtime:
+**A retrieval-gated skill architecture for LLM agents that scales to hundreds of tools by exposing only the top-K relevant capabilities per request.**
 
 - `*.md` files hold behavior and guidance for the agent.
 - A structured registry holds domain expert metadata and tool hints.
@@ -75,7 +75,7 @@ Current sample catalog includes:
 ## Quickstart
 
 ```bash
-cd expert-registry-rag
+cd SkillGate
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .[dev]

@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "expert-registry-rag"
+name = "skillgate"
 version = "0.1.0"
-description = "Instruction-first skills with registry-backed top-k retrieval for agent runtimes"
+description = "A retrieval-gated skill architecture for LLM agents that scales to hundreds of tools by exposing only the top-K relevant capabilities per request."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
