@@ -126,6 +126,35 @@ Then pass `--dense` to CLI commands.
 pytest
 ```
 
+## Codex Skill Bundle (installable)
+
+SkillGate ships a Codex-native skill bundle at:
+
+- `skills/.experimental/skillgate-router`
+
+Install with:
+
+```bash
+$skill-installer install https://github.com/varunreddy/SkillGate/tree/main/skills/.experimental/skillgate-router
+```
+
+Bundle command:
+
+```bash
+skill-rag emit --provider codex --registry <path> --query "<query>" --top-k 5
+```
+
+Local router script:
+
+```bash
+skills/.experimental/skillgate-router/scripts/route.sh --provider codex --registry <path> --query "<query>" --top-k 5
+```
+
+Claude integration docs:
+
+- `docs/integrations/claude-code.md`
+- `docs/integrations/claude-desktop.md`
+
 ## OSS roadmap
 
 1. Add pluggable vector backends (FAISS, Qdrant, pgvector)
