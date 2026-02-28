@@ -1,6 +1,6 @@
-# skill-registry-rag
+# expert-registry-rag
 
-`skill-registry-rag` is an instruction-first skills runtime:
+`expert-registry-rag` is an instruction-first skills runtime:
 
 - `*.md` files hold behavior and guidance for the agent.
 - A structured registry holds domain expert metadata and tool hints.
@@ -75,7 +75,7 @@ Current sample catalog includes:
 ## Quickstart
 
 ```bash
-cd skill-registry-rag
+cd expert-registry-rag
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .[dev]
