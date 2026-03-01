@@ -1,0 +1,72 @@
+registry_name: skillmesh-devops-catalog
+version: 0.1.0
+updated_at: '2026-03-01'
+tools:
+- id: role.devops-engineer
+  title: DevOps Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/devops-engineer.md
+  tags:
+  - role
+  - devops-engineer
+  - infrastructure
+- id: devops.ansible
+  title: Ansible Automation
+  domain: devops
+  instruction_file: instructions/ansible.md
+  tags:
+  - ansible
+  - playbooks
+  - configuration-management
+- id: devops.nginx
+  title: Nginx Web Server and Reverse Proxy
+  domain: devops
+  instruction_file: instructions/nginx.md
+  tags:
+  - nginx
+  - reverse-proxy
+  - load-balancing
+- id: devops.systemd
+  title: Systemd Service Management
+  domain: devops
+  instruction_file: instructions/systemd.md
+  tags:
+  - systemd
+  - service-management
+  - journalctl
+- id: devops.prometheus-grafana
+  title: Monitoring with Prometheus and Grafana
+  domain: devops
+  instruction_file: instructions/prometheus-grafana.md
+  tags:
+  - prometheus
+  - grafana
+  - monitoring
+  - alerting
+- id: devops.elk-logging
+  title: ELK Stack Logging
+  domain: devops
+  instruction_file: instructions/elk-logging.md
+  tags:
+  - elasticsearch
+  - logstash
+  - kibana
+  - logging
+- id: devops.cicd-patterns
+  title: CI/CD Deployment Patterns
+  domain: devops
+  instruction_file: instructions/cicd-patterns.md
+  tags:
+  - cicd
+  - blue-green
+  - canary
+  - deployment
+- id: devops.linux-admin
+  title: Linux Administration
+  domain: devops
+  instruction_file: instructions/linux-administration.md
+  tags:
+  - linux
+  - sysadmin
+  - firewall
+  - ssh

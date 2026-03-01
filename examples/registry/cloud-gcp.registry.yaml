@@ -1,0 +1,66 @@
+registry_name: skillmesh-cloud-gcp-catalog
+version: 0.1.0
+updated_at: '2026-03-01'
+tools:
+- id: role.gcp-engineer
+  title: GCP Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/gcp-engineer.md
+  tags:
+  - role
+  - gcp-engineer
+  - google-cloud
+- id: cloud.gcp-gcs
+  title: Google Cloud Storage
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-gcs.md
+  tags:
+  - gcp
+  - cloud-storage
+  - buckets
+  - signed-urls
+- id: cloud.gcp-bigquery
+  title: BigQuery Analytics
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-bigquery.md
+  tags:
+  - gcp
+  - bigquery
+  - analytics
+  - sql
+- id: cloud.gcp-cloud-run
+  title: Cloud Run Serverless Containers
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-cloud-run.md
+  tags:
+  - gcp
+  - cloud-run
+  - serverless
+  - containers
+- id: cloud.gcp-cloud-functions
+  title: Cloud Functions
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-cloud-functions.md
+  tags:
+  - gcp
+  - cloud-functions
+  - serverless
+  - event-driven
+- id: cloud.gcp-pubsub
+  title: Google Cloud Pub/Sub
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-pubsub.md
+  tags:
+  - gcp
+  - pubsub
+  - messaging
+  - event-streaming
+- id: cloud.gcp-gke
+  title: Google Kubernetes Engine
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-gke.md
+  tags:
+  - gcp
+  - gke
+  - kubernetes
+  - autopilot

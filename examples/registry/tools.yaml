@@ -1631,3 +1631,430 @@ tools:
   examples:
   - Choose Synapse workload architecture for BI and ML consumers
   - Optimize Synapse serving model for dashboard latency and cost
+- id: devops.ansible
+  title: Ansible Automation
+  domain: devops
+  instruction_file: instructions/ansible.md
+  description: Retrieve this expert for infrastructure automation with Ansible playbooks,
+    roles, vault, and idempotent configuration management.
+  tags:
+  - ansible
+  - playbooks
+  - configuration-management
+  - vault
+  - idempotency
+  - molecule
+  tool_hints:
+  - ansible-playbook
+  - ansible-vault
+  - molecule
+  examples:
+  - Write an Ansible playbook to provision a web server fleet
+  - Encrypt secrets with Ansible Vault and rotate credentials
+- id: devops.nginx
+  title: Nginx Web Server and Reverse Proxy
+  domain: devops
+  instruction_file: instructions/nginx.md
+  description: Retrieve this expert for Nginx reverse proxy configuration, SSL termination,
+    rate limiting, and load balancing.
+  tags:
+  - nginx
+  - reverse-proxy
+  - ssl
+  - load-balancing
+  - rate-limiting
+  - caching
+  tool_hints:
+  - nginx
+  - certbot
+  - openssl
+  examples:
+  - Configure Nginx as a reverse proxy with SSL termination
+  - Set up load balancing across multiple upstream servers
+- id: devops.systemd
+  title: Systemd Service Management
+  domain: devops
+  instruction_file: instructions/systemd.md
+  description: Retrieve this expert for systemd unit files, service management, journalctl
+    diagnostics, timers, and resource limits.
+  tags:
+  - systemd
+  - service-management
+  - unit-files
+  - journalctl
+  - timers
+  tool_hints:
+  - systemctl
+  - journalctl
+  - systemd-analyze
+  examples:
+  - Create a systemd unit file for a Python application
+  - Debug a failing service with journalctl and systemd-analyze
+- id: devops.prometheus-grafana
+  title: Monitoring with Prometheus and Grafana
+  domain: devops
+  instruction_file: instructions/prometheus-grafana.md
+  description: Retrieve this expert for Prometheus metrics collection, PromQL queries,
+    Grafana dashboards, alerting rules, and service discovery.
+  tags:
+  - prometheus
+  - grafana
+  - monitoring
+  - alerting
+  - promql
+  - dashboards
+  tool_hints:
+  - prometheus
+  - grafana
+  - alertmanager
+  - promql
+  examples:
+  - Set up Prometheus monitoring with Grafana dashboards for a microservices stack
+  - Write PromQL alert rules for high error rates and latency
+- id: devops.elk-logging
+  title: ELK Stack Logging
+  domain: devops
+  instruction_file: instructions/elk-logging.md
+  description: Retrieve this expert for centralized logging with Elasticsearch, Logstash,
+    Kibana, and Filebeat including index lifecycle management.
+  tags:
+  - elasticsearch
+  - logstash
+  - kibana
+  - filebeat
+  - logging
+  - elk
+  tool_hints:
+  - elasticsearch
+  - logstash
+  - kibana
+  - filebeat
+  examples:
+  - Set up centralized logging with the ELK stack for a Kubernetes cluster
+  - Configure Logstash pipelines with grok filters for application logs
+- id: devops.cicd-patterns
+  title: CI/CD Deployment Patterns
+  domain: devops
+  instruction_file: instructions/cicd-patterns.md
+  description: Retrieve this expert for deployment strategies including blue-green,
+    canary, feature flags, rollback procedures, and pipeline design.
+  tags:
+  - cicd
+  - blue-green
+  - canary
+  - deployment
+  - feature-flags
+  - rollback
+  tool_hints:
+  - github-actions
+  - argocd
+  - flagger
+  - helm
+  examples:
+  - Design a canary deployment pipeline with automated rollback
+  - Implement blue-green deployment with zero-downtime cutover
+- id: devops.linux-admin
+  title: Linux Administration
+  domain: devops
+  instruction_file: instructions/linux-administration.md
+  description: Retrieve this expert for Linux system administration including user
+    management, firewall configuration, SSH hardening, and package management.
+  tags:
+  - linux
+  - sysadmin
+  - firewall
+  - ssh
+  - disk-management
+  - packages
+  tool_hints:
+  - iptables
+  - nftables
+  - useradd
+  - sshd
+  - apt
+  - dnf
+  examples:
+  - Harden SSH access and configure firewall rules for a production server
+  - Set up user accounts with least-privilege access and disk quotas
+- id: webapi.graphql
+  title: GraphQL API Design
+  domain: web_api
+  instruction_file: instructions/graphql.md
+  description: Retrieve this expert for GraphQL schema design, resolver implementation,
+    N+1 prevention with DataLoader, and federation architecture.
+  tags:
+  - graphql
+  - schema
+  - resolvers
+  - dataloader
+  - federation
+  - subscriptions
+  tool_hints:
+  - graphql
+  - apollo
+  - strawberry
+  - ariadne
+  examples:
+  - Design a GraphQL schema with relay-style pagination
+  - Implement DataLoader to solve the N+1 query problem
+- id: webapi.api-gateway
+  title: API Gateway and Service Mesh
+  domain: web_api
+  instruction_file: instructions/api-gateway.md
+  description: Retrieve this expert for API gateway configuration, service mesh patterns,
+    circuit breakers, distributed tracing, and request routing.
+  tags:
+  - api-gateway
+  - service-mesh
+  - circuit-breaker
+  - distributed-tracing
+  - load-balancing
+  tool_hints:
+  - kong
+  - envoy
+  - istio
+  - traefik
+  examples:
+  - Configure an API gateway with circuit breakers and retry policies
+  - Set up distributed tracing across microservices with Jaeger
+- id: webapi.rate-limiting
+  title: Rate Limiting and Throttling
+  domain: web_api
+  instruction_file: instructions/rate-limiting.md
+  description: Retrieve this expert for rate limiting strategies including token bucket,
+    sliding window, Redis-backed limiters, and backpressure patterns.
+  tags:
+  - rate-limiting
+  - throttling
+  - token-bucket
+  - sliding-window
+  - redis
+  - backpressure
+  tool_hints:
+  - redis
+  - nginx
+  - fastapi
+  - flask-limiter
+  examples:
+  - Implement Redis-backed sliding window rate limiting for an API
+  - Configure per-user and per-IP rate limits with graceful degradation
+- id: webapi.api-auth-patterns
+  title: API Authentication Patterns
+  domain: web_api
+  instruction_file: instructions/api-authentication-patterns.md
+  description: Retrieve this expert for API key management, mTLS, HMAC signatures,
+    webhook verification, and service-to-service authentication.
+  tags:
+  - api-keys
+  - mtls
+  - hmac
+  - webhook-verification
+  - service-auth
+  tool_hints:
+  - openssl
+  - cryptography
+  - hashlib
+  - hmac
+  examples:
+  - Implement HMAC request signing for a webhook integration
+  - Set up mTLS between microservices with certificate rotation
+- id: webapi.websockets-sse
+  title: WebSockets and Server-Sent Events
+  domain: web_api
+  instruction_file: instructions/websockets-sse.md
+  description: Retrieve this expert for real-time communication with WebSockets and
+    SSE including connection lifecycle, reconnection, heartbeats, and scaling.
+  tags:
+  - websockets
+  - sse
+  - real-time
+  - streaming
+  - heartbeat
+  - reconnection
+  tool_hints:
+  - websockets
+  - fastapi
+  - socket.io
+  - starlette
+  examples:
+  - Build a WebSocket server with heartbeats and reconnection handling
+  - Implement SSE for real-time dashboard updates
+- id: cloud.gcp-gcs
+  title: Google Cloud Storage
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-gcs.md
+  description: Retrieve this expert for Google Cloud Storage bucket management, lifecycle
+    policies, signed URLs, IAM, and data transfer.
+  tags:
+  - gcp
+  - cloud-storage
+  - buckets
+  - signed-urls
+  - iam
+  - lifecycle
+  tool_hints:
+  - gsutil
+  - google-cloud-storage
+  - gcloud
+  examples:
+  - Configure a GCS bucket with lifecycle policies and signed URL access
+  - Set up cross-region replication with fine-grained IAM
+- id: cloud.gcp-bigquery
+  title: BigQuery Analytics
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-bigquery.md
+  description: Retrieve this expert for BigQuery table design, partitioning, clustering,
+    cost optimization, BQML, and query performance tuning.
+  tags:
+  - gcp
+  - bigquery
+  - analytics
+  - sql
+  - partitioning
+  - bqml
+  tool_hints:
+  - bq
+  - google-cloud-bigquery
+  - bigquery
+  examples:
+  - Design a partitioned and clustered BigQuery table for cost-efficient analytics
+  - Train a classification model with BQML on existing warehouse data
+- id: cloud.gcp-cloud-run
+  title: Cloud Run Serverless Containers
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-cloud-run.md
+  description: Retrieve this expert for deploying containers on Cloud Run with autoscaling,
+    traffic splitting, VPC connectors, and revision management.
+  tags:
+  - gcp
+  - cloud-run
+  - serverless
+  - containers
+  - autoscaling
+  tool_hints:
+  - gcloud
+  - docker
+  - cloud-run
+  examples:
+  - Deploy a containerized API to Cloud Run with traffic splitting
+  - Configure Cloud Run with VPC connector for private database access
+- id: cloud.gcp-cloud-functions
+  title: Cloud Functions
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-cloud-functions.md
+  description: Retrieve this expert for GCP Cloud Functions including event triggers,
+    gen2 functions, cold start optimization, and connection pooling.
+  tags:
+  - gcp
+  - cloud-functions
+  - serverless
+  - event-driven
+  - triggers
+  tool_hints:
+  - gcloud
+  - functions-framework
+  - cloud-functions
+  examples:
+  - Create a Cloud Function triggered by Pub/Sub with retry handling
+  - Optimize cold start times for a gen2 Cloud Function
+- id: cloud.gcp-pubsub
+  title: Google Cloud Pub/Sub
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-pubsub.md
+  description: Retrieve this expert for Pub/Sub messaging including push/pull subscriptions,
+    dead-letter queues, ordering keys, and exactly-once delivery.
+  tags:
+  - gcp
+  - pubsub
+  - messaging
+  - event-streaming
+  - dead-letter
+  - ordering
+  tool_hints:
+  - google-cloud-pubsub
+  - gcloud
+  - pubsub
+  examples:
+  - Set up Pub/Sub with dead-letter queues and exactly-once processing
+  - Configure ordered message delivery with ordering keys
+- id: cloud.gcp-gke
+  title: Google Kubernetes Engine
+  domain: cloud_infrastructure
+  instruction_file: instructions/gcp-gke.md
+  description: Retrieve this expert for GKE cluster management including Autopilot
+    vs Standard, workload identity, node pools, and service mesh integration.
+  tags:
+  - gcp
+  - gke
+  - kubernetes
+  - autopilot
+  - workload-identity
+  - istio
+  tool_hints:
+  - gcloud
+  - kubectl
+  - helm
+  - istioctl
+  examples:
+  - Create a GKE Autopilot cluster with workload identity
+  - Configure GKE node pools with autoscaling and spot instances
+- id: role.devops-engineer
+  title: DevOps Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/devops-engineer.md
+  description: Role expert for infrastructure automation, CI/CD pipelines, monitoring,
+    and production operations across DevOps tooling.
+  tags:
+  - role
+  - devops-engineer
+  - infrastructure
+  - cicd
+  - monitoring
+  tool_hints:
+  - ansible
+  - terraform
+  - docker
+  - kubernetes
+  - prometheus
+  examples:
+  - Act as a DevOps engineer to automate infrastructure and set up CI/CD
+  - Design a production monitoring and alerting stack
+- id: role.api-architect
+  title: API Architect Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/api-architect.md
+  description: Role expert for API design, integration architecture, and backend service
+    communication patterns across REST, GraphQL, and event-driven systems.
+  tags:
+  - role
+  - api-architect
+  - api-design
+  - integration
+  - microservices
+  tool_hints:
+  - openapi
+  - graphql
+  - fastapi
+  - kong
+  examples:
+  - Act as an API architect to design a microservices integration layer
+  - Design a public API with authentication, rate limiting, and versioning
+- id: role.gcp-engineer
+  title: GCP Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/gcp-engineer.md
+  description: Role expert for Google Cloud Platform architecture, deployment, and
+    operations across compute, storage, data, and messaging services.
+  tags:
+  - role
+  - gcp-engineer
+  - google-cloud
+  - cloud-architecture
+  tool_hints:
+  - gcloud
+  - terraform
+  - docker
+  - kubectl
+  examples:
+  - Act as a GCP engineer to architect a serverless data pipeline
+  - Design a GCP infrastructure with Terraform for a microservices platform

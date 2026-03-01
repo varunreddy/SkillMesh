@@ -1,3 +1,27 @@
+Metadata-Version: 2.4
+Name: skillmesh
+Version: 0.1.0
+Summary: A retrieval-gated skill architecture for LLM agents that scales to hundreds of tools by exposing only the top-K relevant capabilities per request.
+Author: Open Skill Registry Contributors
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.24
+Requires-Dist: PyYAML>=6.0
+Requires-Dist: rank-bm25>=0.2.2
+Requires-Dist: jsonschema>=4.0
+Requires-Dist: chromadb>=0.5.0
+Provides-Extra: dense
+Requires-Dist: sentence-transformers>=2.7.0; extra == "dense"
+Provides-Extra: mcp
+Requires-Dist: mcp>=1.0.0; extra == "mcp"
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: pytest-cov>=5.0; extra == "dev"
+Requires-Dist: ruff>=0.6.0; extra == "dev"
+Dynamic: license-file
+
 # SkillMesh
 
 [![CI](https://github.com/varunreddy/SkillMesh/actions/workflows/ci.yml/badge.svg)](https://github.com/varunreddy/SkillMesh/actions/workflows/ci.yml)

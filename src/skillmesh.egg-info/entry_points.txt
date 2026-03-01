@@ -1,0 +1,3 @@
+[console_scripts]
+skillmesh = skill_registry_rag.cli:main
+skillmesh-mcp = skill_registry_rag.mcp_server:main

@@ -1,0 +1,63 @@
+registry_name: skillmesh-web-apis-catalog
+version: 0.1.0
+updated_at: '2026-03-01'
+tools:
+- id: role.api-architect
+  title: API Architect Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/api-architect.md
+  tags:
+  - role
+  - api-architect
+  - integration
+- id: web.rest-design
+  title: REST API Design
+  domain: web_api
+  instruction_file: instructions/rest-design.md
+  tags:
+  - rest
+  - api-design
+  - openapi
+- id: webapi.graphql
+  title: GraphQL API Design
+  domain: web_api
+  instruction_file: instructions/graphql.md
+  tags:
+  - graphql
+  - schema
+  - resolvers
+  - federation
+- id: webapi.api-gateway
+  title: API Gateway and Service Mesh
+  domain: web_api
+  instruction_file: instructions/api-gateway.md
+  tags:
+  - api-gateway
+  - service-mesh
+  - circuit-breaker
+- id: webapi.rate-limiting
+  title: Rate Limiting and Throttling
+  domain: web_api
+  instruction_file: instructions/rate-limiting.md
+  tags:
+  - rate-limiting
+  - throttling
+  - token-bucket
+- id: webapi.api-auth-patterns
+  title: API Authentication Patterns
+  domain: web_api
+  instruction_file: instructions/api-authentication-patterns.md
+  tags:
+  - api-keys
+  - mtls
+  - hmac
+  - webhook-verification
+- id: webapi.websockets-sse
+  title: WebSockets and Server-Sent Events
+  domain: web_api
+  instruction_file: instructions/websockets-sse.md
+  tags:
+  - websockets
+  - sse
+  - real-time
+  - streaming

@@ -1,6 +1,6 @@
 registry_name: skillmesh-roles-catalog
-version: 0.1.0
-updated_at: '2026-02-28'
+version: 0.2.0
+updated_at: '2026-03-01'
 tools:
 - id: role.data-analyst
   title: Data Analyst Role Orchestrator
@@ -79,3 +79,36 @@ tools:
   - analytics-engineer
   - semantic-layer
   - dbt
+- id: role.devops-engineer
+  title: DevOps Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/devops-engineer.md
+  description: Role expert for infrastructure automation, CI/CD pipelines, monitoring,
+    and production operations across DevOps tooling.
+  tags:
+  - role
+  - devops-engineer
+  - infrastructure
+  - cicd
+- id: role.api-architect
+  title: API Architect Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/api-architect.md
+  description: Role expert for API design, integration architecture, and backend service
+    communication patterns across REST, GraphQL, and event-driven systems.
+  tags:
+  - role
+  - api-architect
+  - api-design
+  - integration
+- id: role.gcp-engineer
+  title: GCP Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/gcp-engineer.md
+  description: Role expert for Google Cloud Platform architecture, deployment, and
+    operations across compute, storage, data, and messaging services.
+  tags:
+  - role
+  - gcp-engineer
+  - google-cloud
+  - cloud-architecture

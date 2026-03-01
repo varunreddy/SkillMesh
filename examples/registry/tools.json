@@ -1,7 +1,7 @@
 {
   "registry_name": "skillmesh-tool-catalog",
-  "version": "0.4.0",
-  "updated_at": "2026-02-28",
+  "version": "0.5.0",
+  "updated_at": "2026-03-01",
   "tools": [
     {
       "id": "viz.matplotlib-seaborn",
@@ -4565,6 +4565,1288 @@
       ],
       "risk_level": "high",
       "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "devops.ansible",
+      "title": "Ansible Automation",
+      "domain": "devops",
+      "instruction_file": "instructions/ansible.md",
+      "description": "Retrieve this expert for infrastructure automation with Ansible playbooks, roles, vault, and idempotent configuration management.",
+      "tags": [
+        "ansible",
+        "playbooks",
+        "configuration-management",
+        "vault",
+        "idempotency",
+        "molecule"
+      ],
+      "tool_hints": [
+        "ansible-playbook",
+        "ansible-vault",
+        "molecule"
+      ],
+      "examples": [
+        "Write an Ansible playbook to provision a web server fleet",
+        "Encrypt secrets with Ansible Vault and rotate credentials"
+      ],
+      "aliases": [
+        "ansible-automation",
+        "configuration-management"
+      ],
+      "dependencies": [
+        "ansible",
+        "molecule",
+        "ansible-lint"
+      ],
+      "input_contract": {
+        "required": "target hosts, desired state, and connectivity details",
+        "optional": "vault password, custom roles, and inventory filters"
+      },
+      "output_artifacts": [
+        "playbook_files",
+        "role_structure",
+        "inventory_config",
+        "vault_encrypted_secrets"
+      ],
+      "quality_checks": [
+        "idempotency_verified",
+        "molecule_tests_pass",
+        "ansible_lint_clean"
+      ],
+      "constraints": [
+        "never_hardcode_secrets_in_playbooks",
+        "always_use_vault_for_sensitive_data"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "devops.nginx",
+      "title": "Nginx Web Server and Reverse Proxy",
+      "domain": "devops",
+      "instruction_file": "instructions/nginx.md",
+      "description": "Retrieve this expert for Nginx reverse proxy configuration, SSL termination, rate limiting, and load balancing.",
+      "tags": [
+        "nginx",
+        "reverse-proxy",
+        "ssl",
+        "load-balancing",
+        "rate-limiting",
+        "caching"
+      ],
+      "tool_hints": [
+        "nginx",
+        "certbot",
+        "openssl"
+      ],
+      "examples": [
+        "Configure Nginx as a reverse proxy with SSL termination",
+        "Set up load balancing across multiple upstream servers"
+      ],
+      "aliases": [
+        "nginx-proxy",
+        "web-server"
+      ],
+      "dependencies": [
+        "nginx",
+        "certbot"
+      ],
+      "input_contract": {
+        "required": "upstream services, domain names, and traffic requirements",
+        "optional": "SSL certificates, rate limit thresholds, and caching policies"
+      },
+      "output_artifacts": [
+        "nginx_config_files",
+        "ssl_setup_instructions",
+        "performance_tuning_notes"
+      ],
+      "quality_checks": [
+        "config_syntax_valid",
+        "ssl_grade_a_plus",
+        "no_open_proxy"
+      ],
+      "constraints": [
+        "never_expose_server_version",
+        "always_configure_security_headers"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "devops.systemd",
+      "title": "Systemd Service Management",
+      "domain": "devops",
+      "instruction_file": "instructions/systemd.md",
+      "description": "Retrieve this expert for systemd unit files, service management, journalctl diagnostics, timers, and resource limits.",
+      "tags": [
+        "systemd",
+        "service-management",
+        "unit-files",
+        "journalctl",
+        "timers"
+      ],
+      "tool_hints": [
+        "systemctl",
+        "journalctl",
+        "systemd-analyze"
+      ],
+      "examples": [
+        "Create a systemd unit file for a Python application",
+        "Debug a failing service with journalctl and systemd-analyze"
+      ],
+      "aliases": [
+        "systemd-services",
+        "service-management"
+      ],
+      "dependencies": [
+        "systemd"
+      ],
+      "input_contract": {
+        "required": "application binary or script path and runtime requirements",
+        "optional": "resource limits, restart policies, and dependency ordering"
+      },
+      "output_artifacts": [
+        "unit_files",
+        "timer_definitions",
+        "resource_limit_config"
+      ],
+      "quality_checks": [
+        "unit_file_syntax_valid",
+        "service_starts_cleanly",
+        "resource_limits_set"
+      ],
+      "constraints": [
+        "never_use_type_simple_for_forking_daemons",
+        "always_set_restart_policy"
+      ],
+      "risk_level": "low",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "devops.prometheus-grafana",
+      "title": "Monitoring with Prometheus and Grafana",
+      "domain": "devops",
+      "instruction_file": "instructions/prometheus-grafana.md",
+      "description": "Retrieve this expert for Prometheus metrics collection, PromQL queries, Grafana dashboards, alerting rules, and service discovery.",
+      "tags": [
+        "prometheus",
+        "grafana",
+        "monitoring",
+        "alerting",
+        "promql",
+        "dashboards"
+      ],
+      "tool_hints": [
+        "prometheus",
+        "grafana",
+        "alertmanager",
+        "promql"
+      ],
+      "examples": [
+        "Set up Prometheus monitoring with Grafana dashboards for a microservices stack",
+        "Write PromQL alert rules for high error rates and latency"
+      ],
+      "aliases": [
+        "monitoring-stack",
+        "observability"
+      ],
+      "dependencies": [
+        "prometheus",
+        "grafana",
+        "alertmanager"
+      ],
+      "input_contract": {
+        "required": "target services, metrics endpoints, and alerting thresholds",
+        "optional": "custom recording rules, dashboard templates, and notification channels"
+      },
+      "output_artifacts": [
+        "prometheus_config",
+        "alert_rules",
+        "grafana_dashboards",
+        "recording_rules"
+      ],
+      "quality_checks": [
+        "all_targets_scraped",
+        "alert_rules_tested",
+        "dashboard_panels_load"
+      ],
+      "constraints": [
+        "never_scrape_at_sub_10s_intervals_without_justification",
+        "always_set_alert_severity_labels"
+      ],
+      "risk_level": "low",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "devops.elk-logging",
+      "title": "ELK Stack Logging",
+      "domain": "devops",
+      "instruction_file": "instructions/elk-logging.md",
+      "description": "Retrieve this expert for centralized logging with Elasticsearch, Logstash, Kibana, and Filebeat including index lifecycle management.",
+      "tags": [
+        "elasticsearch",
+        "logstash",
+        "kibana",
+        "filebeat",
+        "logging",
+        "elk"
+      ],
+      "tool_hints": [
+        "elasticsearch",
+        "logstash",
+        "kibana",
+        "filebeat"
+      ],
+      "examples": [
+        "Set up centralized logging with the ELK stack for a Kubernetes cluster",
+        "Configure Logstash pipelines with grok filters for application logs"
+      ],
+      "aliases": [
+        "elk-stack",
+        "centralized-logging"
+      ],
+      "dependencies": [
+        "elasticsearch",
+        "logstash",
+        "kibana",
+        "filebeat"
+      ],
+      "input_contract": {
+        "required": "log sources, log format, and retention requirements",
+        "optional": "custom grok patterns, index templates, and alerting rules"
+      },
+      "output_artifacts": [
+        "logstash_pipelines",
+        "filebeat_config",
+        "kibana_dashboards",
+        "index_lifecycle_policies"
+      ],
+      "quality_checks": [
+        "logs_ingested_end_to_end",
+        "index_lifecycle_configured",
+        "no_dropped_events"
+      ],
+      "constraints": [
+        "never_log_sensitive_data_without_masking",
+        "always_configure_index_retention"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "devops.cicd-patterns",
+      "title": "CI/CD Deployment Patterns",
+      "domain": "devops",
+      "instruction_file": "instructions/cicd-patterns.md",
+      "description": "Retrieve this expert for deployment strategies including blue-green, canary, feature flags, rollback procedures, and pipeline design.",
+      "tags": [
+        "cicd",
+        "blue-green",
+        "canary",
+        "deployment",
+        "feature-flags",
+        "rollback"
+      ],
+      "tool_hints": [
+        "github-actions",
+        "argocd",
+        "flagger",
+        "helm"
+      ],
+      "examples": [
+        "Design a canary deployment pipeline with automated rollback",
+        "Implement blue-green deployment with zero-downtime cutover"
+      ],
+      "aliases": [
+        "deployment-patterns",
+        "release-strategies"
+      ],
+      "dependencies": [],
+      "input_contract": {
+        "required": "application type, deployment target, and risk tolerance",
+        "optional": "rollback criteria, traffic split percentages, and feature flag system"
+      },
+      "output_artifacts": [
+        "pipeline_definitions",
+        "deployment_manifests",
+        "rollback_procedures",
+        "release_runbook"
+      ],
+      "quality_checks": [
+        "rollback_tested",
+        "health_checks_configured",
+        "zero_downtime_verified"
+      ],
+      "constraints": [
+        "never_deploy_without_rollback_strategy",
+        "always_include_health_check_gates"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "devops.linux-admin",
+      "title": "Linux Administration",
+      "domain": "devops",
+      "instruction_file": "instructions/linux-administration.md",
+      "description": "Retrieve this expert for Linux system administration including user management, firewall configuration, SSH hardening, and package management.",
+      "tags": [
+        "linux",
+        "sysadmin",
+        "firewall",
+        "ssh",
+        "disk-management",
+        "packages"
+      ],
+      "tool_hints": [
+        "iptables",
+        "nftables",
+        "useradd",
+        "sshd",
+        "apt",
+        "dnf"
+      ],
+      "examples": [
+        "Harden SSH access and configure firewall rules for a production server",
+        "Set up user accounts with least-privilege access and disk quotas"
+      ],
+      "aliases": [
+        "linux-sysadmin",
+        "server-administration"
+      ],
+      "dependencies": [],
+      "input_contract": {
+        "required": "target Linux distribution and server role",
+        "optional": "compliance requirements, user list, and network topology"
+      },
+      "output_artifacts": [
+        "security_hardening_config",
+        "firewall_rules",
+        "user_management_scripts",
+        "system_audit_report"
+      ],
+      "quality_checks": [
+        "ssh_hardened",
+        "firewall_deny_by_default",
+        "no_world_writable_files"
+      ],
+      "constraints": [
+        "never_allow_root_ssh_login",
+        "always_use_key_based_authentication"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "webapi.graphql",
+      "title": "GraphQL API Design",
+      "domain": "web_api",
+      "instruction_file": "instructions/graphql.md",
+      "description": "Retrieve this expert for GraphQL schema design, resolver implementation, N+1 prevention with DataLoader, and federation architecture.",
+      "tags": [
+        "graphql",
+        "schema",
+        "resolvers",
+        "dataloader",
+        "federation",
+        "subscriptions"
+      ],
+      "tool_hints": [
+        "graphql",
+        "apollo",
+        "strawberry",
+        "ariadne"
+      ],
+      "examples": [
+        "Design a GraphQL schema with relay-style pagination",
+        "Implement DataLoader to solve the N+1 query problem"
+      ],
+      "aliases": [
+        "graphql-api",
+        "graphql-schema"
+      ],
+      "dependencies": [
+        "graphql-core",
+        "strawberry-graphql"
+      ],
+      "input_contract": {
+        "required": "domain entities, relationships, and query patterns",
+        "optional": "federation boundaries, subscription requirements, and caching strategy"
+      },
+      "output_artifacts": [
+        "graphql_schema",
+        "resolver_implementations",
+        "dataloader_factories",
+        "query_documentation"
+      ],
+      "quality_checks": [
+        "no_n_plus_1_queries",
+        "schema_validates",
+        "depth_limiting_configured"
+      ],
+      "constraints": [
+        "never_expose_internal_ids_without_relay_global_ids",
+        "always_implement_query_depth_limiting"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "webapi.api-gateway",
+      "title": "API Gateway and Service Mesh",
+      "domain": "web_api",
+      "instruction_file": "instructions/api-gateway.md",
+      "description": "Retrieve this expert for API gateway configuration, service mesh patterns, circuit breakers, distributed tracing, and request routing.",
+      "tags": [
+        "api-gateway",
+        "service-mesh",
+        "circuit-breaker",
+        "distributed-tracing",
+        "load-balancing"
+      ],
+      "tool_hints": [
+        "kong",
+        "envoy",
+        "istio",
+        "traefik"
+      ],
+      "examples": [
+        "Configure an API gateway with circuit breakers and retry policies",
+        "Set up distributed tracing across microservices with Jaeger"
+      ],
+      "aliases": [
+        "service-mesh",
+        "api-gateway-patterns"
+      ],
+      "dependencies": [],
+      "input_contract": {
+        "required": "service topology, routing rules, and resilience requirements",
+        "optional": "tracing backend, mTLS configuration, and canary routing rules"
+      },
+      "output_artifacts": [
+        "gateway_config",
+        "routing_rules",
+        "circuit_breaker_policies",
+        "tracing_setup"
+      ],
+      "quality_checks": [
+        "health_checks_configured",
+        "circuit_breaker_thresholds_set",
+        "tracing_propagated"
+      ],
+      "constraints": [
+        "never_route_without_health_checks",
+        "always_set_request_timeouts"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "webapi.rate-limiting",
+      "title": "Rate Limiting and Throttling",
+      "domain": "web_api",
+      "instruction_file": "instructions/rate-limiting.md",
+      "description": "Retrieve this expert for rate limiting strategies including token bucket, sliding window, Redis-backed limiters, and backpressure patterns.",
+      "tags": [
+        "rate-limiting",
+        "throttling",
+        "token-bucket",
+        "sliding-window",
+        "redis",
+        "backpressure"
+      ],
+      "tool_hints": [
+        "redis",
+        "nginx",
+        "fastapi",
+        "flask-limiter"
+      ],
+      "examples": [
+        "Implement Redis-backed sliding window rate limiting for an API",
+        "Configure per-user and per-IP rate limits with graceful degradation"
+      ],
+      "aliases": [
+        "throttling",
+        "api-rate-limits"
+      ],
+      "dependencies": [
+        "redis"
+      ],
+      "input_contract": {
+        "required": "rate limit thresholds, key strategy (IP, user, API key), and storage backend",
+        "optional": "burst allowance, retry-after headers, and quota tiers"
+      },
+      "output_artifacts": [
+        "rate_limiter_implementation",
+        "configuration_files",
+        "monitoring_metrics"
+      ],
+      "quality_checks": [
+        "limits_enforced_under_load",
+        "retry_after_headers_present",
+        "no_race_conditions"
+      ],
+      "constraints": [
+        "never_rate_limit_without_informative_response_headers",
+        "always_test_under_concurrent_load"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "webapi.api-auth-patterns",
+      "title": "API Authentication Patterns",
+      "domain": "web_api",
+      "instruction_file": "instructions/api-authentication-patterns.md",
+      "description": "Retrieve this expert for API key management, mTLS, HMAC signatures, webhook verification, and service-to-service authentication.",
+      "tags": [
+        "api-keys",
+        "mtls",
+        "hmac",
+        "webhook-verification",
+        "service-auth"
+      ],
+      "tool_hints": [
+        "openssl",
+        "cryptography",
+        "hashlib",
+        "hmac"
+      ],
+      "examples": [
+        "Implement HMAC request signing for a webhook integration",
+        "Set up mTLS between microservices with certificate rotation"
+      ],
+      "aliases": [
+        "api-authentication",
+        "service-auth-patterns"
+      ],
+      "dependencies": [
+        "cryptography"
+      ],
+      "input_contract": {
+        "required": "authentication method, trust boundaries, and key management strategy",
+        "optional": "certificate authority, rotation schedule, and revocation policy"
+      },
+      "output_artifacts": [
+        "auth_implementation",
+        "key_management_procedures",
+        "verification_logic"
+      ],
+      "quality_checks": [
+        "timing_safe_comparison_used",
+        "keys_never_logged",
+        "rotation_procedure_documented"
+      ],
+      "constraints": [
+        "never_store_api_keys_in_plaintext",
+        "always_use_constant_time_comparison"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "webapi.websockets-sse",
+      "title": "WebSockets and Server-Sent Events",
+      "domain": "web_api",
+      "instruction_file": "instructions/websockets-sse.md",
+      "description": "Retrieve this expert for real-time communication with WebSockets and SSE including connection lifecycle, reconnection, heartbeats, and scaling.",
+      "tags": [
+        "websockets",
+        "sse",
+        "real-time",
+        "streaming",
+        "heartbeat",
+        "reconnection"
+      ],
+      "tool_hints": [
+        "websockets",
+        "fastapi",
+        "socket.io",
+        "starlette"
+      ],
+      "examples": [
+        "Build a WebSocket server with heartbeats and reconnection handling",
+        "Implement SSE for real-time dashboard updates"
+      ],
+      "aliases": [
+        "real-time-apis",
+        "streaming-apis"
+      ],
+      "dependencies": [
+        "websockets"
+      ],
+      "input_contract": {
+        "required": "event types, message format, and connection requirements",
+        "optional": "scaling strategy, authentication for connections, and message ordering"
+      },
+      "output_artifacts": [
+        "connection_handler",
+        "message_protocol",
+        "reconnection_logic",
+        "scaling_config"
+      ],
+      "quality_checks": [
+        "heartbeat_configured",
+        "reconnection_tested",
+        "backpressure_handled"
+      ],
+      "constraints": [
+        "never_trust_client_messages_without_validation",
+        "always_implement_connection_cleanup"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "cloud.gcp-gcs",
+      "title": "Google Cloud Storage",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/gcp-gcs.md",
+      "description": "Retrieve this expert for Google Cloud Storage bucket management, lifecycle policies, signed URLs, IAM, and data transfer.",
+      "tags": [
+        "gcp",
+        "cloud-storage",
+        "buckets",
+        "signed-urls",
+        "iam",
+        "lifecycle"
+      ],
+      "tool_hints": [
+        "gsutil",
+        "google-cloud-storage",
+        "gcloud"
+      ],
+      "examples": [
+        "Configure a GCS bucket with lifecycle policies and signed URL access",
+        "Set up cross-region replication with fine-grained IAM"
+      ],
+      "aliases": [
+        "gcs",
+        "google-cloud-storage"
+      ],
+      "dependencies": [
+        "google-cloud-storage"
+      ],
+      "input_contract": {
+        "required": "bucket purpose, storage class, and access patterns",
+        "optional": "lifecycle rules, CORS config, and retention policy"
+      },
+      "output_artifacts": [
+        "bucket_config",
+        "iam_bindings",
+        "lifecycle_rules",
+        "access_patterns_doc"
+      ],
+      "quality_checks": [
+        "public_access_prevention_set",
+        "lifecycle_policies_configured",
+        "iam_least_privilege"
+      ],
+      "constraints": [
+        "never_create_public_buckets_without_justification",
+        "always_enable_uniform_bucket_level_access"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "cloud.gcp-bigquery",
+      "title": "BigQuery Analytics",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/gcp-bigquery.md",
+      "description": "Retrieve this expert for BigQuery table design, partitioning, clustering, cost optimization, BQML, and query performance tuning.",
+      "tags": [
+        "gcp",
+        "bigquery",
+        "analytics",
+        "sql",
+        "partitioning",
+        "bqml"
+      ],
+      "tool_hints": [
+        "bq",
+        "google-cloud-bigquery",
+        "bigquery"
+      ],
+      "examples": [
+        "Design a partitioned and clustered BigQuery table for cost-efficient analytics",
+        "Train a classification model with BQML on existing warehouse data"
+      ],
+      "aliases": [
+        "bq",
+        "bigquery-analytics"
+      ],
+      "dependencies": [
+        "google-cloud-bigquery"
+      ],
+      "input_contract": {
+        "required": "data schema, query patterns, and cost constraints",
+        "optional": "partitioning strategy, clustering columns, and materialized view candidates"
+      },
+      "output_artifacts": [
+        "table_definitions",
+        "query_optimizations",
+        "cost_analysis",
+        "bqml_models"
+      ],
+      "quality_checks": [
+        "partitioning_configured",
+        "slot_usage_monitored",
+        "cost_per_query_estimated"
+      ],
+      "constraints": [
+        "never_run_select_star_on_large_tables",
+        "always_partition_tables_over_1tb"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "cloud.gcp-cloud-run",
+      "title": "Cloud Run Serverless Containers",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/gcp-cloud-run.md",
+      "description": "Retrieve this expert for deploying containers on Cloud Run with autoscaling, traffic splitting, VPC connectors, and revision management.",
+      "tags": [
+        "gcp",
+        "cloud-run",
+        "serverless",
+        "containers",
+        "autoscaling"
+      ],
+      "tool_hints": [
+        "gcloud",
+        "docker",
+        "cloud-run"
+      ],
+      "examples": [
+        "Deploy a containerized API to Cloud Run with traffic splitting",
+        "Configure Cloud Run with VPC connector for private database access"
+      ],
+      "aliases": [
+        "cloud-run",
+        "gcp-serverless"
+      ],
+      "dependencies": [
+        "docker"
+      ],
+      "input_contract": {
+        "required": "container image, concurrency settings, and scaling limits",
+        "optional": "VPC connector, custom domain, and traffic split percentages"
+      },
+      "output_artifacts": [
+        "service_config",
+        "deployment_commands",
+        "traffic_routing_rules",
+        "monitoring_setup"
+      ],
+      "quality_checks": [
+        "health_check_configured",
+        "min_instances_set_for_production",
+        "iam_invoker_restricted"
+      ],
+      "constraints": [
+        "never_allow_unauthenticated_access_without_justification",
+        "always_set_concurrency_and_timeout_limits"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "cloud.gcp-cloud-functions",
+      "title": "Cloud Functions",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/gcp-cloud-functions.md",
+      "description": "Retrieve this expert for GCP Cloud Functions including event triggers, gen2 functions, cold start optimization, and connection pooling.",
+      "tags": [
+        "gcp",
+        "cloud-functions",
+        "serverless",
+        "event-driven",
+        "triggers"
+      ],
+      "tool_hints": [
+        "gcloud",
+        "functions-framework",
+        "cloud-functions"
+      ],
+      "examples": [
+        "Create a Cloud Function triggered by Pub/Sub with retry handling",
+        "Optimize cold start times for a gen2 Cloud Function"
+      ],
+      "aliases": [
+        "gcf",
+        "gcp-functions"
+      ],
+      "dependencies": [
+        "functions-framework"
+      ],
+      "input_contract": {
+        "required": "trigger type, runtime, and function entry point",
+        "optional": "environment variables, VPC connector, and memory/timeout settings"
+      },
+      "output_artifacts": [
+        "function_source",
+        "deployment_config",
+        "trigger_setup",
+        "testing_harness"
+      ],
+      "quality_checks": [
+        "cold_start_measured",
+        "retry_behavior_tested",
+        "secrets_from_secret_manager"
+      ],
+      "constraints": [
+        "never_hardcode_secrets_in_function_source",
+        "always_set_timeout_and_memory_limits"
+      ],
+      "risk_level": "low",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "cloud.gcp-pubsub",
+      "title": "Google Cloud Pub/Sub",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/gcp-pubsub.md",
+      "description": "Retrieve this expert for Pub/Sub messaging including push/pull subscriptions, dead-letter queues, ordering keys, and exactly-once delivery.",
+      "tags": [
+        "gcp",
+        "pubsub",
+        "messaging",
+        "event-streaming",
+        "dead-letter",
+        "ordering"
+      ],
+      "tool_hints": [
+        "google-cloud-pubsub",
+        "gcloud",
+        "pubsub"
+      ],
+      "examples": [
+        "Set up Pub/Sub with dead-letter queues and exactly-once processing",
+        "Configure ordered message delivery with ordering keys"
+      ],
+      "aliases": [
+        "pubsub",
+        "gcp-messaging"
+      ],
+      "dependencies": [
+        "google-cloud-pubsub"
+      ],
+      "input_contract": {
+        "required": "topic structure, subscription type, and delivery guarantees",
+        "optional": "ordering keys, dead-letter config, and flow control settings"
+      },
+      "output_artifacts": [
+        "topic_config",
+        "subscription_config",
+        "dead_letter_setup",
+        "consumer_implementation"
+      ],
+      "quality_checks": [
+        "dead_letter_configured",
+        "ack_deadline_appropriate",
+        "flow_control_set"
+      ],
+      "constraints": [
+        "never_ack_before_processing_completes",
+        "always_configure_dead_letter_for_production"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "cloud.gcp-gke",
+      "title": "Google Kubernetes Engine",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/gcp-gke.md",
+      "description": "Retrieve this expert for GKE cluster management including Autopilot vs Standard, workload identity, node pools, and service mesh integration.",
+      "tags": [
+        "gcp",
+        "gke",
+        "kubernetes",
+        "autopilot",
+        "workload-identity",
+        "istio"
+      ],
+      "tool_hints": [
+        "gcloud",
+        "kubectl",
+        "helm",
+        "istioctl"
+      ],
+      "examples": [
+        "Create a GKE Autopilot cluster with workload identity",
+        "Configure GKE node pools with autoscaling and spot instances"
+      ],
+      "aliases": [
+        "gke",
+        "google-kubernetes"
+      ],
+      "dependencies": [
+        "kubectl",
+        "helm"
+      ],
+      "input_contract": {
+        "required": "cluster mode, workload requirements, and networking model",
+        "optional": "node pool config, service mesh, and multi-cluster strategy"
+      },
+      "output_artifacts": [
+        "cluster_config",
+        "node_pool_definitions",
+        "workload_identity_bindings",
+        "network_policies"
+      ],
+      "quality_checks": [
+        "workload_identity_enabled",
+        "network_policies_applied",
+        "autoscaling_configured"
+      ],
+      "constraints": [
+        "never_use_default_service_account_for_workloads",
+        "always_enable_workload_identity"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "role.devops-engineer",
+      "title": "DevOps Engineer Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/devops-engineer.md",
+      "description": "Role expert for infrastructure automation, CI/CD pipelines, monitoring, and production operations across DevOps tooling.",
+      "tags": [
+        "role",
+        "devops-engineer",
+        "infrastructure",
+        "cicd",
+        "monitoring"
+      ],
+      "tool_hints": [
+        "ansible",
+        "terraform",
+        "docker",
+        "kubernetes",
+        "prometheus"
+      ],
+      "examples": [
+        "Act as a DevOps engineer to automate infrastructure and set up CI/CD",
+        "Design a production monitoring and alerting stack"
+      ],
+      "aliases": [
+        "devops-role",
+        "infrastructure-engineer"
+      ],
+      "dependencies": [],
+      "input_contract": {
+        "required": "infrastructure requirements, deployment targets, and SLA targets",
+        "optional": "compliance constraints, team size, and existing tooling"
+      },
+      "output_artifacts": [
+        "infrastructure_plan",
+        "pipeline_config",
+        "automation_playbooks",
+        "monitoring_setup",
+        "operations_runbook"
+      ],
+      "quality_checks": [
+        "rollback_strategy_defined",
+        "monitoring_configured",
+        "secrets_managed_securely"
+      ],
+      "constraints": [
+        "never_deploy_without_rollback_strategy"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "role.api-architect",
+      "title": "API Architect Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/api-architect.md",
+      "description": "Role expert for API design, integration architecture, and backend service communication patterns across REST, GraphQL, and event-driven systems.",
+      "tags": [
+        "role",
+        "api-architect",
+        "api-design",
+        "integration",
+        "microservices"
+      ],
+      "tool_hints": [
+        "openapi",
+        "graphql",
+        "fastapi",
+        "kong"
+      ],
+      "examples": [
+        "Act as an API architect to design a microservices integration layer",
+        "Design a public API with authentication, rate limiting, and versioning"
+      ],
+      "aliases": [
+        "api-design-role",
+        "integration-architect"
+      ],
+      "dependencies": [],
+      "input_contract": {
+        "required": "API consumers, data contracts, and latency requirements",
+        "optional": "versioning strategy, federation boundaries, and compliance needs"
+      },
+      "output_artifacts": [
+        "api_design",
+        "security_model",
+        "integration_architecture",
+        "documentation_bundle",
+        "testing_plan"
+      ],
+      "quality_checks": [
+        "versioning_strategy_defined",
+        "rate_limiting_configured",
+        "auth_model_documented"
+      ],
+      "constraints": [
+        "never_expose_internal_details_in_public_apis"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      }
+    },
+    {
+      "id": "role.gcp-engineer",
+      "title": "GCP Engineer Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/gcp-engineer.md",
+      "description": "Role expert for Google Cloud Platform architecture, deployment, and operations across compute, storage, data, and messaging services.",
+      "tags": [
+        "role",
+        "gcp-engineer",
+        "google-cloud",
+        "cloud-architecture"
+      ],
+      "tool_hints": [
+        "gcloud",
+        "terraform",
+        "docker",
+        "kubectl"
+      ],
+      "examples": [
+        "Act as a GCP engineer to architect a serverless data pipeline",
+        "Design a GCP infrastructure with Terraform for a microservices platform"
+      ],
+      "aliases": [
+        "gcp-role",
+        "google-cloud-engineer"
+      ],
+      "dependencies": [],
+      "input_contract": {
+        "required": "workload type, availability target, and cost budget",
+        "optional": "data residency requirements, compliance framework, and team structure"
+      },
+      "output_artifacts": [
+        "architecture_design",
+        "terraform_modules",
+        "security_config",
+        "deployment_pipeline",
+        "cost_and_ops_plan"
+      ],
+      "quality_checks": [
+        "iam_least_privilege",
+        "terraform_state_managed",
+        "cost_alerts_configured"
+      ],
+      "constraints": [
+        "never_use_default_service_accounts_in_production"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
       "metadata": {
         "provider_support": [
           "codex",
