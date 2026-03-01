@@ -210,6 +210,12 @@ skillmesh emit \
   --top-k 3
 ```
 
+## Benchmarking
+
+Use the reproducible benchmark template:
+- [Benchmark template](docs/benchmarks/benchmark-template.md)
+- [Human eval workflow](docs/benchmarks/human-eval.md)
+
 ## CLI Commands
 
 | Command | Description |
