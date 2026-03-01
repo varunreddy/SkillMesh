@@ -2,56 +2,15 @@ from __future__ import annotations
 
 import os
 import sys
-from pathlib import Path
 from typing import Any
 
+from ._resolve import resolve_registry_path
 from .adapters import render_claude_context, render_codex_context
 from .registry import RegistryError, load_registry
 from .retriever import SkillRetriever
 
 _VALID_PROVIDERS = {"claude", "codex"}
 _VALID_BACKENDS = {"auto", "memory", "chroma"}
-
-
-def _find_repo_root() -> Path | None:
-    here = Path(__file__).resolve()
-    markers = ("src/skill_registry_rag/__main__.py", "examples/registry/tools.json")
-    for candidate in [here.parent, *here.parents]:
-        if all((candidate / marker).exists() for marker in markers):
-            return candidate
-    return None
-
-
-def _default_registry_path() -> Path | None:
-    env_path = os.getenv("SKILLMESH_REGISTRY", "").strip()
-    if env_path:
-        candidate = Path(env_path).expanduser().resolve()
-        if not candidate.exists():
-            raise ValueError(
-                f"SKILLMESH_REGISTRY points to a missing file: {candidate}"
-            )
-        return candidate
-
-    repo_root = _find_repo_root()
-    if repo_root is None:
-        return None
-    candidate = (repo_root / "examples" / "registry" / "tools.json").resolve()
-    return candidate if candidate.exists() else None
-
-
-def _resolve_registry_path(registry: str | None) -> Path:
-    if registry and registry.strip():
-        candidate = Path(registry).expanduser().resolve()
-        if not candidate.exists():
-            raise ValueError(f"Registry not found: {candidate}")
-        return candidate
-
-    default = _default_registry_path()
-    if default is None:
-        raise ValueError(
-            "Missing registry path. Provide `registry` or set SKILLMESH_REGISTRY."
-        )
-    return default
 
 
 def _normalize_query(query: str) -> str:
@@ -92,7 +51,7 @@ def _retrieve_hits(
     resolved_query = _normalize_query(query)
     resolved_top_k = _normalize_top_k(top_k)
     resolved_backend = _normalize_backend(backend)
-    registry_path = _resolve_registry_path(registry)
+    registry_path = resolve_registry_path(registry)
 
     try:
         cards = load_registry(registry_path)

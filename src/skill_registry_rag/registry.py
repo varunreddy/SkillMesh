@@ -150,11 +150,16 @@ def load_registry(
         seen_ids.add(card_id)
 
         instruction_file = str(row["instruction_file"]).strip()
-        instruction_path = (root / instruction_file).resolve()
-        if not instruction_path.exists():
-            raise RegistryError(
-                f"Instruction file missing for '{card_id}': {instruction_path}"
-            )
+
+        # Use inlined instruction_text if present (compiled registry), else read from file
+        instruction_text = str(row.get("instruction_text", "")).strip()
+        if not instruction_text:
+            instruction_path = (root / instruction_file).resolve()
+            if not instruction_path.exists():
+                raise RegistryError(
+                    f"Instruction file missing for '{card_id}': {instruction_path}"
+                )
+            instruction_text = instruction_path.read_text(encoding="utf-8").strip()
 
         card = ToolCard(
             id=card_id,
@@ -180,7 +185,7 @@ def load_registry(
             risk_level=str(row.get("risk_level", "")).strip(),
             maturity=str(row.get("maturity", "")).strip(),
             metadata=_to_any_map(row.get("metadata"), "metadata", card_id),
-            instruction_text=instruction_path.read_text(encoding="utf-8").strip(),
+            instruction_text=instruction_text,
         )
         cards.append(card)
 

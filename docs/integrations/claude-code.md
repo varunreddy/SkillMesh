@@ -1,8 +1,29 @@
 # Claude Code Integration
 
-SkillMesh can be used in Claude Code by calling the router script and asking Claude to follow only returned top-K capabilities.
+SkillMesh can be used in Claude Code via MCP or by calling the router script directly.
 
-## 1) Install the skill bundle in Codex-style layout
+## Option A: MCP server (recommended)
+
+Add to your Claude Code MCP settings (`.claude/settings.json` or via `claude mcp add`):
+
+```json
+{
+  "mcpServers": {
+    "skillmesh": {
+      "command": "uvx",
+      "args": ["--from", "skillmesh[mcp]", "skillmesh-mcp"]
+    }
+  }
+}
+```
+
+Requires [uv](https://docs.astral.sh/uv/getting-started/installation/). No env vars or file paths needed.
+
+Once configured, Claude Code can call `route_with_skillmesh()` and `retrieve_skillmesh_cards()` automatically.
+
+## Option B: Skill bundle + CLI
+
+### 1) Install the skill bundle in Codex-style layout
 
 ```bash
 $skill-installer install https://github.com/varunreddy/SkillMesh/tree/main/skills/skillmesh
@@ -10,7 +31,7 @@ $skill-installer install https://github.com/varunreddy/SkillMesh/tree/main/skill
 
 Restart Codex after install.
 
-## 2) Route for Claude output format
+### 2) Route for Claude output format
 
 ```bash
 ~/.codex/skills/skillmesh/scripts/route.sh \
@@ -21,7 +42,7 @@ Restart Codex after install.
   --top-k 5
 ```
 
-## 3) Use in Claude Code workflow
+### 3) Use in Claude Code workflow
 
 - Run the command above.
 - Paste the returned XML block into Claude Code.

@@ -50,6 +50,25 @@ User Query
 
 Each card contains: execution behavior, decision trees, anti-patterns, output contracts, and composability hints — everything the agent needs to act as a domain expert.
 
+## One-line MCP install (Claude Desktop / Claude Code)
+
+Add this to your Claude Desktop config (`claude_desktop_config.json`) or Claude Code MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "skillmesh": {
+      "command": "uvx",
+      "args": ["--from", "skillmesh[mcp]", "skillmesh-mcp"]
+    }
+  }
+}
+```
+
+No env vars. No file paths. No cloning. The bundled registry is included in the package.
+
+Requires [uv](https://docs.astral.sh/uv/getting-started/installation/) to be installed.
+
 ## 60-Second Demo
 
 ```bash
@@ -92,11 +111,14 @@ Only the relevant experts are injected — the rest of the 90+ card catalog stay
 
 ### Claude MCP Server
 
+The easiest way to run it is via `uvx` (see "One-line MCP install" above). For local development:
+
 ```bash
 pip install -e .[mcp]
-export SKILLMESH_REGISTRY=/path/to/tools.json
 skillmesh-mcp
 ```
+
+The server auto-discovers the registry: env var `SKILLMESH_REGISTRY` → repo root → bundled registry.
 
 Exposes two tools via MCP:
 - `route_with_skillmesh(query, top_k)` — provider-formatted context block
@@ -215,6 +237,8 @@ pip install -e .
 ```
 
 ### Missing registry path
+
+The CLI and MCP server auto-discover the registry. If auto-discovery fails, pass `--registry` or set:
 
 ```bash
 export SKILLMESH_REGISTRY=/path/to/tools.json
