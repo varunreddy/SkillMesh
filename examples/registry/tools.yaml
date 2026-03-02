@@ -3,24 +3,67 @@ tools:
   title: Visualization with Matplotlib and Seaborn
   domain: visualization
   instruction_file: instructions/visualization-matplotlib-seaborn.md
-  description: Retrieve this expert for publication-quality charting, statistical
-    visualization, and figure export workflows.
+  description: Publication-grade charting and statistical visualization workflows.
   tags:
   - matplotlib
   - seaborn
   - chart
   - heatmap
-  - lineplot
-  - scatterplot
   - dashboard
-  - styling
   tool_hints:
   - matplotlib.pyplot
   - seaborn
   - pandas
   examples:
-  - Build a 2x2 dashboard with trend, distribution, and correlation views
-  - Export publication-ready PNG charts for a technical report
+  - Build trend/distribution dashboard
+  - Export report-ready charts
+  aliases:
+  - charting
+  - data-viz
+  dependencies:
+  - matplotlib
+  - seaborn
+  - pandas
+  input_contract:
+    required: tabular dataframe or tidy data
+    optional: style palette, chart type hints
+  output_artifacts:
+  - png_figures
+  - svg_figures
+  - figure_manifest
+  quality_checks:
+  - axis_labels_present
+  - units_present
+  - legend_consistency
+  constraints:
+  - avoid_axis_misleading_scales
+  - save_dpi_at_least_180
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: viz
+    owner: community
+  invocation:
+    type: function
+    function:
+      name: viz_matplotlib-seaborn
+      description: Publication-grade charting and statistical visualization workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: tabular dataframe or tidy data
+          context:
+            type: object
+            description: style palette, chart type hints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: ml.model-export
   title: Machine Learning Model Export and Packaging
   domain: machine_learning
@@ -43,98 +86,362 @@ tools:
   examples:
   - Export an sklearn pipeline with version metadata
   - Convert gradient-boosted model to ONNX for serving
+  aliases:
+  - ml-model-export
+  - machine-learning-model-export-and-packaging
+  dependencies:
+  - joblib
+  - onnxruntime
+  - skl2onnx
+  - xgboost
+  - lightgbm
+  input_contract:
+    required: trained model/pipeline object and target serving environment
+    optional: latency constraints, interoperability target (ONNX/joblib), and versioning
+      policy
+  output_artifacts:
+  - serialized_model_artifacts
+  - inference_compatibility_report
+  - model_metadata_manifest
+  quality_checks:
+  - model_reload_test_passes
+  - inference_parity_validated
+  - version_and_dependency_metadata_recorded
+  constraints:
+  - never_export_unvalidated_model
+  - avoid_format_without_runtime_compatibility_check
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: ml
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: ml_model-export
+      description: Retrieve this expert for saving trained models with reproducible
+        metadata and deployment-safe export formats.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: trained model/pipeline object and target serving environment
+          context:
+            type: object
+            description: latency constraints, interoperability target (ONNX/joblib),
+              and versioning policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: ml.sklearn-modeling
   title: Scikit-learn Modeling and Evaluation
   domain: machine_learning
   instruction_file: instructions/sklearn-modeling.md
-  description: Retrieve this expert for feature preprocessing, model selection, cross-validation,
-    and robust sklearn evaluation pipelines.
+  description: Leakage-safe sklearn pipelines with CV, tuning, and diagnostics.
   tags:
   - sklearn
-  - cross-validation
   - pipeline
-  - feature-selection
-  - hyperparameter-tuning
+  - cross-validation
+  - metrics
   - classification
   - regression
-  - metrics
   tool_hints:
   - sklearn.pipeline
   - sklearn.model_selection
-  - sklearn.compose
   - sklearn.metrics
   examples:
-  - Build a leakage-safe sklearn pipeline with stratified cross-validation
-  - Tune gradient boosting and evaluate calibration and confusion matrix
+  - Train leakage-safe classifier
+  - Tune model with stratified CV
+  aliases:
+  - classical-ml
+  - tabular-ml
+  dependencies:
+  - scikit-learn
+  - pandas
+  - numpy
+  input_contract:
+    required: feature matrix X and target y
+    optional: sample weights, groups for CV
+  invocation:
+    type: function
+    function:
+      name: sklearn_model_selection_cross_validate
+      description: Primary schema follows cross_validate. Train/test split and grid
+        search argument examples are included for common modeling flows.
+      parameters:
+        type: object
+        required:
+        - estimator
+        - X
+        - y
+        properties:
+          estimator:
+            type: string
+            description: Estimator instance expression, e.g. Pipeline(...)
+          X:
+            type: string
+            description: Feature matrix variable name
+          y:
+            type: string
+            description: Target vector variable name
+          groups:
+            type: string
+          scoring:
+            oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+            - type: object
+          cv:
+            oneOf:
+            - type: integer
+              minimum: 2
+            - type: object
+          n_jobs:
+            type: integer
+          verbose:
+            type: integer
+            minimum: 0
+          params:
+            type: object
+          pre_dispatch:
+            oneOf:
+            - type: integer
+            - type: string
+          return_train_score:
+            type: boolean
+          return_estimator:
+            type: boolean
+          return_indices:
+            type: boolean
+          error_score:
+            oneOf:
+            - type: number
+            - type: string
+        additionalProperties: false
+      strict: false
+  output_artifacts:
+  - trained_pipeline
+  - metrics_report
+  - cv_fold_scores
+  quality_checks:
+  - train_validation_split
+  - no_data_leakage
+  - metric_variance_reported
+  constraints:
+  - never_report_train_only_metric
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: ml
 - id: ml.gradient-boosting
   title: Gradient Boosting with XGBoost and LightGBM
   domain: machine_learning
   instruction_file: instructions/gradient-boosting-xgb-lgbm.md
-  description: Retrieve this expert for high-performance tree boosting workflows,
-    tuning, feature attribution, and production export.
+  description: High-performance boosting, tuning, and SHAP-based attribution.
   tags:
   - xgboost
   - lightgbm
   - catboost
-  - gradient-boosting
-  - early-stopping
-  - feature-importance
   - shap
-  - tabular
+  - boosting
   tool_hints:
   - xgboost
   - lightgbm
   - catboost
   - shap
   examples:
-  - Train and tune an XGBoost classifier with calibrated probabilities
-  - Compare LightGBM and CatBoost with cross-validation and SHAP interpretation
+  - Tune XGBoost with early stopping
+  - Compare LightGBM vs CatBoost
+  aliases:
+  - gbm
+  - tree-boosting
+  dependencies:
+  - xgboost
+  - lightgbm
+  - catboost
+  - shap
+  - scikit-learn
+  input_contract:
+    required: tabular train/validation datasets
+    optional: class weights and monotonic constraints
+  output_artifacts:
+  - booster_model
+  - feature_importance
+  - shap_summary
+  quality_checks:
+  - early_stopping_enabled
+  - class_imbalance_strategy
+  - feature_leakage_review
+  constraints:
+  - consistent_validation_metric_across_models
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: boosting
+  invocation:
+    type: function
+    function:
+      name: ml_gradient-boosting
+      description: High-performance boosting, tuning, and SHAP-based attribution.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: tabular train/validation datasets
+          context:
+            type: object
+            description: class weights and monotonic constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: dl.pytorch-training
   title: Deep Learning with PyTorch
   domain: deep_learning
   instruction_file: instructions/pytorch-training.md
-  description: Retrieve this expert for PyTorch model training loops, GPU utilization,
-    mixed precision, and checkpointed experiments.
+  description: PyTorch training loops with mixed precision, GPU, and checkpoints.
   tags:
   - pytorch
   - torch
-  - neural-network
-  - dataloader
   - cuda
-  - mixed-precision
+  - amp
   - checkpoint
-  - training-loop
+  - dataloader
   tool_hints:
   - torch
   - torch.nn
   - torch.utils.data
   - torch.cuda.amp
   examples:
-  - Build a PyTorch training loop with early stopping and checkpoint save
-  - Train a CNN with mixed precision and evaluate on validation split
+  - Train CNN with AMP
+  - Checkpoint best model with patience
+  aliases:
+  - deep-learning
+  - torch-training
+  dependencies:
+  - torch
+  - torchvision
+  - numpy
+  input_contract:
+    required: tensor-ready dataset and model definition
+    optional: scheduler and mixed precision flag
+  output_artifacts:
+  - model_checkpoint
+  - training_history
+  - validation_report
+  quality_checks:
+  - seed_set
+  - checkpoint_saved
+  - validation_evaluated
+  constraints:
+  - do_not_skip_validation
+  - log_epoch_metrics
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: deep-learning
+  invocation:
+    type: function
+    function:
+      name: dl_pytorch-training
+      description: PyTorch training loops with mixed precision, GPU, and checkpoints.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: tensor-ready dataset and model definition
+          context:
+            type: object
+            description: scheduler and mixed precision flag
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: stats.scipy-statsmodels
   title: Statistical Inference with SciPy and Statsmodels
   domain: statistics
   instruction_file: instructions/statistics-scipy-statsmodels.md
-  description: Retrieve this expert for hypothesis testing, regression diagnostics,
-    ANOVA, and confidence interval workflows.
+  description: Hypothesis testing, ANOVA, and regression diagnostics.
   tags:
   - scipy
   - statsmodels
-  - hypothesis-testing
-  - p-value
   - anova
   - ols
-  - confidence-interval
+  - p-value
   - diagnostics
   tool_hints:
   - scipy.stats
   - statsmodels.api
   - statsmodels.formula.api
-  - statsmodels.stats
   examples:
-  - Run Welch t-test and Mann-Whitney with effect sizes
-  - Fit OLS model with robust standard errors and residual diagnostics
+  - Run Welch t-test with effect size
+  - Fit OLS with robust errors
+  aliases:
+  - inference
+  - classical-stats
+  dependencies:
+  - scipy
+  - statsmodels
+  - pandas
+  - numpy
+  input_contract:
+    required: well-defined hypotheses and structured sample groups
+    optional: multiple-testing correction strategy
+  output_artifacts:
+  - test_results
+  - model_summary
+  - diagnostic_plots
+  quality_checks:
+  - assumptions_checked
+  - effect_size_reported
+  - pvalue_reported
+  constraints:
+  - avoid_causal_claim_for_observational_data
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: stats
+  invocation:
+    type: function
+    function:
+      name: stats_scipy-statsmodels
+      description: Hypothesis testing, ANOVA, and regression diagnostics.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: well-defined hypotheses and structured sample groups
+          context:
+            type: object
+            description: multiple-testing correction strategy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: scipy.optimization-signal
   title: Scientific Computing with SciPy
   domain: scientific_computing
@@ -158,29 +465,120 @@ tools:
   examples:
   - Calibrate nonlinear parameters with bounds and confidence estimates
   - Detect peaks and smooth noisy sensor time-series data
+  aliases:
+  - scipy-optimization-signal
+  - scientific-computing-with-scipy
+  dependencies:
+  - scipy
+  - numpy
+  - matplotlib
+  input_contract:
+    required: mathematical objective, signal/data characteristics, and optimization
+      constraints
+    optional: initial parameter guesses, bounds, and noise assumptions
+  output_artifacts:
+  - method_selection_rationale
+  - optimized_parameters_or_signal_features
+  - numerical_stability_notes
+  quality_checks:
+  - convergence_or_stopping_criteria_checked
+  - residual_or_signal_quality_assessed
+  - sensitivity_to_initial_conditions_reviewed
+  constraints:
+  - avoid_overinterpreting_unstable_numerical_results
+  - document_parameter_sensitivity
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: scipy
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: scipy_optimization-signal
+      description: Retrieve this expert for optimization, curve fitting, integration,
+        ODE solving, and signal processing tasks.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: mathematical objective, signal/data characteristics, and
+              optimization constraints
+          context:
+            type: object
+            description: initial parameter guesses, bounds, and noise assumptions
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: chemistry.rdkit-cheminformatics
   title: Chemistry and Cheminformatics (RDKit)
   domain: chemistry
   instruction_file: instructions/chemistry-rdkit.md
-  description: Retrieve this expert for molecule parsing, descriptor extraction, substructure
-    search, and similarity workflows.
+  description: SMILES parsing, descriptors, fingerprints, and similarity workflows.
   tags:
   - chemistry
   - rdkit
   - smiles
   - fingerprints
-  - molecular-descriptors
   - substructure
-  - similarity
-  - medicinal-chemistry
   tool_hints:
   - rdkit.Chem
   - rdkit.Chem.AllChem
-  - rdkit.Chem.Descriptors
   - rdkit.DataStructs
   examples:
-  - Compute Morgan fingerprints and nearest-neighbor similarity ranking
-  - Filter molecules by Lipinski properties and substructure patterns
+  - Compute Morgan fingerprints
+  - Filter by Lipinski rules
+  aliases:
+  - cheminformatics
+  - molecule-analytics
+  dependencies:
+  - rdkit
+  - pandas
+  - numpy
+  input_contract:
+    required: canonical SMILES list
+    optional: substructure SMARTS query
+  output_artifacts:
+  - descriptor_table
+  - fingerprint_matrix
+  - similarity_rankings
+  quality_checks:
+  - invalid_smiles_reported
+  - sanitization_status_logged
+  constraints:
+  - do_not_claim_biological_efficacy_without_experimental_data
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: chemistry
+  invocation:
+    type: function
+    function:
+      name: chemistry_rdkit-cheminformatics
+      description: SMILES parsing, descriptors, fingerprints, and similarity workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: canonical SMILES list
+          context:
+            type: object
+            description: substructure SMARTS query
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: graph.networkx-analytics
   title: Graph Analytics with NetworkX
   domain: graph_analytics
@@ -204,115 +602,381 @@ tools:
   examples:
   - Compute centrality and detect communities in an interaction network
   - Analyze shortest paths and bottleneck nodes in a supply graph
+  aliases:
+  - graph-networkx-analytics
+  - graph-analytics-with-networkx
+  dependencies:
+  - networkx
+  - pandas
+  - numpy
+  - scipy
+  - matplotlib
+  input_contract:
+    required: graph definition, node-edge semantics, and analysis objective
+    optional: graph size characteristics, weighting rules, and output visualization
+      needs
+  output_artifacts:
+  - graph_construction_pipeline
+  - network_metrics_and_paths
+  - interpretability_summary
+  quality_checks:
+  - node_edge_integrity_validated
+  - metric_choice_matches_business_question
+  - large_graph_complexity_limits_noted
+  constraints:
+  - avoid_confusing_directed_vs_undirected_semantics
+  - preserve_node_and_edge_identifier_integrity
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: graph
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: graph_networkx-analytics
+      description: Retrieve this expert for graph construction, centrality analysis,
+        community detection, and path-based reasoning tasks.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: graph definition, node-edge semantics, and analysis objective
+          context:
+            type: object
+            description: graph size characteristics, weighting rules, and output visualization
+              needs
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cv.opencv-image-processing
   title: Computer Vision with OpenCV
   domain: computer_vision
   instruction_file: instructions/opencv-image-processing.md
-  description: Retrieve this expert for image preprocessing, feature extraction, contour
-    analysis, and CV pipeline prototyping.
+  description: Image preprocessing, contour extraction, and edge/threshold pipelines.
   tags:
   - opencv
   - cv2
   - image-processing
-  - edge-detection
   - contour
   - thresholding
-  - feature-matching
-  - segmentation
   tool_hints:
   - cv2
   - numpy
   - skimage
   - pillow
   examples:
-  - Detect edges and contours for object counting workflow
-  - Build an OpenCV preprocessing pipeline for document cleanup
+  - Object counting via contours
+  - Document cleanup pipeline
+  aliases:
+  - image-cv
+  - vision-preprocessing
+  dependencies:
+  - opencv-python
+  - numpy
+  - scikit-image
+  - pillow
+  input_contract:
+    required: image path(s) or ndarray
+    optional: ROI masks and confidence thresholds
+  output_artifacts:
+  - processed_images
+  - contour_stats
+  - detection_overlay
+  quality_checks:
+  - image_dimensions_valid
+  - contrast_assessed
+  - transform_params_logged
+  constraints:
+  - preserve_original_images
+  - log_non_detected_cases
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cv
+  invocation:
+    type: function
+    function:
+      name: cv_opencv-image-processing
+      description: Image preprocessing, contour extraction, and edge/threshold pipelines.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: image path(s) or ndarray
+          context:
+            type: object
+            description: ROI masks and confidence thresholds
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: geo.geopandas-spatial
   title: Geospatial Analysis with GeoPandas
   domain: geospatial
   instruction_file: instructions/geospatial-geopandas.md
-  description: Retrieve this expert for geospatial joins, coordinate transforms, spatial
-    indexing, and map-ready data preparation.
+  description: Spatial joins, CRS transforms, and map-ready geodata prep.
   tags:
   - geopandas
   - shapely
-  - geospatial
-  - projection
   - spatial-join
-  - choropleth
   - crs
-  - geodataframe
+  - choropleth
   tool_hints:
   - geopandas
   - shapely
   - pyproj
   - folium
   examples:
-  - Perform point-in-polygon spatial joins and aggregate by region
-  - Reproject geometries and build choropleth-ready GeoDataFrames
+  - Point-in-polygon joins
+  - Reproject and aggregate by region
+  aliases:
+  - gis
+  - spatial-analytics
+  dependencies:
+  - geopandas
+  - shapely
+  - pyproj
+  - fiona
+  input_contract:
+    required: valid geometry columns with declared CRS
+    optional: boundary datasets and map styling
+  output_artifacts:
+  - joined_geodataframe
+  - spatial_aggregate_table
+  - map_ready_layers
+  quality_checks:
+  - crs_validated
+  - invalid_geometries_reported
+  - join_predicate_logged
+  constraints:
+  - reproject_before_metric_distance_ops
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: geo
+  invocation:
+    type: function
+    function:
+      name: geo_geopandas-spatial
+      description: Spatial joins, CRS transforms, and map-ready geodata prep.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: valid geometry columns with declared CRS
+          context:
+            type: object
+            description: boundary datasets and map styling
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: nlp.spacy-transformers
   title: NLP Pipelines with spaCy and Transformers
   domain: nlp
   instruction_file: instructions/nlp-spacy-transformers.md
-  description: Retrieve this expert for tokenization, NER, text classification, and
-    embedding-enriched NLP pipelines.
+  description: NER, text classification, and embedding-backed NLP workflows.
   tags:
   - nlp
   - spacy
   - transformers
-  - tokenization
-  - named-entity-recognition
-  - text-classification
+  - ner
+  - classification
   - embeddings
-  - language-model
   tool_hints:
   - spacy
   - transformers
   - sentence-transformers
   - nltk
   examples:
-  - Build NER extraction pipeline and normalize entities into tables
-  - Run transformer-based text classification with confidence filtering
+  - NER extraction pipeline
+  - Transformer text classification
+  aliases:
+  - language-processing
+  - text-ml
+  dependencies:
+  - spacy
+  - transformers
+  - sentence-transformers
+  - nltk
+  input_contract:
+    required: text corpus with language context
+    optional: label schema and confidence thresholds
+  output_artifacts:
+  - entity_table
+  - classification_scores
+  - embedding_index
+  quality_checks:
+  - model_version_logged
+  - confidence_thresholds_explicit
+  constraints:
+  - flag_low_confidence_outputs
+  - preserve_source_text_references
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: nlp
+  invocation:
+    type: function
+    function:
+      name: nlp_spacy-transformers
+      description: NER, text classification, and embedding-backed NLP workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: text corpus with language context
+          context:
+            type: object
+            description: label schema and confidence thresholds
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: docs.pdf-generation
   title: PDF Report Generation
   domain: document_generation
   instruction_file: instructions/pdf-creation.md
-  description: Retrieve this expert for markdown/HTML-to-PDF generation, print styling,
-    and deterministic export.
+  description: Deterministic markdown/HTML to PDF rendering for reports.
   tags:
   - pdf
-  - report
-  - html-to-pdf
-  - markdown
   - weasyprint
   - reportlab
+  - markdown
+  - report
   tool_hints:
   - weasyprint
   - reportlab
   - markdown
   examples:
-  - Convert analysis markdown into a branded PDF memo
-  - Generate a multi-page PDF with tables and charts
+  - Render branded markdown report
+  - Export multi-page chart PDF
+  aliases:
+  - pdf-rendering
+  - report-export
+  dependencies:
+  - weasyprint
+  - reportlab
+  - markdown
+  input_contract:
+    required: markdown/html content
+    optional: css overrides and output filename
+  output_artifacts:
+  - pdf_report
+  - render_log
+  quality_checks:
+  - pdf_generated
+  - file_size_nonzero
+  - tables_not_clipped
+  constraints:
+  - include_failure_fallback_message
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: docs
+  invocation:
+    type: function
+    function:
+      name: docs_pdf-generation
+      description: Deterministic markdown/HTML to PDF rendering for reports.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: markdown/html content
+          context:
+            type: object
+            description: css overrides and output filename
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: docs.slides-pptx
   title: Slide Deck Creation (PPTX)
   domain: presentation_generation
   instruction_file: instructions/slide-creation.md
-  description: Retrieve this expert for structured slide narratives, PPTX authoring,
-    and speaker-ready deck output.
+  description: Narrative deck creation with PPTX output and chart integration.
   tags:
   - slides
   - pptx
-  - presentation
   - python-pptx
+  - presentation
   - storytelling
-  - executive-summary
   tool_hints:
   - python-pptx
   - matplotlib
   - pillow
   examples:
-  - Build a 10-slide executive deck from analysis artifacts
-  - Export a presentation with chart images and key takeaways
+  - Executive summary deck
+  - Findings deck with visuals
+  aliases:
+  - deck-generation
+  - slide-authoring
+  dependencies:
+  - python-pptx
+  - pillow
+  - matplotlib
+  input_contract:
+    required: structured storyline or slide outline
+    optional: brand template and theme colors
+  output_artifacts:
+  - pptx_deck
+  - slide_outline
+  - speaker_notes_stub
+  quality_checks:
+  - title_and_recommendation_slides_present
+  - visual_hierarchy_consistent
+  constraints:
+  - one_core_message_per_slide
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: slides
+  invocation:
+    type: function
+    function:
+      name: docs_slides-pptx
+      description: Narrative deck creation with PPTX output and chart integration.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: structured storyline or slide outline
+          context:
+            type: object
+            description: brand template and theme colors
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.schema-normalization
   title: Schema and Cleaning Specialist
   domain: data_engineering
@@ -333,6 +997,58 @@ tools:
   examples:
   - Fix mixed dict/list payload before metric extraction
   - Align quarterly reports and coerce numeric columns safely
+  aliases:
+  - data-schema-normalization
+  - schema-and-cleaning-specialist
+  dependencies:
+  - pandas
+  - pyarrow
+  - pandera
+  - pydantic
+  input_contract:
+    required: raw payload/schema examples and expected canonical schema
+    optional: null-handling rules, date/quarter alignment policy, and quality thresholds
+  output_artifacts:
+  - normalized_dataset
+  - schema_mapping_spec
+  - data_quality_findings
+  quality_checks:
+  - type_coercions_logged
+  - missing_and_outlier_handling_documented
+  - schema_drift_flags_reported
+  constraints:
+  - avoid_silent_column_drops_or_renames
+  - preserve_raw_to_normalized_lineage
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: data
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: data_schema-normalization
+      description: Retrieve this expert for payload normalization, dataframe conversion,
+        and quarter/date alignment.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: raw payload/schema examples and expected canonical schema
+          context:
+            type: object
+            description: null-handling rules, date/quarter alignment policy, and quality
+              thresholds
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: fe.accessibility
   title: Web Accessibility (WCAG)
   domain: frontend
@@ -355,6 +1071,59 @@ tools:
   examples:
   - Audit React UI for WCAG 2.2 AA compliance
   - Fix keyboard traps and missing ARIA labels
+  aliases:
+  - fe-accessibility
+  - web-accessibility-wcag
+  - web-accessibility-(wcag)
+  dependencies:
+  - axe-core
+  - lighthouse
+  - eslint-plugin-jsx-a11y
+  input_contract:
+    required: UI feature intent, interaction states, and target device/browser requirements
+    optional: design tokens, brand constraints, and accessibility/performance targets
+  output_artifacts:
+  - component_or_layout_changes
+  - accessibility_or_performance_notes
+  - integration_usage_guidance
+  quality_checks:
+  - responsive_and_state_behaviors_verified
+  - keyboard_and_screen_reader_baseline_checked
+  - render_performance_considered
+  constraints:
+  - preserve_design_system_consistency
+  - avoid_regressing_core_accessibility_paths
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: frontend
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: fe_accessibility
+      description: Retrieve this expert for WCAG compliance, semantic HTML, keyboard
+        navigation, and screen-reader safe UI patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: UI feature intent, interaction states, and target device/browser
+              requirements
+          context:
+            type: object
+            description: design tokens, brand constraints, and accessibility/performance
+              targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: web.auth-jwt
   title: JWT Authentication and Authorization
   domain: web_api
@@ -376,6 +1145,59 @@ tools:
   examples:
   - Implement short-lived access token with refresh rotation
   - Design role-based claims validation middleware
+  aliases:
+  - web-auth-jwt
+  - jwt-authentication-and-authorization
+  dependencies:
+  - pyjwt
+  - fastapi
+  - authlib
+  - oauthlib
+  input_contract:
+    required: API/auth objective, request-response expectations, and security requirements
+    optional: backward-compatibility constraints, target clients, and deployment environment
+  output_artifacts:
+  - api_or_auth_design
+  - implementation_changes
+  - validation_and_security_results
+  quality_checks:
+  - token_lifecycle_and_rotation_defined
+  - signature_and_claim_validation_enforced
+  - authz_scope_or_role_checks_covered
+  constraints:
+  - preserve_api_compatibility_or_version_explicitly
+  - avoid_exposing_sensitive_data_in_logs
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: web
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: web_auth-jwt
+      description: Retrieve this expert for JWT token issuance, validation, refresh
+        flows, RBAC claims, and secure auth middleware patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API/auth objective, request-response expectations, and security
+              requirements
+          context:
+            type: object
+            description: backward-compatibility constraints, target clients, and deployment
+              environment
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: web.auth-oauth
   title: OAuth2 and OpenID Connect
   domain: web_api
@@ -397,6 +1219,59 @@ tools:
   examples:
   - Integrate OAuth2 Authorization Code + PKCE in SPA
   - Validate OIDC ID token and provider JWKS signatures
+  aliases:
+  - web-auth-oauth
+  - oauth2-and-openid-connect
+  dependencies:
+  - authlib
+  - oauthlib
+  - pyjwt
+  - openid-client
+  input_contract:
+    required: API/auth objective, request-response expectations, and security requirements
+    optional: backward-compatibility constraints, target clients, and deployment environment
+  output_artifacts:
+  - api_or_auth_design
+  - implementation_changes
+  - validation_and_security_results
+  quality_checks:
+  - oauth_flow_matches_client_type
+  - pkce_and_state_validation_enabled
+  - token_storage_and_revocation_controls_defined
+  constraints:
+  - preserve_api_compatibility_or_version_explicitly
+  - avoid_exposing_sensitive_data_in_logs
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: web
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: web_auth-oauth
+      description: Retrieve this expert for OAuth2/OIDC authorization flows, PKCE,
+        token exchange, and secure third-party identity integration.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API/auth objective, request-response expectations, and security
+              requirements
+          context:
+            type: object
+            description: backward-compatibility constraints, target clients, and deployment
+              environment
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.aws-lambda
   title: AWS Lambda Serverless Workloads
   domain: cloud_infrastructure
@@ -418,6 +1293,59 @@ tools:
   examples:
   - Build event-triggered Lambda with DLQ and retries
   - Optimize Lambda memory/timeouts for lower latency
+  aliases:
+  - cloud-aws-lambda
+  - aws-lambda-serverless-workloads
+  dependencies:
+  - boto3
+  - aws-lambda-powertools
+  - aws-sam-cli
+  - awscli
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - timeout_memory_and_retry_policy_reviewed
+  - cold_start_and_dependency_size_considered
+  - observability_and_dlq_configured
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-lambda
+      description: Retrieve this expert for Lambda handlers, cold-start optimization,
+        packaging, observability, and event-driven serverless patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.aws-s3
   title: AWS S3 Bucket Operations
   domain: cloud_infrastructure
@@ -440,6 +1368,59 @@ tools:
   examples:
   - Create versioned encrypted bucket with lifecycle rules
   - Generate secure presigned upload/download URLs
+  aliases:
+  - cloud-aws-s3
+  - aws-s3-bucket-operations
+  dependencies:
+  - boto3
+  - awscli
+  - terraform
+  - cloudfront
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - bucket_policy_and_encryption_reviewed
+  - lifecycle_and_versioning_config_validated
+  - audit_logging_configuration_verified
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-s3
+      description: Retrieve this expert for S3 buckets, lifecycle policies, presigned
+        URLs, encryption, and secure object storage architecture.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.aws-vpc
   title: AWS VPC Networking
   domain: cloud_infrastructure
@@ -461,6 +1442,794 @@ tools:
   examples:
   - Design multi-AZ private/public subnet layout
   - Harden VPC ingress/egress with least privilege
+  aliases:
+  - cloud-aws-vpc
+  - aws-vpc-networking
+  dependencies:
+  - awscli
+  - terraform
+  - vpc-flow-logs
+  - cloudwatch
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - subnet_route_and_nat_design_validated
+  - security_group_and_nacl_rules_reviewed
+  - multi_az_and_flow_logs_considered
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-vpc
+      description: Retrieve this expert for VPC design, subnet routing, security groups,
+        NAT, peering, and network segmentation decisions.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-ec2
+  title: AWS EC2 Compute Instances
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-ec2.md
+  description: Retrieve this expert for EC2 instance sizing, launch templates, autoscaling
+    strategy, hardening baselines, and instance operations.
+  tags:
+  - aws
+  - ec2
+  - compute
+  - autoscaling
+  - ami
+  - ebs
+  tool_hints:
+  - aws ec2
+  - aws autoscaling
+  - cloud-init
+  - ssm
+  examples:
+  - Design private EC2 application tier with autoscaling and SSM access
+  - Harden EC2 launch template and patch baseline for production workloads
+  aliases:
+  - cloud-aws-ec2
+  - aws-ec2-compute-instances
+  dependencies:
+  - awscli
+  - boto3
+  - cloudwatch-agent
+  - ssm-agent
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - ami_patch_baseline_reviewed
+  - instance_profile_least_privilege
+  - autoscaling_and_health_checks_configured
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-ec2
+      description: Retrieve this expert for EC2 instance sizing, launch templates,
+        autoscaling strategy, hardening baselines, and instance operations.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-eks
+  title: AWS EKS Kubernetes Clusters
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-eks.md
+  description: Retrieve this expert for EKS cluster architecture, IRSA setup, node
+    strategy, add-on governance, and production operations.
+  tags:
+  - aws
+  - eks
+  - kubernetes
+  - irsa
+  - node-groups
+  - autoscaling
+  tool_hints:
+  - aws eks
+  - eksctl
+  - kubectl
+  - helm
+  examples:
+  - Design private EKS cluster with IRSA and managed node groups
+  - Build EKS upgrade and add-on versioning strategy for production
+  aliases:
+  - cloud-aws-eks
+  - aws-eks-kubernetes-clusters
+  dependencies:
+  - awscli
+  - kubectl
+  - helm
+  - eksctl
+  - terraform
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - irsa_configured
+  - control_plane_logging_enabled
+  - node_and_network_policies_reviewed
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-eks
+      description: Retrieve this expert for EKS cluster architecture, IRSA setup,
+        node strategy, add-on governance, and production operations.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-rds
+  title: AWS RDS Managed Databases
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-rds.md
+  description: Retrieve this expert for RDS/Aurora engine selection, HA topology,
+    backup and recovery controls, and database operations.
+  tags:
+  - aws
+  - rds
+  - aurora
+  - postgres
+  - mysql
+  - database
+  tool_hints:
+  - aws rds
+  - psql
+  - mysql
+  - cloudwatch
+  examples:
+  - Design Multi-AZ RDS architecture with backup and PITR controls
+  - Tune RDS parameter groups and failover posture for production
+  aliases:
+  - cloud-aws-rds
+  - aws-rds-managed-databases
+  dependencies:
+  - awscli
+  - terraform
+  - cloudwatch
+  - psql
+  - mysql
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - backups_and_pitr_enabled
+  - encryption_and_kms_configured
+  - multi_az_and_failover_validated
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-rds
+      description: Retrieve this expert for RDS/Aurora engine selection, HA topology,
+        backup and recovery controls, and database operations.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-dynamodb
+  title: AWS DynamoDB NoSQL Design
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-dynamodb.md
+  description: Retrieve this expert for DynamoDB access-pattern modeling, partition
+    key design, indexing strategy, and scaling controls.
+  tags:
+  - aws
+  - dynamodb
+  - nosql
+  - partition-key
+  - gsi
+  - streams
+  tool_hints:
+  - aws dynamodb
+  - boto3 dynamodb
+  - dynamodb streams
+  - cloudwatch
+  examples:
+  - Model DynamoDB table and GSIs from concrete read/write patterns
+  - Design DynamoDB scaling and hot-partition mitigation strategy
+  aliases:
+  - cloud-aws-dynamodb
+  - aws-dynamodb-nosql-design
+  dependencies:
+  - awscli
+  - boto3
+  - dynamodb-toolkit
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - partition_key_and_access_patterns_validated
+  - capacity_mode_and_autoscaling_reviewed
+  - backup_and_ttl_configuration_verified
+  constraints:
+  - avoid_unreviewed_production_changes
+  - require_access_pattern_driven_schema_design
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-dynamodb
+      description: Retrieve this expert for DynamoDB access-pattern modeling, partition
+        key design, indexing strategy, and scaling controls.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-api-gateway
+  title: AWS API Gateway Delivery
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-api-gateway.md
+  description: Retrieve this expert for API Gateway route design, authn/authz controls,
+    throttling, and staged API delivery patterns.
+  tags:
+  - aws
+  - api-gateway
+  - rest
+  - http-api
+  - authorizer
+  - throttling
+  tool_hints:
+  - aws apigateway
+  - aws apigatewayv2
+  - lambda authorizer
+  - wafv2
+  examples:
+  - Design versioned API Gateway routes with JWT authorizers and throttling
+  - Implement staged API rollout with access logs and rollback controls
+  aliases:
+  - cloud-aws-api-gateway
+  - aws-api-gateway-delivery
+  dependencies:
+  - awscli
+  - boto3
+  - lambda
+  - wafv2
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - authn_authz_strategy_defined
+  - throttling_and_waf_controls_configured
+  - logging_and_versioning_configured
+  constraints:
+  - avoid_unreviewed_production_changes
+  - preserve_api_compatibility_or_version_explicitly
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-api-gateway
+      description: Retrieve this expert for API Gateway route design, authn/authz
+        controls, throttling, and staged API delivery patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-cloudfront
+  title: AWS CloudFront Edge Delivery
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-cloudfront.md
+  description: Retrieve this expert for CloudFront caching strategy, origin security,
+    TLS posture, and edge performance optimization.
+  tags:
+  - aws
+  - cloudfront
+  - cdn
+  - caching
+  - waf
+  - edge
+  tool_hints:
+  - aws cloudfront
+  - oac
+  - wafv2
+  - s3 origin
+  examples:
+  - Configure CloudFront with secure S3 origin access and signed delivery
+  - Tune CloudFront cache key/TTL strategy for API and static traffic
+  aliases:
+  - cloud-aws-cloudfront
+  - aws-cloudfront-edge-delivery
+  dependencies:
+  - awscli
+  - terraform
+  - wafv2
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - origin_access_controls_enforced
+  - cache_key_and_ttl_strategy_reviewed
+  - tls_waf_and_geo_controls_validated
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-cloudfront
+      description: Retrieve this expert for CloudFront caching strategy, origin security,
+        TLS posture, and edge performance optimization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-sqs-sns-eventbridge
+  title: AWS Messaging and Event Routing
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-sqs-sns-eventbridge.md
+  description: Retrieve this expert for SQS/SNS/EventBridge topology design, delivery
+    guarantees, retries, dead-letter handling, and event governance.
+  tags:
+  - aws
+  - sqs
+  - sns
+  - eventbridge
+  - messaging
+  - dlq
+  tool_hints:
+  - aws sqs
+  - aws sns
+  - aws events
+  - eventbridge rules
+  examples:
+  - Design asynchronous workflow with retries, DLQ, and idempotent consumers
+  - Implement EventBridge event bus routing with schema and filter governance
+  aliases:
+  - cloud-aws-sqs-sns-eventbridge
+  - aws-messaging-and-event-routing
+  dependencies:
+  - awscli
+  - boto3
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - retry_and_dlq_strategy_defined
+  - idempotency_and_deduplication_addressed
+  - event_filtering_and_schema_contracts_documented
+  constraints:
+  - avoid_unreviewed_production_changes
+  - always_define_retry_or_dead_letter_strategy
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-sqs-sns-eventbridge
+      description: Retrieve this expert for SQS/SNS/EventBridge topology design, delivery
+        guarantees, retries, dead-letter handling, and event governance.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-cloudwatch-observability
+  title: AWS CloudWatch Observability
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-cloudwatch-observability.md
+  description: Retrieve this expert for CloudWatch metrics/logs/alarms, alert quality
+    tuning, dashboarding, and operational observability controls.
+  tags:
+  - aws
+  - cloudwatch
+  - observability
+  - alarms
+  - metrics
+  - logs
+  tool_hints:
+  - aws cloudwatch
+  - aws logs
+  - cloudwatch dashboards
+  - x-ray
+  examples:
+  - Build SLO-aligned CloudWatch alarm strategy with escalation policy
+  - Standardize AWS log retention and dashboard design for production services
+  aliases:
+  - cloud-aws-cloudwatch-observability
+  - aws-cloudwatch-observability
+  dependencies:
+  - awscli
+  - cloudwatch-agent
+  - xray
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - slo_aligned_alarms_defined
+  - log_retention_and_cost_controls_reviewed
+  - dashboards_and_runbooks_linked
+  constraints:
+  - avoid_unreviewed_production_changes
+  - do_not_log_secrets_or_pii
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-cloudwatch-observability
+      description: Retrieve this expert for CloudWatch metrics/logs/alarms, alert
+        quality tuning, dashboarding, and operational observability controls.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-iam-identity-center
+  title: AWS IAM Identity Center
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-iam-identity-center.md
+  description: Retrieve this expert for IAM Identity Center workforce access design,
+    permission set governance, and multi-account access controls.
+  tags:
+  - aws
+  - iam
+  - identity-center
+  - sso
+  - permission-sets
+  - governance
+  tool_hints:
+  - aws sso-admin
+  - aws identitystore
+  - aws organizations
+  - permission sets
+  examples:
+  - Design IAM Identity Center permission sets for multi-account enterprise teams
+  - Migrate from IAM users to federated SSO with MFA and access review controls
+  aliases:
+  - cloud-aws-iam-identity-center
+  - aws-iam-identity-center
+  dependencies:
+  - awscli
+  - terraform
+  - aws-organizations
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - permission_sets_least_privilege_reviewed
+  - mfa_and_session_policies_enforced
+  - access_review_and_recertification_defined
+  constraints:
+  - avoid_unreviewed_production_changes
+  - require_mfa_for_human_privileged_access
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-iam-identity-center
+      description: Retrieve this expert for IAM Identity Center workforce access design,
+        permission set governance, and multi-account access controls.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.aws-kms
+  title: AWS KMS Key Management
+  domain: cloud_infrastructure
+  instruction_file: instructions/aws-kms.md
+  description: Retrieve this expert for KMS key policy design, rotation/deletion controls,
+    and encryption integration across AWS services.
+  tags:
+  - aws
+  - kms
+  - encryption
+  - keys
+  - key-management
+  - compliance
+  tool_hints:
+  - aws kms
+  - kms key policy
+  - aws encryption sdk
+  - secrets manager
+  examples:
+  - Design environment-scoped KMS key hierarchy with strict policy boundaries
+  - Integrate KMS encryption controls across S3, RDS, and Secrets Manager
+  aliases:
+  - cloud-aws-kms
+  - aws-kms-key-management
+  dependencies:
+  - awscli
+  - boto3
+  - aws-encryption-sdk
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - key_policy_scope_reviewed
+  - rotation_and_deletion_controls_configured
+  - service_encryption_integrations_validated
+  constraints:
+  - avoid_unreviewed_production_changes
+  - never_grant_broad_kms_decrypt_access
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-kms
+      description: Retrieve this expert for KMS key policy design, rotation/deletion
+        controls, and encryption integration across AWS services.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sys.concurrency
   title: Concurrency and Parallelism Patterns
   domain: systems
@@ -482,6 +2251,56 @@ tools:
   examples:
   - Diagnose race condition in shared-state service
   - Choose async vs worker pool strategy for mixed workloads
+  aliases:
+  - sys-concurrency
+  - concurrency-and-parallelism-patterns
+  dependencies:
+  - python-stdlib
+  input_contract:
+    required: runtime constraints, correctness requirements, and interface boundaries
+    optional: throughput/latency goals, concurrency model, and platform targets
+  output_artifacts:
+  - implementation_changes
+  - profiling_or_benchmark_notes
+  - safety_and_error_handling_summary
+  quality_checks:
+  - error_paths_and_boundary_conditions_tested
+  - concurrency_or_memory_safety_reviewed
+  - performance_tradeoffs_documented
+  constraints:
+  - avoid_undefined_behavior_and_hidden_global_state
+  - prefer_deterministic_and_observable_failure_modes
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: systems
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sys_concurrency
+      description: Retrieve this expert for thread safety, async coordination, lock
+        strategies, and race-condition resistant concurrent architectures.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: runtime constraints, correctness requirements, and interface
+              boundaries
+          context:
+            type: object
+            description: throughput/latency goals, concurrency model, and platform
+              targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sec.container-security
   title: Container Security and Hardening
   domain: security
@@ -504,6 +2323,59 @@ tools:
   examples:
   - Harden Dockerfile for non-root distroless runtime
   - Add image signing and vulnerability gates to CI pipeline
+  aliases:
+  - sec-container-security
+  - container-security-and-hardening
+  dependencies:
+  - trivy
+  - grype
+  - cosign
+  - kubernetes
+  - docker
+  input_contract:
+    required: authorized scope, threat context, and assets under assessment
+    optional: compliance framework mapping, risk tolerance, and remediation timeline
+  output_artifacts:
+  - security_findings
+  - prioritized_remediation_plan
+  - control_verification_checklist
+  quality_checks:
+  - image_scan_gate_enforced
+  - runtime_hardening_controls_verified
+  - admission_or_signature_policy_defined
+  constraints:
+  - authorized_scope_only
+  - omit_operational_exploit_detail_that_enables_misuse
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: security
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sec_container-security
+      description: Retrieve this expert for container image hardening, runtime controls,
+        Kubernetes pod security, and CI vulnerability gates.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: authorized scope, threat context, and assets under assessment
+          context:
+            type: object
+            description: compliance framework mapping, risk tolerance, and remediation
+              timeline
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sys.cpp-modern
   title: Modern C++ (C++17/C++20)
   domain: systems
@@ -525,6 +2397,58 @@ tools:
   examples:
   - Refactor legacy pointer code to RAII and smart pointers
   - Implement generic performance-safe abstractions with templates
+  aliases:
+  - sys-cpp-modern
+  - modern-c-c-17-c-20
+  - modern-c++-(c++17/c++20)
+  dependencies:
+  - clang
+  - cmake
+  input_contract:
+    required: runtime constraints, correctness requirements, and interface boundaries
+    optional: throughput/latency goals, concurrency model, and platform targets
+  output_artifacts:
+  - implementation_changes
+  - profiling_or_benchmark_notes
+  - safety_and_error_handling_summary
+  quality_checks:
+  - error_paths_and_boundary_conditions_tested
+  - concurrency_or_memory_safety_reviewed
+  - performance_tradeoffs_documented
+  constraints:
+  - avoid_undefined_behavior_and_hidden_global_state
+  - prefer_deterministic_and_observable_failure_modes
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: systems
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sys_cpp-modern
+      description: Retrieve this expert for modern C++ architecture, RAII safety,
+        move semantics, templates, and performance-aware systems code.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: runtime constraints, correctness requirements, and interface
+              boundaries
+          context:
+            type: object
+            description: throughput/latency goals, concurrency model, and platform
+              targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: fe.css-architecture
   title: CSS Architecture and Design Systems
   domain: frontend
@@ -546,6 +2470,56 @@ tools:
   examples:
   - Define token-based theming system across components
   - Refactor fragile CSS into predictable architecture layers
+  aliases:
+  - fe-css-architecture
+  - css-architecture-and-design-systems
+  dependencies:
+  - react
+  input_contract:
+    required: UI feature intent, interaction states, and target device/browser requirements
+    optional: design tokens, brand constraints, and accessibility/performance targets
+  output_artifacts:
+  - component_or_layout_changes
+  - accessibility_or_performance_notes
+  - integration_usage_guidance
+  quality_checks:
+  - responsive_and_state_behaviors_verified
+  - keyboard_and_screen_reader_baseline_checked
+  - render_performance_considered
+  constraints:
+  - preserve_design_system_consistency
+  - avoid_regressing_core_accessibility_paths
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: frontend
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: fe_css-architecture
+      description: Retrieve this expert for scalable CSS systems, design tokens, component
+        theming, and responsive layout strategies.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: UI feature intent, interaction states, and target device/browser
+              requirements
+          context:
+            type: object
+            description: design tokens, brand constraints, and accessibility/performance
+              targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.dbt
   title: dbt Analytics Engineering
   domain: data_engineering
@@ -567,6 +2541,55 @@ tools:
   examples:
   - Design staging/intermediate/mart dbt model layers
   - Implement incremental models with schema tests and lineage
+  aliases:
+  - data-dbt
+  - dbt-analytics-engineering
+  dependencies:
+  - dbt-core
+  input_contract:
+    required: source schema/data samples and transformation objectives
+    optional: data volume profile, latency/SLA constraints, and governance rules
+  output_artifacts:
+  - transformation_logic_or_queries
+  - data_quality_report
+  - lineage_or_execution_notes
+  quality_checks:
+  - schema_and_type_assumptions_verified
+  - null_and_edge_cases_handled
+  - reproducible_execution_documented
+  constraints:
+  - avoid_silent_schema_or_type_breakage
+  - preserve_traceability_of_source_to_output
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: data
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: data_dbt
+      description: Retrieve this expert for dbt model layering, testing, documentation,
+        and incremental transformation workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sec.dependency-scanning
   title: Dependency Scanning and SCA
   domain: security
@@ -588,6 +2611,59 @@ tools:
   examples:
   - Prioritize reachable critical CVEs and remediation plan
   - Generate and validate SBOM as CI artifact
+  aliases:
+  - sec-dependency-scanning
+  - dependency-scanning-and-sca
+  dependencies:
+  - pip-audit
+  - npm-audit
+  - trivy
+  - dependabot
+  - cyclonedx
+  input_contract:
+    required: authorized scope, threat context, and assets under assessment
+    optional: compliance framework mapping, risk tolerance, and remediation timeline
+  output_artifacts:
+  - security_findings
+  - prioritized_remediation_plan
+  - control_verification_checklist
+  quality_checks:
+  - critical_and_high_cves_triaged
+  - reachability_or_exploitability_reviewed
+  - sbom_generation_and_storage_verified
+  constraints:
+  - authorized_scope_only
+  - omit_operational_exploit_detail_that_enables_misuse
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: security
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sec_dependency-scanning
+      description: Retrieve this expert for CVE triage, software composition analysis,
+        SBOM workflows, and secure dependency governance.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: authorized scope, threat context, and assets under assessment
+          context:
+            type: object
+            description: compliance framework mapping, risk tolerance, and remediation
+              timeline
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.docker
   title: Docker Build and Runtime Patterns
   domain: cloud_infrastructure
@@ -609,6 +2685,56 @@ tools:
   examples:
   - Convert monolithic Dockerfile to multi-stage minimal image
   - Implement non-root runtime with health checks and cache strategy
+  aliases:
+  - cloud-docker
+  - docker-build-and-runtime-patterns
+  dependencies:
+  - trivy
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - least_privilege_reviewed
+  - failure_and_rollback_path_defined
+  - cost_and_scaling_implications_noted
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_docker
+      description: Retrieve this expert for production Dockerfiles, multi-stage builds,
+        secure runtime configs, and container image optimization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: web.fastapi
   title: FastAPI Async Web Services
   domain: web_api
@@ -630,6 +2756,59 @@ tools:
   examples:
   - Build async REST API with strict request/response schemas
   - Structure FastAPI routers and auth dependencies for production
+  aliases:
+  - web-fastapi
+  - fastapi-async-web-services
+  dependencies:
+  - fastapi
+  - uvicorn
+  - pydantic
+  - httpx
+  input_contract:
+    required: API/auth objective, request-response expectations, and security requirements
+    optional: backward-compatibility constraints, target clients, and deployment environment
+  output_artifacts:
+  - api_or_auth_design
+  - implementation_changes
+  - validation_and_security_results
+  quality_checks:
+  - request_validation_and_error_contract_defined
+  - authorization_rules_verified
+  - logging_and_observability_considered
+  constraints:
+  - preserve_api_compatibility_or_version_explicitly
+  - avoid_exposing_sensitive_data_in_logs
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: web
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: web_fastapi
+      description: Retrieve this expert for FastAPI endpoint design, dependency injection,
+        validation, middleware, and async API architecture.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API/auth objective, request-response expectations, and security
+              requirements
+          context:
+            type: object
+            description: backward-compatibility constraints, target clients, and deployment
+              environment
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: ml.feature-engineering
   title: Feature Engineering for ML
   domain: machine_learning
@@ -651,6 +2830,55 @@ tools:
   examples:
   - Build leakage-safe lag and rolling features
   - Design encoding pipeline for high-cardinality categoricals
+  aliases:
+  - ml-feature-engineering
+  - feature-engineering-for-ml
+  dependencies:
+  - pandas
+  - featuretools
+  input_contract:
+    required: problem definition, target variable, and evaluation metric
+    optional: feature constraints, compute budget, and deployment target
+  output_artifacts:
+  - modeling_or_feature_plan
+  - evaluation_summary
+  - reproducibility_metadata
+  quality_checks:
+  - data_leakage_review_completed
+  - validation_strategy_aligned_to_problem
+  - metrics_include_uncertainty_or_variance
+  constraints:
+  - avoid_training_test_contamination
+  - record_model_data_and_seed_versions
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: ml
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: ml_feature-engineering
+      description: Retrieve this expert for robust feature design, leakage-safe transforms,
+        encoding strategies, and model-ready feature pipelines.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: problem definition, target variable, and evaluation metric
+          context:
+            type: object
+            description: feature constraints, compute budget, and deployment target
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: finance.financial-modeling
   title: Financial Modeling and Valuation
   domain: finance
@@ -672,6 +2900,96 @@ tools:
   examples:
   - Build three-statement forecast with scenario toggles
   - Estimate equity value with DCF and comparable multiples
+  aliases:
+  - finance-financial-modeling
+  - financial-modeling-and-valuation
+  dependencies:
+  - pandas
+  - numpy
+  input_contract:
+    required: financial objective, modeling assumptions, and data time horizon
+    optional: scenario definitions, risk constraints, and benchmark references
+  invocation:
+    type: function
+    function:
+      name: finance_financial_modeling_run
+      description: No single canonical API covers full financial modeling orchestration,
+        so this schema is a strong workflow contract with API-backed NPV/IRR references.
+      parameters:
+        type: object
+        required:
+        - objective
+        - historical_cashflows
+        - forecast_horizon_periods
+        - discount_rate
+        properties:
+          objective:
+            type: string
+            enum:
+            - valuation
+            - planning
+            - budgeting
+            - scenario_analysis
+          historical_cashflows:
+            type: array
+            items:
+              type: number
+            minItems: 3
+          forecast_horizon_periods:
+            type: integer
+            minimum: 1
+          frequency:
+            type: string
+            enum:
+            - monthly
+            - quarterly
+            - annual
+          currency:
+            type: string
+          discount_rate:
+            type: number
+            minimum: 0
+          terminal_growth_rate:
+            type: number
+          tax_rate:
+            type: number
+            minimum: 0
+            maximum: 1
+          capex_percent_revenue:
+            type: number
+          working_capital_percent_revenue:
+            type: number
+          comparable_multiples:
+            type: object
+          scenario_overrides:
+            type: object
+          include_npv:
+            type: boolean
+          include_irr:
+            type: boolean
+        additionalProperties: false
+      strict: false
+  output_artifacts:
+  - assumption_framework
+  - scenario_or_backtest_outputs
+  - risk_and_sensitivity_summary
+  quality_checks:
+  - assumptions_and_units_are_explicit
+  - sensitivity_or_stress_analysis_included
+  - data_sources_and_methods_cited
+  constraints:
+  - not_investment_advice
+  - avoid_unjustified_precision_or_causal_claims
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: finance
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
 - id: web.flask
   title: Flask Web Application Patterns
   domain: web_api
@@ -693,6 +3011,59 @@ tools:
   examples:
   - Refactor Flask service to app-factory + blueprint architecture
   - Add robust error handling and testable dependency boundaries
+  aliases:
+  - web-flask
+  - flask-web-application-patterns
+  dependencies:
+  - flask
+  - gunicorn
+  - sqlalchemy
+  - pytest
+  input_contract:
+    required: API/auth objective, request-response expectations, and security requirements
+    optional: backward-compatibility constraints, target clients, and deployment environment
+  output_artifacts:
+  - api_or_auth_design
+  - implementation_changes
+  - validation_and_security_results
+  quality_checks:
+  - request_validation_and_error_contract_defined
+  - authorization_rules_verified
+  - logging_and_observability_considered
+  constraints:
+  - preserve_api_compatibility_or_version_explicitly
+  - avoid_exposing_sensitive_data_in_logs
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: web
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: web_flask
+      description: Retrieve this expert for Flask app factory design, blueprints,
+        extension wiring, and production-ready API/service patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API/auth objective, request-response expectations, and security
+              requirements
+          context:
+            type: object
+            description: backward-compatibility constraints, target clients, and deployment
+              environment
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: infra.github-actions
   title: GitHub Actions CI/CD Workflows
   domain: devops
@@ -714,6 +3085,56 @@ tools:
   examples:
   - Set up matrix test workflow with caching and artifacts
   - Harden CI secrets and pin action versions
+  aliases:
+  - infra-github-actions
+  - github-actions-ci-cd-workflows
+  - github-actions-ci/cd-workflows
+  dependencies:
+  - github-actions
+  input_contract:
+    required: pipeline objective, repository/workflow context, and deployment policy
+    optional: runner constraints, cache strategy, and release gating rules
+  output_artifacts:
+  - workflow_configuration
+  - ci_validation_results
+  - deployment_or_release_notes
+  quality_checks:
+  - secrets_handling_verified
+  - artifact_and_cache_strategy_defined
+  - failure_notifications_and_retries_configured
+  constraints:
+  - pin_external_actions_or_dependencies
+  - avoid_unreviewed_auto_deploy_to_production
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: devops
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: infra_github-actions
+      description: Retrieve this expert for GitHub Actions pipelines, caching, reusable
+        workflows, secure secrets handling, and deployment automation.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: pipeline objective, repository/workflow context, and deployment
+              policy
+          context:
+            type: object
+            description: runner constraints, cache strategy, and release gating rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sys.go
   title: Go Systems Programming
   domain: systems
@@ -735,6 +3156,56 @@ tools:
   examples:
   - Design concurrent Go worker pool with context cancellation
   - Refactor error-prone Go service into idiomatic layered package
+  aliases:
+  - sys-go
+  - go-systems-programming
+  dependencies:
+  - go
+  input_contract:
+    required: runtime constraints, correctness requirements, and interface boundaries
+    optional: throughput/latency goals, concurrency model, and platform targets
+  output_artifacts:
+  - implementation_changes
+  - profiling_or_benchmark_notes
+  - safety_and_error_handling_summary
+  quality_checks:
+  - error_paths_and_boundary_conditions_tested
+  - concurrency_or_memory_safety_reviewed
+  - performance_tradeoffs_documented
+  constraints:
+  - avoid_undefined_behavior_and_hidden_global_state
+  - prefer_deterministic_and_observable_failure_modes
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: systems
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sys_go
+      description: Retrieve this expert for idiomatic Go services, goroutine patterns,
+        error handling discipline, and high-performance backend design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: runtime constraints, correctness requirements, and interface
+              boundaries
+          context:
+            type: object
+            description: throughput/latency goals, concurrency model, and platform
+              targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: ml.hyperparameter-tuning
   title: Hyperparameter Tuning and Search
   domain: machine_learning
@@ -756,6 +3227,55 @@ tools:
   examples:
   - Tune XGBoost with Bayesian optimization and early stopping
   - Choose search space and pruning strategy for constrained runtime
+  aliases:
+  - ml-hyperparameter-tuning
+  - hyperparameter-tuning-and-search
+  dependencies:
+  - optuna
+  - ray[tune]
+  input_contract:
+    required: problem definition, target variable, and evaluation metric
+    optional: feature constraints, compute budget, and deployment target
+  output_artifacts:
+  - modeling_or_feature_plan
+  - evaluation_summary
+  - reproducibility_metadata
+  quality_checks:
+  - data_leakage_review_completed
+  - validation_strategy_aligned_to_problem
+  - metrics_include_uncertainty_or_variance
+  constraints:
+  - avoid_training_test_contamination
+  - record_model_data_and_seed_versions
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: ml
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: ml_hyperparameter-tuning
+      description: Retrieve this expert for systematic hyperparameter search, tuning
+        strategy design, and objective-driven model optimization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: problem definition, target variable, and evaluation metric
+          context:
+            type: object
+            description: feature constraints, compute budget, and deployment target
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sec.iam-policies
   title: IAM Policies and Access Control
   domain: security
@@ -777,6 +3297,58 @@ tools:
   examples:
   - Design least-privilege role policy for CI deployment
   - Audit and tighten wildcard IAM permissions with conditions
+  aliases:
+  - sec-iam-policies
+  - iam-policies-and-access-control
+  dependencies:
+  - awscli
+  - aws-iam-access-analyzer
+  - cloudtrail
+  - terraform
+  input_contract:
+    required: authorized scope, threat context, and assets under assessment
+    optional: compliance framework mapping, risk tolerance, and remediation timeline
+  output_artifacts:
+  - security_findings
+  - prioritized_remediation_plan
+  - control_verification_checklist
+  quality_checks:
+  - least_privilege_policy_scope_reviewed
+  - wildcards_and_escalation_paths_checked
+  - audit_logging_and_alerting_confirmed
+  constraints:
+  - authorized_scope_only
+  - omit_operational_exploit_detail_that_enables_misuse
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: security
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sec_iam-policies
+      description: Retrieve this expert for least-privilege IAM design, policy boundaries,
+        role trust rules, and cloud access governance.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: authorized scope, threat context, and assets under assessment
+          context:
+            type: object
+            description: compliance framework mapping, risk tolerance, and remediation
+              timeline
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.kubernetes
   title: Kubernetes Workload Operations
   domain: cloud_infrastructure
@@ -799,6 +3371,59 @@ tools:
   examples:
   - Deploy resilient service with probes and autoscaling
   - Harden pod security contexts and namespace policies
+  aliases:
+  - cloud-kubernetes
+  - kubernetes-workload-operations
+  dependencies:
+  - kubectl
+  - helm
+  - kustomize
+  - kubernetes
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - least_privilege_reviewed
+  - failure_and_rollback_path_defined
+  - cost_and_scaling_implications_noted
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_kubernetes
+      description: Retrieve this expert for Kubernetes deployments, scaling, networking,
+        RBAC, and production-grade cluster operations.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: fe.nextjs
   title: Next.js Full-stack Applications
   domain: frontend
@@ -820,6 +3445,59 @@ tools:
   examples:
   - Choose SSR vs SSG per route with caching strategy
   - Implement Next.js app router with server/client boundaries
+  aliases:
+  - fe-nextjs
+  - next-js-full-stack-applications
+  - next.js-full-stack-applications
+  dependencies:
+  - next
+  - react
+  - vercel
+  input_contract:
+    required: UI feature intent, interaction states, and target device/browser requirements
+    optional: design tokens, brand constraints, and accessibility/performance targets
+  output_artifacts:
+  - component_or_layout_changes
+  - accessibility_or_performance_notes
+  - integration_usage_guidance
+  quality_checks:
+  - responsive_and_state_behaviors_verified
+  - keyboard_and_screen_reader_baseline_checked
+  - render_performance_considered
+  constraints:
+  - preserve_design_system_consistency
+  - avoid_regressing_core_accessibility_paths
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: frontend
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: fe_nextjs
+      description: Retrieve this expert for Next.js app/router architecture, SSR/SSG
+        strategies, API routes, and performance optimization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: UI feature intent, interaction states, and target device/browser
+              requirements
+          context:
+            type: object
+            description: design tokens, brand constraints, and accessibility/performance
+              targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sec.owasp-web
   title: Web Application Security (OWASP Top 10)
   domain: security
@@ -842,6 +3520,59 @@ tools:
   examples:
   - Harden API against XSS/CSRF/SQLi classes
   - Apply OWASP checklist to web service threat review
+  aliases:
+  - sec-owasp-web
+  - web-application-security-owasp-top-10
+  - web-application-security-(owasp-top-10)
+  dependencies:
+  - owasp-asvs
+  - semgrep
+  - zap
+  - burp-suite
+  input_contract:
+    required: authorized scope, threat context, and assets under assessment
+    optional: compliance framework mapping, risk tolerance, and remediation timeline
+  output_artifacts:
+  - security_findings
+  - prioritized_remediation_plan
+  - control_verification_checklist
+  quality_checks:
+  - findings_mapped_to_owasp_categories
+  - severity_and_repro_steps_documented
+  - fixes_include_verification_strategy
+  constraints:
+  - authorized_scope_only
+  - omit_operational_exploit_detail_that_enables_misuse
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: security
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sec_owasp-web
+      description: Retrieve this expert for OWASP-aligned web security reviews, secure
+        coding controls, and vulnerability remediation guidance.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: authorized scope, threat context, and assets under assessment
+          context:
+            type: object
+            description: compliance framework mapping, risk tolerance, and remediation
+              timeline
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.pandas-advanced
   title: Advanced Pandas Data Workflows
   domain: data_engineering
@@ -863,6 +3594,55 @@ tools:
   examples:
   - Optimize large dataframe joins and aggregations
   - Refactor slow pandas pipeline into vectorized operations
+  aliases:
+  - data-pandas-advanced
+  - advanced-pandas-data-workflows
+  dependencies:
+  - pandas
+  input_contract:
+    required: source schema/data samples and transformation objectives
+    optional: data volume profile, latency/SLA constraints, and governance rules
+  output_artifacts:
+  - transformation_logic_or_queries
+  - data_quality_report
+  - lineage_or_execution_notes
+  quality_checks:
+  - schema_and_type_assumptions_verified
+  - null_and_edge_cases_handled
+  - reproducible_execution_documented
+  constraints:
+  - avoid_silent_schema_or_type_breakage
+  - preserve_traceability_of_source_to_output
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: data
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: data_pandas-advanced
+      description: Retrieve this expert for high-performance pandas transformations,
+        memory optimization, and robust dataframe pipeline design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sec.penetration-testing
   title: Penetration Testing Methodology (Authorized)
   domain: security
@@ -884,6 +3664,60 @@ tools:
   examples:
   - Plan scoped authorized pentest with rules of engagement
   - Produce executive and technical findings report with remediation
+  aliases:
+  - sec-penetration-testing
+  - penetration-testing-methodology-authorized
+  - penetration-testing-methodology-(authori
+  dependencies:
+  - nmap
+  - burp-suite
+  - nikto
+  - owasp-testing-guide
+  - metasploit-framework
+  input_contract:
+    required: authorized scope, threat context, and assets under assessment
+    optional: compliance framework mapping, risk tolerance, and remediation timeline
+  output_artifacts:
+  - security_findings
+  - prioritized_remediation_plan
+  - control_verification_checklist
+  quality_checks:
+  - written_authorization_and_scope_verified
+  - evidence_chain_preserved
+  - findings_prioritized_with_business_impact
+  constraints:
+  - authorized_scope_only
+  - omit_operational_exploit_detail_that_enables_misuse
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: security
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sec_penetration-testing
+      description: Retrieve this expert for authorized penetration testing methodology,
+        evidence collection, risk classification, and reporting.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: authorized scope, threat context, and assets under assessment
+          context:
+            type: object
+            description: compliance framework mapping, risk tolerance, and remediation
+              timeline
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: finance.quantitative
   title: Quantitative Finance Modeling
   domain: finance
@@ -905,6 +3739,100 @@ tools:
   examples:
   - Construct and evaluate long-short factor portfolio
   - Compute drawdown, Sharpe, and exposure diagnostics
+  aliases:
+  - finance-quantitative
+  - quantitative-finance-modeling
+  dependencies:
+  - pandas
+  - numpy
+  input_contract:
+    required: financial objective, modeling assumptions, and data time horizon
+    optional: scenario definitions, risk constraints, and benchmark references
+  invocation:
+    type: function
+    function:
+      name: scipy_optimize_minimize
+      description: The primary optimization arguments align to scipy.optimize.minimize;
+        regression arguments are included for common factor model diagnostics.
+      parameters:
+        type: object
+        required:
+        - fun
+        - x0
+        properties:
+          fun:
+            type: string
+            description: Objective callable expression, e.g. portfolio_variance
+          x0:
+            type: array
+            items:
+              type: number
+            minItems: 1
+          args:
+            type: array
+          method:
+            type: string
+          jac:
+            oneOf:
+            - type: boolean
+            - type: string
+          hess:
+            oneOf:
+            - type: string
+            - type: object
+          bounds:
+            type: array
+            items:
+              type: array
+              items:
+                oneOf:
+                - type: number
+                - type: 'null'
+              minItems: 2
+              maxItems: 2
+          constraints:
+            type: array
+            items:
+              type: object
+          tol:
+            type: number
+          options:
+            type: object
+          regression_formula:
+            type: string
+          regression_data:
+            type: string
+          robust_cov:
+            type: string
+            enum:
+            - nonrobust
+            - HC0
+            - HC1
+            - HC2
+            - HC3
+        additionalProperties: false
+      strict: false
+  output_artifacts:
+  - assumption_framework
+  - scenario_or_backtest_outputs
+  - risk_and_sensitivity_summary
+  quality_checks:
+  - assumptions_and_units_are_explicit
+  - sensitivity_or_stress_analysis_included
+  - data_sources_and_methods_cited
+  constraints:
+  - not_investment_advice
+  - avoid_unjustified_precision_or_causal_claims
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: finance
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
 - id: fe.react-native
   title: React Native Mobile Development
   domain: frontend
@@ -926,6 +3854,56 @@ tools:
   examples:
   - Architect cross-platform mobile app with native module boundaries
   - Optimize React Native rendering and startup performance
+  aliases:
+  - fe-react-native
+  - react-native-mobile-development
+  dependencies:
+  - react
+  input_contract:
+    required: UI feature intent, interaction states, and target device/browser requirements
+    optional: design tokens, brand constraints, and accessibility/performance targets
+  output_artifacts:
+  - component_or_layout_changes
+  - accessibility_or_performance_notes
+  - integration_usage_guidance
+  quality_checks:
+  - responsive_and_state_behaviors_verified
+  - keyboard_and_screen_reader_baseline_checked
+  - render_performance_considered
+  constraints:
+  - preserve_design_system_consistency
+  - avoid_regressing_core_accessibility_paths
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: frontend
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: fe_react-native
+      description: Retrieve this expert for React Native navigation, platform APIs,
+        performance optimization, and production mobile release patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: UI feature intent, interaction states, and target device/browser
+              requirements
+          context:
+            type: object
+            description: design tokens, brand constraints, and accessibility/performance
+              targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: fe.react
   title: React Component Architecture
   domain: frontend
@@ -947,6 +3925,56 @@ tools:
   examples:
   - Split monolithic component tree into reusable architecture
   - Fix unnecessary re-renders with memoization strategy
+  aliases:
+  - fe-react
+  - react-component-architecture
+  dependencies:
+  - react
+  input_contract:
+    required: UI feature intent, interaction states, and target device/browser requirements
+    optional: design tokens, brand constraints, and accessibility/performance targets
+  output_artifacts:
+  - component_or_layout_changes
+  - accessibility_or_performance_notes
+  - integration_usage_guidance
+  quality_checks:
+  - responsive_and_state_behaviors_verified
+  - keyboard_and_screen_reader_baseline_checked
+  - render_performance_considered
+  constraints:
+  - preserve_design_system_consistency
+  - avoid_regressing_core_accessibility_paths
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: frontend
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: fe_react
+      description: Retrieve this expert for React component design, hook strategy,
+        state boundaries, and performance-oriented UI architecture.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: UI feature intent, interaction states, and target device/browser
+              requirements
+          context:
+            type: object
+            description: design tokens, brand constraints, and accessibility/performance
+              targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: web.rest-design
   title: REST API Design and Contracts
   domain: web_api
@@ -968,6 +3996,56 @@ tools:
   examples:
   - Design REST endpoints with stable pagination and filtering
   - Standardize error response envelopes across API surface
+  aliases:
+  - web-rest-design
+  - rest-api-design-and-contracts
+  dependencies:
+  - openapi
+  input_contract:
+    required: API/auth objective, request-response expectations, and security requirements
+    optional: backward-compatibility constraints, target clients, and deployment environment
+  output_artifacts:
+  - api_or_auth_design
+  - implementation_changes
+  - validation_and_security_results
+  quality_checks:
+  - request_validation_and_error_contract_defined
+  - authorization_rules_verified
+  - logging_and_observability_considered
+  constraints:
+  - preserve_api_compatibility_or_version_explicitly
+  - avoid_exposing_sensitive_data_in_logs
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: web
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: web_rest-design
+      description: Retrieve this expert for resource-oriented API design, pagination/error
+        contracts, and durable REST interface conventions.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API/auth objective, request-response expectations, and security
+              requirements
+          context:
+            type: object
+            description: backward-compatibility constraints, target clients, and deployment
+              environment
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sys.rust
   title: Rust Systems Programming
   domain: systems
@@ -989,6 +4067,59 @@ tools:
   examples:
   - Refactor unsafe ownership flow into idiomatic borrowing
   - Design async Rust service with robust error boundaries
+  aliases:
+  - sys-rust
+  - rust-systems-programming
+  dependencies:
+  - cargo
+  - rustfmt
+  - clippy
+  - tokio
+  input_contract:
+    required: runtime constraints, correctness requirements, and interface boundaries
+    optional: throughput/latency goals, concurrency model, and platform targets
+  output_artifacts:
+  - implementation_changes
+  - profiling_or_benchmark_notes
+  - safety_and_error_handling_summary
+  quality_checks:
+  - error_paths_and_boundary_conditions_tested
+  - concurrency_or_memory_safety_reviewed
+  - performance_tradeoffs_documented
+  constraints:
+  - avoid_undefined_behavior_and_hidden_global_state
+  - prefer_deterministic_and_observable_failure_modes
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: systems
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sys_rust
+      description: Retrieve this expert for idiomatic Rust design, ownership-safe
+        implementations, async runtime patterns, and performance tuning.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: runtime constraints, correctness requirements, and interface
+              boundaries
+          context:
+            type: object
+            description: throughput/latency goals, concurrency model, and platform
+              targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: sec.secrets-management
   title: Secrets Management and Rotation
   domain: security
@@ -1011,6 +4142,58 @@ tools:
   examples:
   - Design secret rotation and lease policy for production services
   - Harden CI pipelines to prevent credential leakage
+  aliases:
+  - sec-secrets-management
+  - secrets-management-and-rotation
+  dependencies:
+  - hashicorp-vault
+  - aws-secrets-manager
+  - gitleaks
+  - sops
+  input_contract:
+    required: authorized scope, threat context, and assets under assessment
+    optional: compliance framework mapping, risk tolerance, and remediation timeline
+  output_artifacts:
+  - security_findings
+  - prioritized_remediation_plan
+  - control_verification_checklist
+  quality_checks:
+  - secret_inventory_documented
+  - rotation_and_revocation_paths_defined
+  - exposure_monitoring_and_alerts_configured
+  constraints:
+  - authorized_scope_only
+  - omit_operational_exploit_detail_that_enables_misuse
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: security
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: sec_secrets-management
+      description: Retrieve this expert for secure secret storage, rotation policy,
+        CI/CD secret hygiene, and credential incident response.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: authorized scope, threat context, and assets under assessment
+          context:
+            type: object
+            description: compliance framework mapping, risk tolerance, and remediation
+              timeline
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.spark
   title: Apache Spark Distributed Data Processing
   domain: data_engineering
@@ -1032,6 +4215,55 @@ tools:
   examples:
   - Tune Spark job with skew-aware partition strategy
   - Design fault-tolerant ETL on large-scale datasets
+  aliases:
+  - data-spark
+  - apache-spark-distributed-data-processing
+  dependencies:
+  - pyspark
+  input_contract:
+    required: source schema/data samples and transformation objectives
+    optional: data volume profile, latency/SLA constraints, and governance rules
+  output_artifacts:
+  - transformation_logic_or_queries
+  - data_quality_report
+  - lineage_or_execution_notes
+  quality_checks:
+  - schema_and_type_assumptions_verified
+  - null_and_edge_cases_handled
+  - reproducible_execution_documented
+  constraints:
+  - avoid_silent_schema_or_type_breakage
+  - preserve_traceability_of_source_to_output
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: data
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: data_spark
+      description: Retrieve this expert for Spark data pipelines, partitioning strategy,
+        performance tuning, and resilient distributed processing.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.sql-queries
   title: SQL Query Design and Optimization
   domain: data_engineering
@@ -1053,6 +4285,57 @@ tools:
   examples:
   - Rewrite slow SQL query using proper indexes and windows
   - Build analytics query with layered CTEs and quality checks
+  aliases:
+  - data-sql-queries
+  - sql-query-design-and-optimization
+  dependencies:
+  - postgresql
+  - sqlite
+  - dbt-core
+  input_contract:
+    required: source schema/data samples and transformation objectives
+    optional: data volume profile, latency/SLA constraints, and governance rules
+  output_artifacts:
+  - transformation_logic_or_queries
+  - data_quality_report
+  - lineage_or_execution_notes
+  quality_checks:
+  - schema_and_type_assumptions_verified
+  - null_and_edge_cases_handled
+  - reproducible_execution_documented
+  constraints:
+  - avoid_silent_schema_or_type_breakage
+  - preserve_traceability_of_source_to_output
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: data
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: data_sql-queries
+      description: Retrieve this expert for advanced SQL joins, CTE/window logic,
+        query optimization, and analytical data retrieval patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: web.sqlalchemy
   title: SQLAlchemy ORM and Sessions
   domain: web_api
@@ -1074,6 +4357,57 @@ tools:
   examples:
   - Design transactional unit-of-work session boundaries
   - Implement performant ORM queries with eager loading strategy
+  aliases:
+  - web-sqlalchemy
+  - sqlalchemy-orm-and-sessions
+  dependencies:
+  - sqlalchemy
+  - postgresql
+  input_contract:
+    required: API/auth objective, request-response expectations, and security requirements
+    optional: backward-compatibility constraints, target clients, and deployment environment
+  output_artifacts:
+  - api_or_auth_design
+  - implementation_changes
+  - validation_and_security_results
+  quality_checks:
+  - request_validation_and_error_contract_defined
+  - authorization_rules_verified
+  - logging_and_observability_considered
+  constraints:
+  - preserve_api_compatibility_or_version_explicitly
+  - avoid_exposing_sensitive_data_in_logs
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: web
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: web_sqlalchemy
+      description: Retrieve this expert for SQLAlchemy model design, session lifecycle
+        management, migrations, and ORM query correctness.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API/auth objective, request-response expectations, and security
+              requirements
+          context:
+            type: object
+            description: backward-compatibility constraints, target clients, and deployment
+              environment
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.terraform
   title: Terraform Infrastructure as Code
   domain: cloud_infrastructure
@@ -1095,6 +4429,56 @@ tools:
   examples:
   - Design reusable Terraform modules for multi-env deployment
   - Implement remote state locking and drift detection controls
+  aliases:
+  - cloud-terraform
+  - terraform-infrastructure-as-code
+  dependencies:
+  - terraform
+  input_contract:
+    required: target cloud environment, intended workload behavior, and resource scope
+    optional: existing topology, compliance controls, cost and rollback constraints
+  output_artifacts:
+  - infrastructure_changeset
+  - configuration_artifacts
+  - operational_validation_report
+  quality_checks:
+  - least_privilege_reviewed
+  - failure_and_rollback_path_defined
+  - cost_and_scaling_implications_noted
+  constraints:
+  - avoid_unreviewed_production_changes
+  - pin_or_version_infrastructure_artifacts
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: cloud
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: cloud_terraform
+      description: Retrieve this expert for Terraform module design, remote state
+        safety, drift detection, and cloud IaC delivery workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.time-series
   title: Time Series Analysis and Forecasting
   domain: data_science
@@ -1116,6 +4500,56 @@ tools:
   examples:
   - Build leakage-safe temporal cross-validation forecast pipeline
   - Compare ARIMA/SARIMA with ML lag-feature approach
+  aliases:
+  - data-time-series
+  - time-series-analysis-and-forecasting
+  dependencies:
+  - prophet
+  - pandas
+  input_contract:
+    required: source schema/data samples and transformation objectives
+    optional: data volume profile, latency/SLA constraints, and governance rules
+  output_artifacts:
+  - transformation_logic_or_queries
+  - data_quality_report
+  - lineage_or_execution_notes
+  quality_checks:
+  - schema_and_type_assumptions_verified
+  - null_and_edge_cases_handled
+  - reproducible_execution_documented
+  constraints:
+  - avoid_silent_schema_or_type_breakage
+  - preserve_traceability_of_source_to_output
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: data
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: data_time-series
+      description: Retrieve this expert for stationarity checks, decomposition, forecasting
+        model selection, and time-aware validation.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: dl.transformers-finetuning
   title: Transformers Fine-tuning
   domain: deep_learning
@@ -1137,6 +4571,58 @@ tools:
   examples:
   - Fine-tune text classifier with LoRA and evaluation metrics
   - Run QLoRA on constrained GPU memory with stable checkpoints
+  aliases:
+  - dl-transformers-finetuning
+  - transformers-fine-tuning
+  dependencies:
+  - transformers
+  - peft
+  - bitsandbytes
+  - datasets
+  input_contract:
+    required: task definition, model family choice, and dataset readiness details
+    optional: GPU memory budget, adapter strategy, and checkpoint cadence
+  output_artifacts:
+  - training_configuration
+  - model_or_adapter_artifacts
+  - evaluation_and_limitations_summary
+  quality_checks:
+  - train_validation_split_strategy_documented
+  - checkpoint_and_recovery_plan_defined
+  - resource_constraints_accounted_for
+  constraints:
+  - avoid_overstating_generalization
+  - track_dataset_model_and_prompt_versions
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    install_extra: deep-learning
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v2
+  invocation:
+    type: function
+    function:
+      name: dl_transformers-finetuning
+      description: Retrieve this expert for HuggingFace transformer fine-tuning, LoRA/QLoRA
+        adaptation, and GPU-efficient training workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: task definition, model family choice, and dataset readiness
+              details
+          context:
+            type: object
+            description: GPU memory budget, adapter strategy, and checkpoint cadence
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.data-analyst
   title: Data Analyst Role Orchestrator
   domain: role_orchestrator
@@ -1159,6 +4645,58 @@ tools:
   examples:
   - Profile messy dataset, clean it, and deliver insight dashboard
   - Run EDA plus baseline prediction with leakage-safe validation
+  aliases:
+  - role-data-analyst
+  - analytics-orchestrator
+  dependencies:
+  - data.pandas-advanced
+  - data.sql-queries
+  - viz.matplotlib-seaborn
+  - ml.sklearn-modeling
+  - stats.scipy-statsmodels
+  input_contract:
+    required: tabular dataset and analysis objective
+    optional: target metric, business context, and prediction requirement
+  output_artifacts:
+  - data_profile_summary
+  - eda_findings
+  - visual_report
+  - baseline_model_report
+  quality_checks:
+  - missingness_and_dtype_audit_completed
+  - insights_backed_by_numeric_evidence
+  - charts_have_labels_units_and_titles
+  constraints:
+  - no_causal_claims_from_correlation_only
+  - use_only_allowed_dependencies_unless_explicitly_authorized
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: roles
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_data-analyst
+      description: Role expert that orchestrates profiling, cleaning, EDA, baseline
+        modeling, and visualization for tabular analytics tasks.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: tabular dataset and analysis objective
+          context:
+            type: object
+            description: target metric, business context, and prediction requirement
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.financial-analyst
   title: Financial Analyst Role Orchestrator
   domain: role_orchestrator
@@ -1182,6 +4720,99 @@ tools:
   examples:
   - Build base/upside/downside forecast with sensitivity analysis
   - Produce financial trend report with assumptions and risk notes
+  aliases:
+  - role-financial-analyst
+  - finance-orchestrator
+  dependencies:
+  - data.pandas-advanced
+  - data.time-series
+  - stats.scipy-statsmodels
+  - finance.financial-modeling
+  - finance.quantitative
+  - viz.matplotlib-seaborn
+  input_contract:
+    required: financial dataset with timeframe and target question
+    optional: scenario assumptions, risk tolerance, and reporting horizon
+  invocation:
+    type: function
+    function:
+      name: role_financial-analyst_execute
+      description: Role-level orchestration contract that routes into dependent cards;
+        fields represent execution intent rather than one library API signature.
+      parameters:
+        type: object
+        required:
+        - question
+        - dataset_ref
+        - target_metric
+        properties:
+          question:
+            type: string
+          dataset_ref:
+            type: string
+            description: Path, table, or URI for the primary financial dataset
+          target_metric:
+            type: string
+          time_column:
+            type: string
+          forecast_horizon_periods:
+            type: integer
+            minimum: 1
+          frequency:
+            type: string
+            enum:
+            - daily
+            - weekly
+            - monthly
+            - quarterly
+            - annual
+          scenario_assumptions:
+            type: object
+          risk_tolerance:
+            type: string
+            enum:
+            - low
+            - medium
+            - high
+          valuation_mode:
+            type: string
+            enum:
+            - dcf
+            - multiples
+            - blended
+            - none
+          include_visuals:
+            type: boolean
+          output_format:
+            type: string
+            enum:
+            - markdown
+            - json
+            - notebook
+        additionalProperties: false
+      strict: false
+  output_artifacts:
+  - assumptions_table
+  - financial_kpi_summary
+  - scenario_analysis_output
+  - risk_and_limitations_report
+  quality_checks:
+  - assumptions_explicitly_documented
+  - time_alignment_and_units_validated
+  - forecast_errors_and_uncertainty_reported
+  constraints:
+  - do_not_present_estimates_as_certainty
+  - separate_observed_facts_from_modeled_assumptions
+  - use_only_allowed_dependencies_unless_explicitly_authorized
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: roles
+    instruction_version: v1
 - id: ml.sklearn-pipeline-ops
   title: Scikit-learn Pipeline Ops
   domain: machine_learning
@@ -1203,6 +4834,101 @@ tools:
   examples:
   - Build deployment-ready pipeline with preprocessing parity checks
   - Tune decision threshold with precision-recall tradeoff analysis
+  aliases:
+  - ml-sklearn-pipeline-ops
+  - sklearn-production-pipelines
+  dependencies:
+  - scikit-learn
+  - pandas
+  - numpy
+  - joblib
+  input_contract:
+    required: training dataset with target variable and deployment objective
+    optional: class imbalance profile, threshold policy, and serving constraints
+  invocation:
+    type: function
+    function:
+      name: sklearn_pipeline_Pipeline
+      description: Pipeline schema models init/persist/calibration arguments used
+        in production packaging flows.
+      parameters:
+        type: object
+        required:
+        - steps
+        properties:
+          steps:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              required:
+              - name
+              - estimator
+              properties:
+                name:
+                  type: string
+                estimator:
+                  type: string
+              additionalProperties: false
+          memory:
+            oneOf:
+            - type: string
+            - type: 'null'
+          verbose:
+            type: boolean
+          calibration_method:
+            type: string
+            enum:
+            - sigmoid
+            - isotonic
+          calibration_cv:
+            oneOf:
+            - type: integer
+              minimum: 2
+            - type: object
+            - type: 'null'
+          calibration_n_jobs:
+            type: integer
+          calibration_ensemble:
+            oneOf:
+            - type: boolean
+            - type: string
+              enum:
+              - auto
+          persist_path:
+            type: string
+          persist_compress:
+            oneOf:
+            - type: integer
+              minimum: 0
+              maximum: 9
+            - type: boolean
+          persist_protocol:
+            oneOf:
+            - type: integer
+            - type: 'null'
+        additionalProperties: false
+      strict: false
+  output_artifacts:
+  - fitted_sklearn_pipeline
+  - calibration_threshold_report
+  - deployment_readiness_notes
+  quality_checks:
+  - preprocessing_parity_train_vs_inference
+  - baseline_vs_candidate_comparison_present
+  - metric_selection_aligned_to_objective
+  constraints:
+  - no_untracked_manual_preprocessing
+  - no_train_only_metric_reporting
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
 - id: stats.experiment-design
   title: Statistical Experiment Design and A/B Testing
   domain: statistics
@@ -1224,6 +4950,56 @@ tools:
   examples:
   - Design A/B experiment with MDE and power targets
   - Validate sample ratio mismatch and run robust significance checks
+  aliases:
+  - stats-experiment-design
+  - ab-test-design
+  dependencies:
+  - scipy
+  - statsmodels
+  - numpy
+  - pandas
+  input_contract:
+    required: primary metric, hypothesis, and experiment constraints
+    optional: historical variance, expected effect size, and traffic allocation
+  output_artifacts:
+  - experiment_plan
+  - power_sample_size_sheet
+  - decision_summary_with_uncertainty
+  quality_checks:
+  - primary_metric_pre_registered
+  - multiple_testing_or_peeking_risks_addressed
+  - effect_size_and_confidence_intervals_reported
+  constraints:
+  - avoid_p_value_only_conclusions
+  - separate_statistical_and_practical_significance
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: stats_experiment-design
+      description: Retrieve this expert for experiment planning, power analysis, sample-size
+        estimation, and robust A/B test interpretation.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: primary metric, hypothesis, and experiment constraints
+          context:
+            type: object
+            description: historical variance, expected effect size, and traffic allocation
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: stats.model-diagnostics
   title: Statistical Model Diagnostics
   domain: statistics
@@ -1245,6 +5021,56 @@ tools:
   examples:
   - Run residual and heteroskedasticity checks for regression model
   - Evaluate classification calibration and subgroup error stability
+  aliases:
+  - stats-model-diagnostics
+  - model-reliability-diagnostics
+  dependencies:
+  - statsmodels
+  - scipy
+  - scikit-learn
+  - matplotlib
+  input_contract:
+    required: trained model outputs, targets, and feature context
+    optional: cohort definitions, drift windows, and operating thresholds
+  output_artifacts:
+  - diagnostics_report
+  - cohort_error_breakdown
+  - risk_mitigation_actions
+  quality_checks:
+  - diagnostic_tests_match_model_type
+  - influential_points_or_outliers_reviewed
+  - subgroup_instability_assessed
+  constraints:
+  - avoid_global_metric_only_evaluation
+  - avoid_action_recommendations_without_evidence
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: stats_model-diagnostics
+      description: Retrieve this expert for residual diagnostics, calibration assessment,
+        cohort error analysis, and model reliability checks.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: trained model outputs, targets, and feature context
+          context:
+            type: object
+            description: cohort definitions, drift windows, and operating thresholds
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.machine-learning-engineer
   title: Machine Learning Engineer Role Orchestrator
   domain: role_orchestrator
@@ -1270,6 +5096,12 @@ tools:
   - stats.model-diagnostics
   - ml.model-export
   - viz.matplotlib-seaborn
+  examples:
+  - Build production-ready ML pipeline with diagnostics and export artifacts
+  - Deliver model handoff with monitoring plan and rollback triggers
+  aliases:
+  - role-ml-engineer
+  - ml-engineering-orchestrator
   dependencies:
   - data.pandas-advanced
   - ml.feature-engineering
@@ -1282,6 +5114,15 @@ tools:
   - stats.model-diagnostics
   - ml.model-export
   - viz.matplotlib-seaborn
+  input_contract:
+    required: dataset, target objective, and model success metric
+    optional: latency constraints, deployment target, and compliance requirements
+  output_artifacts:
+  - problem_contract
+  - pipeline_spec
+  - evaluation_report
+  - model_artifacts
+  - deployment_notes
   quality_checks:
   - baseline_before_tuning
   - leakage_controls_verified
@@ -1291,9 +5132,35 @@ tools:
   - do_not_report_train_only_metrics
   - include_segment_level_performance
   - require_reproducibility_metadata
-  examples:
-  - Build production-ready ML pipeline with diagnostics and export artifacts
-  - Deliver model handoff with monitoring plan and rollback triggers
+  - use_only_allowed_dependencies_unless_explicitly_authorized
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: roles
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_machine-learning-engineer
+      description: Role expert for end-to-end ML delivery across feature pipelines,
+        training, diagnostics, packaging, and deployment handoff.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: dataset, target objective, and model success metric
+          context:
+            type: object
+            description: latency constraints, deployment target, and compliance requirements
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.data-engineer
   title: Data Engineer Role Orchestrator
   domain: role_orchestrator
@@ -1316,6 +5183,12 @@ tools:
   - cloud.docker
   - cloud.kubernetes
   - cloud.terraform
+  examples:
+  - Build warehouse-ready pipeline with quality checks and observability
+  - Design Spark plus dbt workflow with replay and backfill procedures
+  aliases:
+  - role-data-engineer
+  - data-platform-orchestrator
   dependencies:
   - data.spark
   - data.sql-queries
@@ -1325,6 +5198,15 @@ tools:
   - cloud.docker
   - cloud.kubernetes
   - cloud.terraform
+  input_contract:
+    required: source datasets, target schema, and freshness expectations
+    optional: lineage requirements, cost constraints, and backfill policy
+  output_artifacts:
+  - pipeline_contract
+  - transformation_assets
+  - quality_report
+  - deployment_bundle
+  - operations_plan
   quality_checks:
   - schema_evolution_handled
   - idempotent_pipeline_design
@@ -1333,9 +5215,35 @@ tools:
   constraints:
   - avoid_unbounded_scans_on_large_tables
   - require_lineage_and_freshness_documentation
-  examples:
-  - Build warehouse-ready pipeline with quality checks and observability
-  - Design Spark plus dbt workflow with replay and backfill procedures
+  - use_only_allowed_dependencies_unless_explicitly_authorized
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: roles
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_data-engineer
+      description: Role expert for scalable data pipelines, quality enforcement, and
+        production-ready data platform delivery.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source datasets, target schema, and freshness expectations
+          context:
+            type: object
+            description: lineage requirements, cost constraints, and backfill policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.ml-researcher
   title: ML Researcher Role Orchestrator
   domain: role_orchestrator
@@ -1359,6 +5267,12 @@ tools:
   - stats.scipy-statsmodels
   - data.pandas-advanced
   - viz.matplotlib-seaborn
+  examples:
+  - Run structured model ablations with reproducible experiment tracking
+  - Produce research report with confidence intervals and failure analysis
+  aliases:
+  - role-ml-researcher
+  - research-orchestrator
   dependencies:
   - dl.pytorch-training
   - dl.transformers-finetuning
@@ -1369,6 +5283,15 @@ tools:
   - stats.scipy-statsmodels
   - data.pandas-advanced
   - viz.matplotlib-seaborn
+  input_contract:
+    required: research objective, target metric, and baseline definition
+    optional: compute budget, experiment matrix, and publication criteria
+  output_artifacts:
+  - research_plan
+  - training_log_summary
+  - results_table
+  - diagnostics
+  - next_experiments
   quality_checks:
   - baseline_plus_ablation_required
   - uncertainty_and_variance_reported
@@ -1376,9 +5299,35 @@ tools:
   constraints:
   - avoid_single_run_claims
   - avoid_sota_claims_without_comparable_baselines
-  examples:
-  - Run structured model ablations with reproducible experiment tracking
-  - Produce research report with confidence intervals and failure analysis
+  - use_only_allowed_dependencies_unless_explicitly_authorized
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: roles
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_ml-researcher
+      description: Role expert for hypothesis-driven ML research, ablations, diagnostics,
+        and reproducible experimental reporting.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: research objective, target metric, and baseline definition
+          context:
+            type: object
+            description: compute budget, experiment matrix, and publication criteria
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.dashboard-design
   title: BI Dashboard Design and Storytelling
   domain: business_intelligence
@@ -1400,6 +5349,55 @@ tools:
   examples:
   - Design executive and analyst dashboard pages with drill-down structure
   - Define KPI cards and trend visuals for weekly business review
+  aliases:
+  - bi-dashboard-design
+  - dashboard-storytelling
+  dependencies:
+  - data.sql-queries
+  - data.dbt
+  - viz.matplotlib-seaborn
+  input_contract:
+    required: business objective, audience, and target KPIs
+    optional: dashboard tool choice, refresh cadence, and governance constraints
+  output_artifacts:
+  - dashboard_blueprint
+  - kpi_layout_spec
+  - interaction_and_filter_plan
+  quality_checks:
+  - chart_types_match_business_questions
+  - kpi_cards_have_definition_and_owner
+  - time_window_and_filters_are_explicit
+  constraints:
+  - avoid_visual_clutter_without_decision_value
+  - avoid_unlabeled_or_ambiguous_kpis
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: bi_dashboard-design
+      description: Retrieve this expert for KPI-driven dashboard architecture, chart
+        selection, stakeholder communication, and adoption-focused BI reporting.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business objective, audience, and target KPIs
+          context:
+            type: object
+            description: dashboard tool choice, refresh cadence, and governance constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.metric-semantic-modeling
   title: BI Metric and Semantic Modeling
   domain: business_intelligence
@@ -1421,6 +5419,55 @@ tools:
   examples:
   - Define canonical metric dictionary with grain and owner
   - Design star-schema marts for BI dashboards and ad hoc analysis
+  aliases:
+  - bi-metric-semantic-modeling
+  - semantic-metric-layer
+  dependencies:
+  - data.sql-queries
+  - data.dbt
+  - data.pandas-advanced
+  input_contract:
+    required: entity definitions, required KPIs, and analysis grain
+    optional: lineage tool, SCD policy, and ownership model
+  output_artifacts:
+  - semantic_model_blueprint
+  - metric_dictionary
+  - quality_test_matrix
+  quality_checks:
+  - metric_grain_is_explicit
+  - join_paths_prevent_double_counting
+  - kpi_time_window_semantics_defined
+  constraints:
+  - avoid_implicit_metric_definitions
+  - avoid_untracked_schema_changes
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: bi_metric-semantic-modeling
+      description: Retrieve this expert for semantic layer design, metric governance,
+        dimensional modeling, and trusted KPI standardization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: entity definitions, required KPIs, and analysis grain
+          context:
+            type: object
+            description: lineage tool, SCD policy, and ownership model
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.bi-analyst
   title: BI Analyst Role Orchestrator
   domain: role_orchestrator
@@ -1442,6 +5489,12 @@ tools:
   - data.pandas-advanced
   - stats.scipy-statsmodels
   - viz.matplotlib-seaborn
+  examples:
+  - Build BI reporting spec with governed KPI definitions
+  - Produce stakeholder dashboard blueprint with drill-down analysis paths
+  aliases:
+  - role-bi-analyst
+  - business-intelligence-orchestrator
   dependencies:
   - bi.dashboard-design
   - bi.metric-semantic-modeling
@@ -1450,6 +5503,15 @@ tools:
   - data.pandas-advanced
   - stats.scipy-statsmodels
   - viz.matplotlib-seaborn
+  input_contract:
+    required: business questions, KPI scope, and audience
+    optional: tooling preferences, refresh cadence, and governance policy
+  output_artifacts:
+  - business_questions
+  - kpi_dictionary
+  - analysis_summary
+  - dashboard_blueprint
+  - governance_notes
   quality_checks:
   - kpi_dictionary_defined
   - grain_consistency_validated
@@ -1457,9 +5519,35 @@ tools:
   constraints:
   - avoid_mixed_grain_metrics
   - require_lineage_and_metric_definition_for_published_kpis
-  examples:
-  - Build BI reporting spec with governed KPI definitions
-  - Produce stakeholder dashboard blueprint with drill-down analysis paths
+  - use_only_allowed_dependencies_unless_explicitly_authorized
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: roles
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_bi-analyst
+      description: Role expert for KPI-centric business analysis, dashboard planning,
+        and governed reporting outputs for stakeholders.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business questions, KPI scope, and audience
+          context:
+            type: object
+            description: tooling preferences, refresh cadence, and governance policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.tableau-authoring
   title: Tableau Authoring and Governance
   domain: business_intelligence
@@ -1481,6 +5569,55 @@ tools:
   examples:
   - Design Tableau dashboard with action filters and KPI drill paths
   - Optimize workbook extract and publish workflow for stakeholders
+  aliases:
+  - bi-tableau-authoring
+  - tableau-governance
+  dependencies:
+  - data.sql-queries
+  - data.dbt
+  - bi.metric-semantic-modeling
+  input_contract:
+    required: target business KPIs and dashboard audience
+    optional: publish environment, refresh cadence, and permission model
+  output_artifacts:
+  - tableau_blueprint
+  - interaction_map
+  - publish_governance_checklist
+  quality_checks:
+  - kpi_lineage_to_source_verified
+  - dashboard_interaction_defaults_defined
+  - publish_ownership_documented
+  constraints:
+  - avoid_unmanaged_published_workbooks
+  - avoid_ambiguous_kpi_calculations
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: bi_tableau-authoring
+      description: Retrieve this expert for Tableau dashboard design, interaction
+        patterns, performance tuning, and governed publishing workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target business KPIs and dashboard audience
+          context:
+            type: object
+            description: publish environment, refresh cadence, and permission model
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.powerbi-modeling
   title: Power BI Modeling and DAX
   domain: business_intelligence
@@ -1502,6 +5639,55 @@ tools:
   examples:
   - Build Power BI semantic model with reusable DAX measures
   - Configure RLS and incremental refresh for production reporting
+  aliases:
+  - bi-powerbi-modeling
+  - powerbi-dax
+  dependencies:
+  - data.sql-queries
+  - data.dbt
+  - bi.metric-semantic-modeling
+  input_contract:
+    required: business KPIs, source schema, and report objectives
+    optional: security requirements, workspace policy, and refresh windows
+  output_artifacts:
+  - powerbi_model_spec
+  - dax_measure_catalog
+  - security_and_refresh_plan
+  quality_checks:
+  - dax_filter_context_validated
+  - relationship_cardinality_reviewed
+  - rls_and_refresh_policy_documented
+  constraints:
+  - avoid_ambiguous_model_relationships
+  - avoid_unvalidated_dax_measures
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: bi_powerbi-modeling
+      description: Retrieve this expert for Power BI data modeling, DAX measure design,
+        row-level security, and refresh strategy.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business KPIs, source schema, and report objectives
+          context:
+            type: object
+            description: security requirements, workspace policy, and refresh windows
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.looker-modeling
   title: Looker Modeling and LookML
   domain: business_intelligence
@@ -1523,6 +5709,55 @@ tools:
   examples:
   - Design LookML explores with governed measures and dimensions
   - Tune Looker semantic model using PDT and aggregate strategies
+  aliases:
+  - bi-looker-modeling
+  - looker-lookml
+  dependencies:
+  - data.sql-queries
+  - data.dbt
+  - bi.metric-semantic-modeling
+  input_contract:
+    required: entity model, metric requirements, and explore needs
+    optional: access policy, PDT strategy, and deployment workflow
+  output_artifacts:
+  - lookml_model_blueprint
+  - explore_design_spec
+  - governance_and_deploy_checklist
+  quality_checks:
+  - measure_logic_matches_kpi_dictionary
+  - explore_join_fanout_risks_reviewed
+  - access_and_ownership_policy_documented
+  constraints:
+  - avoid_unreviewed_semantic_model_changes
+  - avoid_duplicate_measure_definitions
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: bi_looker-modeling
+      description: Retrieve this expert for LookML model design, explore governance,
+        and performant semantic delivery in Looker.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: entity model, metric requirements, and explore needs
+          context:
+            type: object
+            description: access policy, PDT strategy, and deployment workflow
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.analytics-engineer
   title: Analytics Engineer Role Orchestrator
   domain: role_orchestrator
@@ -1547,6 +5782,12 @@ tools:
   - data.pandas-advanced
   - stats.scipy-statsmodels
   - viz.matplotlib-seaborn
+  examples:
+  - Build analytics engineering plan for dbt plus BI semantic delivery
+  - Deliver governed KPI model across Tableau, Power BI, and Looker
+  aliases:
+  - role-analytics-engineer
+  - semantic-delivery-orchestrator
   dependencies:
   - bi.metric-semantic-modeling
   - bi.dashboard-design
@@ -1558,6 +5799,15 @@ tools:
   - data.pandas-advanced
   - stats.scipy-statsmodels
   - viz.matplotlib-seaborn
+  input_contract:
+    required: business metric scope, source systems, and target BI platform
+    optional: governance constraints, ownership model, and release cadence
+  output_artifacts:
+  - semantic_contract
+  - transformation_spec
+  - bi_delivery_plan
+  - governance_pack
+  - acceptance_checks
   quality_checks:
   - semantic_grain_defined
   - metric_parity_verified_across_tools
@@ -1565,9 +5815,35 @@ tools:
   constraints:
   - avoid_dashboard_specific_metric_forks_without_approval
   - require_tested_transformations_before_publish
-  examples:
-  - Build analytics engineering plan for dbt plus BI semantic delivery
-  - Deliver governed KPI model across Tableau, Power BI, and Looker
+  - use_only_allowed_dependencies_unless_explicitly_authorized
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: roles
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_analytics-engineer
+      description: Role expert for governed analytics delivery across semantic modeling,
+        tested transformations, and BI platform implementation.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business metric scope, source systems, and target BI platform
+          context:
+            type: object
+            description: governance constraints, ownership model, and release cadence
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.azure-storage
   title: Azure Storage and Data Lake
   domain: cloud_infrastructure
@@ -1589,6 +5865,55 @@ tools:
   examples:
   - Design raw to curated ADLS layout with partitioning policy
   - Configure secure data lake access model for analytics teams
+  aliases:
+  - cloud-azure-storage
+  - azure-data-lake
+  dependencies:
+  - azure storage
+  - adls gen2
+  - managed identity
+  input_contract:
+    required: data domains, retention policy, and access requirements
+    optional: cost constraints, lifecycle policy, and downstream consumers
+  output_artifacts:
+  - storage_architecture_blueprint
+  - security_and_access_plan
+  - partitioning_and_layout_spec
+  quality_checks:
+  - partitioning_conventions_defined
+  - least_privilege_access_modeled
+  - retention_and_deletion_policies_documented
+  constraints:
+  - avoid_flat_unpartitioned_data_lakes
+  - avoid_unmanaged_public_access
+  risk_level: medium
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: cloud_azure-storage
+      description: Retrieve this expert for Azure Blob and ADLS Gen2 architecture,
+        data layout, access policy, and lifecycle governance.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: data domains, retention policy, and access requirements
+          context:
+            type: object
+            description: cost constraints, lifecycle policy, and downstream consumers
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.azure-data-factory
   title: Azure Data Factory Pipelines
   domain: cloud_infrastructure
@@ -1610,6 +5935,55 @@ tools:
   examples:
   - Build parameterized ADF ingestion and transformation workflows
   - Define retry and backfill strategy with data quality gates
+  aliases:
+  - cloud-azure-data-factory
+  - adf-pipelines
+  dependencies:
+  - azure data factory
+  - azure storage
+  - data.sql-queries
+  input_contract:
+    required: source and target systems with freshness SLA
+    optional: retry policy, backfill windows, and quality threshold rules
+  output_artifacts:
+  - pipeline_topology_design
+  - retry_and_failure_policy
+  - monitoring_and_alerting_plan
+  quality_checks:
+  - idempotency_strategy_defined
+  - quality_gates_before_publish
+  - alert_ownership_and_thresholds_set
+  constraints:
+  - avoid_non_recoverable_pipeline_steps
+  - avoid_hidden_environment_specific_logic
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: cloud_azure-data-factory
+      description: Retrieve this expert for Azure Data Factory pipeline orchestration,
+        ETL scheduling, retries, and operational reliability patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source and target systems with freshness SLA
+          context:
+            type: object
+            description: retry policy, backfill windows, and quality threshold rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.azure-synapse
   title: Azure Synapse Analytics
   domain: cloud_infrastructure
@@ -1631,6 +6005,55 @@ tools:
   examples:
   - Choose Synapse workload architecture for BI and ML consumers
   - Optimize Synapse serving model for dashboard latency and cost
+  aliases:
+  - cloud-azure-synapse
+  - synapse-analytics
+  dependencies:
+  - cloud.azure-storage
+  - data.sql-queries
+  - data.spark
+  input_contract:
+    required: workload latency goals, concurrency profile, and source systems
+    optional: cost budget, security boundaries, and BI serving targets
+  output_artifacts:
+  - synapse_architecture_recommendation
+  - query_optimization_plan
+  - bi_integration_strategy
+  quality_checks:
+  - architecture_matches_workload_profile
+  - security_boundaries_documented
+  - serving_grain_and_metric_consistency_verified
+  constraints:
+  - avoid_unbounded_compute_without_cost_guardrails
+  - avoid_ambiguous_serving_models
+  risk_level: high
+  maturity: beta
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: cloud_azure-synapse
+      description: Retrieve this expert for Synapse SQL and Spark architecture, serving
+        model design, and BI-facing optimization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: workload latency goals, concurrency profile, and source systems
+          context:
+            type: object
+            description: cost budget, security boundaries, and BI serving targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: devops.ansible
   title: Ansible Automation
   domain: devops
@@ -1651,6 +6074,56 @@ tools:
   examples:
   - Write an Ansible playbook to provision a web server fleet
   - Encrypt secrets with Ansible Vault and rotate credentials
+  aliases:
+  - ansible-automation
+  - configuration-management
+  dependencies:
+  - ansible
+  - molecule
+  - ansible-lint
+  input_contract:
+    required: target hosts, desired state, and connectivity details
+    optional: vault password, custom roles, and inventory filters
+  output_artifacts:
+  - playbook_files
+  - role_structure
+  - inventory_config
+  - vault_encrypted_secrets
+  quality_checks:
+  - idempotency_verified
+  - molecule_tests_pass
+  - ansible_lint_clean
+  constraints:
+  - never_hardcode_secrets_in_playbooks
+  - always_use_vault_for_sensitive_data
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: devops_ansible
+      description: Retrieve this expert for infrastructure automation with Ansible
+        playbooks, roles, vault, and idempotent configuration management.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target hosts, desired state, and connectivity details
+          context:
+            type: object
+            description: vault password, custom roles, and inventory filters
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: devops.nginx
   title: Nginx Web Server and Reverse Proxy
   domain: devops
@@ -1671,6 +6144,54 @@ tools:
   examples:
   - Configure Nginx as a reverse proxy with SSL termination
   - Set up load balancing across multiple upstream servers
+  aliases:
+  - nginx-proxy
+  - web-server
+  dependencies:
+  - nginx
+  - certbot
+  input_contract:
+    required: upstream services, domain names, and traffic requirements
+    optional: SSL certificates, rate limit thresholds, and caching policies
+  output_artifacts:
+  - nginx_config_files
+  - ssl_setup_instructions
+  - performance_tuning_notes
+  quality_checks:
+  - config_syntax_valid
+  - ssl_grade_a_plus
+  - no_open_proxy
+  constraints:
+  - never_expose_server_version
+  - always_configure_security_headers
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: devops_nginx
+      description: Retrieve this expert for Nginx reverse proxy configuration, SSL
+        termination, rate limiting, and load balancing.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: upstream services, domain names, and traffic requirements
+          context:
+            type: object
+            description: SSL certificates, rate limit thresholds, and caching policies
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: devops.systemd
   title: Systemd Service Management
   domain: devops
@@ -1690,6 +6211,53 @@ tools:
   examples:
   - Create a systemd unit file for a Python application
   - Debug a failing service with journalctl and systemd-analyze
+  aliases:
+  - systemd-services
+  - service-management
+  dependencies:
+  - systemd
+  input_contract:
+    required: application binary or script path and runtime requirements
+    optional: resource limits, restart policies, and dependency ordering
+  output_artifacts:
+  - unit_files
+  - timer_definitions
+  - resource_limit_config
+  quality_checks:
+  - unit_file_syntax_valid
+  - service_starts_cleanly
+  - resource_limits_set
+  constraints:
+  - never_use_type_simple_for_forking_daemons
+  - always_set_restart_policy
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: devops_systemd
+      description: Retrieve this expert for systemd unit files, service management,
+        journalctl diagnostics, timers, and resource limits.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: application binary or script path and runtime requirements
+          context:
+            type: object
+            description: resource limits, restart policies, and dependency ordering
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: devops.prometheus-grafana
   title: Monitoring with Prometheus and Grafana
   domain: devops
@@ -1711,6 +6279,57 @@ tools:
   examples:
   - Set up Prometheus monitoring with Grafana dashboards for a microservices stack
   - Write PromQL alert rules for high error rates and latency
+  aliases:
+  - monitoring-stack
+  - observability
+  dependencies:
+  - prometheus
+  - grafana
+  - alertmanager
+  input_contract:
+    required: target services, metrics endpoints, and alerting thresholds
+    optional: custom recording rules, dashboard templates, and notification channels
+  output_artifacts:
+  - prometheus_config
+  - alert_rules
+  - grafana_dashboards
+  - recording_rules
+  quality_checks:
+  - all_targets_scraped
+  - alert_rules_tested
+  - dashboard_panels_load
+  constraints:
+  - never_scrape_at_sub_10s_intervals_without_justification
+  - always_set_alert_severity_labels
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: devops_prometheus-grafana
+      description: Retrieve this expert for Prometheus metrics collection, PromQL
+        queries, Grafana dashboards, alerting rules, and service discovery.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target services, metrics endpoints, and alerting thresholds
+          context:
+            type: object
+            description: custom recording rules, dashboard templates, and notification
+              channels
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: devops.elk-logging
   title: ELK Stack Logging
   domain: devops
@@ -1732,6 +6351,57 @@ tools:
   examples:
   - Set up centralized logging with the ELK stack for a Kubernetes cluster
   - Configure Logstash pipelines with grok filters for application logs
+  aliases:
+  - elk-stack
+  - centralized-logging
+  dependencies:
+  - elasticsearch
+  - logstash
+  - kibana
+  - filebeat
+  input_contract:
+    required: log sources, log format, and retention requirements
+    optional: custom grok patterns, index templates, and alerting rules
+  output_artifacts:
+  - logstash_pipelines
+  - filebeat_config
+  - kibana_dashboards
+  - index_lifecycle_policies
+  quality_checks:
+  - logs_ingested_end_to_end
+  - index_lifecycle_configured
+  - no_dropped_events
+  constraints:
+  - never_log_sensitive_data_without_masking
+  - always_configure_index_retention
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: devops_elk-logging
+      description: Retrieve this expert for centralized logging with Elasticsearch,
+        Logstash, Kibana, and Filebeat including index lifecycle management.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: log sources, log format, and retention requirements
+          context:
+            type: object
+            description: custom grok patterns, index templates, and alerting rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: devops.cicd-patterns
   title: CI/CD Deployment Patterns
   domain: devops
@@ -1753,6 +6423,54 @@ tools:
   examples:
   - Design a canary deployment pipeline with automated rollback
   - Implement blue-green deployment with zero-downtime cutover
+  aliases:
+  - deployment-patterns
+  - release-strategies
+  dependencies: []
+  input_contract:
+    required: application type, deployment target, and risk tolerance
+    optional: rollback criteria, traffic split percentages, and feature flag system
+  output_artifacts:
+  - pipeline_definitions
+  - deployment_manifests
+  - rollback_procedures
+  - release_runbook
+  quality_checks:
+  - rollback_tested
+  - health_checks_configured
+  - zero_downtime_verified
+  constraints:
+  - never_deploy_without_rollback_strategy
+  - always_include_health_check_gates
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: devops_cicd-patterns
+      description: Retrieve this expert for deployment strategies including blue-green,
+        canary, feature flags, rollback procedures, and pipeline design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: application type, deployment target, and risk tolerance
+          context:
+            type: object
+            description: rollback criteria, traffic split percentages, and feature
+              flag system
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: devops.linux-admin
   title: Linux Administration
   domain: devops
@@ -1776,6 +6494,53 @@ tools:
   examples:
   - Harden SSH access and configure firewall rules for a production server
   - Set up user accounts with least-privilege access and disk quotas
+  aliases:
+  - linux-sysadmin
+  - server-administration
+  dependencies: []
+  input_contract:
+    required: target Linux distribution and server role
+    optional: compliance requirements, user list, and network topology
+  output_artifacts:
+  - security_hardening_config
+  - firewall_rules
+  - user_management_scripts
+  - system_audit_report
+  quality_checks:
+  - ssh_hardened
+  - firewall_deny_by_default
+  - no_world_writable_files
+  constraints:
+  - never_allow_root_ssh_login
+  - always_use_key_based_authentication
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: devops_linux-admin
+      description: Retrieve this expert for Linux system administration including
+        user management, firewall configuration, SSH hardening, and package management.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target Linux distribution and server role
+          context:
+            type: object
+            description: compliance requirements, user list, and network topology
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.graphql
   title: GraphQL API Design
   domain: web_api
@@ -1797,6 +6562,56 @@ tools:
   examples:
   - Design a GraphQL schema with relay-style pagination
   - Implement DataLoader to solve the N+1 query problem
+  aliases:
+  - graphql-api
+  - graphql-schema
+  dependencies:
+  - graphql-core
+  - strawberry-graphql
+  input_contract:
+    required: domain entities, relationships, and query patterns
+    optional: federation boundaries, subscription requirements, and caching strategy
+  output_artifacts:
+  - graphql_schema
+  - resolver_implementations
+  - dataloader_factories
+  - query_documentation
+  quality_checks:
+  - no_n_plus_1_queries
+  - schema_validates
+  - depth_limiting_configured
+  constraints:
+  - never_expose_internal_ids_without_relay_global_ids
+  - always_implement_query_depth_limiting
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: webapi_graphql
+      description: Retrieve this expert for GraphQL schema design, resolver implementation,
+        N+1 prevention with DataLoader, and federation architecture.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: domain entities, relationships, and query patterns
+          context:
+            type: object
+            description: federation boundaries, subscription requirements, and caching
+              strategy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.api-gateway
   title: API Gateway and Service Mesh
   domain: web_api
@@ -1817,6 +6632,53 @@ tools:
   examples:
   - Configure an API gateway with circuit breakers and retry policies
   - Set up distributed tracing across microservices with Jaeger
+  aliases:
+  - service-mesh
+  - api-gateway-patterns
+  dependencies: []
+  input_contract:
+    required: service topology, routing rules, and resilience requirements
+    optional: tracing backend, mTLS configuration, and canary routing rules
+  output_artifacts:
+  - gateway_config
+  - routing_rules
+  - circuit_breaker_policies
+  - tracing_setup
+  quality_checks:
+  - health_checks_configured
+  - circuit_breaker_thresholds_set
+  - tracing_propagated
+  constraints:
+  - never_route_without_health_checks
+  - always_set_request_timeouts
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: webapi_api-gateway
+      description: Retrieve this expert for API gateway configuration, service mesh
+        patterns, circuit breakers, distributed tracing, and request routing.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: service topology, routing rules, and resilience requirements
+          context:
+            type: object
+            description: tracing backend, mTLS configuration, and canary routing rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.rate-limiting
   title: Rate Limiting and Throttling
   domain: web_api
@@ -1838,6 +6700,55 @@ tools:
   examples:
   - Implement Redis-backed sliding window rate limiting for an API
   - Configure per-user and per-IP rate limits with graceful degradation
+  aliases:
+  - throttling
+  - api-rate-limits
+  dependencies:
+  - redis
+  input_contract:
+    required: rate limit thresholds, key strategy (IP, user, API key), and storage
+      backend
+    optional: burst allowance, retry-after headers, and quota tiers
+  output_artifacts:
+  - rate_limiter_implementation
+  - configuration_files
+  - monitoring_metrics
+  quality_checks:
+  - limits_enforced_under_load
+  - retry_after_headers_present
+  - no_race_conditions
+  constraints:
+  - never_rate_limit_without_informative_response_headers
+  - always_test_under_concurrent_load
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: webapi_rate-limiting
+      description: Retrieve this expert for rate limiting strategies including token
+        bucket, sliding window, Redis-backed limiters, and backpressure patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: rate limit thresholds, key strategy (IP, user, API key),
+              and storage backend
+          context:
+            type: object
+            description: burst allowance, retry-after headers, and quota tiers
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.api-auth-patterns
   title: API Authentication Patterns
   domain: web_api
@@ -1858,6 +6769,55 @@ tools:
   examples:
   - Implement HMAC request signing for a webhook integration
   - Set up mTLS between microservices with certificate rotation
+  aliases:
+  - api-authentication
+  - service-auth-patterns
+  dependencies:
+  - cryptography
+  input_contract:
+    required: authentication method, trust boundaries, and key management strategy
+    optional: certificate authority, rotation schedule, and revocation policy
+  output_artifacts:
+  - auth_implementation
+  - key_management_procedures
+  - verification_logic
+  quality_checks:
+  - timing_safe_comparison_used
+  - keys_never_logged
+  - rotation_procedure_documented
+  constraints:
+  - never_store_api_keys_in_plaintext
+  - always_use_constant_time_comparison
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: webapi_api-auth-patterns
+      description: Retrieve this expert for API key management, mTLS, HMAC signatures,
+        webhook verification, and service-to-service authentication.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: authentication method, trust boundaries, and key management
+              strategy
+          context:
+            type: object
+            description: certificate authority, rotation schedule, and revocation
+              policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.websockets-sse
   title: WebSockets and Server-Sent Events
   domain: web_api
@@ -1879,6 +6839,55 @@ tools:
   examples:
   - Build a WebSocket server with heartbeats and reconnection handling
   - Implement SSE for real-time dashboard updates
+  aliases:
+  - real-time-apis
+  - streaming-apis
+  dependencies:
+  - websockets
+  input_contract:
+    required: event types, message format, and connection requirements
+    optional: scaling strategy, authentication for connections, and message ordering
+  output_artifacts:
+  - connection_handler
+  - message_protocol
+  - reconnection_logic
+  - scaling_config
+  quality_checks:
+  - heartbeat_configured
+  - reconnection_tested
+  - backpressure_handled
+  constraints:
+  - never_trust_client_messages_without_validation
+  - always_implement_connection_cleanup
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: webapi_websockets-sse
+      description: Retrieve this expert for real-time communication with WebSockets
+        and SSE including connection lifecycle, reconnection, heartbeats, and scaling.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: event types, message format, and connection requirements
+          context:
+            type: object
+            description: scaling strategy, authentication for connections, and message
+              ordering
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-gcs
   title: Google Cloud Storage
   domain: cloud_infrastructure
@@ -1899,6 +6908,54 @@ tools:
   examples:
   - Configure a GCS bucket with lifecycle policies and signed URL access
   - Set up cross-region replication with fine-grained IAM
+  aliases:
+  - gcs
+  - google-cloud-storage
+  dependencies:
+  - google-cloud-storage
+  input_contract:
+    required: bucket purpose, storage class, and access patterns
+    optional: lifecycle rules, CORS config, and retention policy
+  output_artifacts:
+  - bucket_config
+  - iam_bindings
+  - lifecycle_rules
+  - access_patterns_doc
+  quality_checks:
+  - public_access_prevention_set
+  - lifecycle_policies_configured
+  - iam_least_privilege
+  constraints:
+  - never_create_public_buckets_without_justification
+  - always_enable_uniform_bucket_level_access
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-gcs
+      description: Retrieve this expert for Google Cloud Storage bucket management,
+        lifecycle policies, signed URLs, IAM, and data transfer.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: bucket purpose, storage class, and access patterns
+          context:
+            type: object
+            description: lifecycle rules, CORS config, and retention policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-bigquery
   title: BigQuery Analytics
   domain: cloud_infrastructure
@@ -1919,6 +6976,55 @@ tools:
   examples:
   - Design a partitioned and clustered BigQuery table for cost-efficient analytics
   - Train a classification model with BQML on existing warehouse data
+  aliases:
+  - bq
+  - bigquery-analytics
+  dependencies:
+  - google-cloud-bigquery
+  input_contract:
+    required: data schema, query patterns, and cost constraints
+    optional: partitioning strategy, clustering columns, and materialized view candidates
+  output_artifacts:
+  - table_definitions
+  - query_optimizations
+  - cost_analysis
+  - bqml_models
+  quality_checks:
+  - partitioning_configured
+  - slot_usage_monitored
+  - cost_per_query_estimated
+  constraints:
+  - never_run_select_star_on_large_tables
+  - always_partition_tables_over_1tb
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-bigquery
+      description: Retrieve this expert for BigQuery table design, partitioning, clustering,
+        cost optimization, BQML, and query performance tuning.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: data schema, query patterns, and cost constraints
+          context:
+            type: object
+            description: partitioning strategy, clustering columns, and materialized
+              view candidates
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-cloud-run
   title: Cloud Run Serverless Containers
   domain: cloud_infrastructure
@@ -1938,6 +7044,54 @@ tools:
   examples:
   - Deploy a containerized API to Cloud Run with traffic splitting
   - Configure Cloud Run with VPC connector for private database access
+  aliases:
+  - cloud-run
+  - gcp-serverless
+  dependencies:
+  - docker
+  input_contract:
+    required: container image, concurrency settings, and scaling limits
+    optional: VPC connector, custom domain, and traffic split percentages
+  output_artifacts:
+  - service_config
+  - deployment_commands
+  - traffic_routing_rules
+  - monitoring_setup
+  quality_checks:
+  - health_check_configured
+  - min_instances_set_for_production
+  - iam_invoker_restricted
+  constraints:
+  - never_allow_unauthenticated_access_without_justification
+  - always_set_concurrency_and_timeout_limits
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-cloud-run
+      description: Retrieve this expert for deploying containers on Cloud Run with
+        autoscaling, traffic splitting, VPC connectors, and revision management.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: container image, concurrency settings, and scaling limits
+          context:
+            type: object
+            description: VPC connector, custom domain, and traffic split percentages
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-cloud-functions
   title: Cloud Functions
   domain: cloud_infrastructure
@@ -1957,6 +7111,55 @@ tools:
   examples:
   - Create a Cloud Function triggered by Pub/Sub with retry handling
   - Optimize cold start times for a gen2 Cloud Function
+  aliases:
+  - gcf
+  - gcp-functions
+  dependencies:
+  - functions-framework
+  input_contract:
+    required: trigger type, runtime, and function entry point
+    optional: environment variables, VPC connector, and memory/timeout settings
+  output_artifacts:
+  - function_source
+  - deployment_config
+  - trigger_setup
+  - testing_harness
+  quality_checks:
+  - cold_start_measured
+  - retry_behavior_tested
+  - secrets_from_secret_manager
+  constraints:
+  - never_hardcode_secrets_in_function_source
+  - always_set_timeout_and_memory_limits
+  risk_level: low
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-cloud-functions
+      description: Retrieve this expert for GCP Cloud Functions including event triggers,
+        gen2 functions, cold start optimization, and connection pooling.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: trigger type, runtime, and function entry point
+          context:
+            type: object
+            description: environment variables, VPC connector, and memory/timeout
+              settings
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-pubsub
   title: Google Cloud Pub/Sub
   domain: cloud_infrastructure
@@ -1977,6 +7180,54 @@ tools:
   examples:
   - Set up Pub/Sub with dead-letter queues and exactly-once processing
   - Configure ordered message delivery with ordering keys
+  aliases:
+  - pubsub
+  - gcp-messaging
+  dependencies:
+  - google-cloud-pubsub
+  input_contract:
+    required: topic structure, subscription type, and delivery guarantees
+    optional: ordering keys, dead-letter config, and flow control settings
+  output_artifacts:
+  - topic_config
+  - subscription_config
+  - dead_letter_setup
+  - consumer_implementation
+  quality_checks:
+  - dead_letter_configured
+  - ack_deadline_appropriate
+  - flow_control_set
+  constraints:
+  - never_ack_before_processing_completes
+  - always_configure_dead_letter_for_production
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-pubsub
+      description: Retrieve this expert for Pub/Sub messaging including push/pull
+        subscriptions, dead-letter queues, ordering keys, and exactly-once delivery.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: topic structure, subscription type, and delivery guarantees
+          context:
+            type: object
+            description: ordering keys, dead-letter config, and flow control settings
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-gke
   title: Google Kubernetes Engine
   domain: cloud_infrastructure
@@ -1998,6 +7249,55 @@ tools:
   examples:
   - Create a GKE Autopilot cluster with workload identity
   - Configure GKE node pools with autoscaling and spot instances
+  aliases:
+  - gke
+  - google-kubernetes
+  dependencies:
+  - kubectl
+  - helm
+  input_contract:
+    required: cluster mode, workload requirements, and networking model
+    optional: node pool config, service mesh, and multi-cluster strategy
+  output_artifacts:
+  - cluster_config
+  - node_pool_definitions
+  - workload_identity_bindings
+  - network_policies
+  quality_checks:
+  - workload_identity_enabled
+  - network_policies_applied
+  - autoscaling_configured
+  constraints:
+  - never_use_default_service_account_for_workloads
+  - always_enable_workload_identity
+  risk_level: high
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-gke
+      description: Retrieve this expert for GKE cluster management including Autopilot
+        vs Standard, workload identity, node pools, and service mesh integration.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: cluster mode, workload requirements, and networking model
+          context:
+            type: object
+            description: node pool config, service mesh, and multi-cluster strategy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.devops-engineer
   title: DevOps Engineer Role Orchestrator
   domain: role_orchestrator
@@ -2019,6 +7319,54 @@ tools:
   examples:
   - Act as a DevOps engineer to automate infrastructure and set up CI/CD
   - Design a production monitoring and alerting stack
+  aliases:
+  - devops-role
+  - infrastructure-engineer
+  dependencies: []
+  input_contract:
+    required: infrastructure requirements, deployment targets, and SLA targets
+    optional: compliance constraints, team size, and existing tooling
+  output_artifacts:
+  - infrastructure_plan
+  - pipeline_config
+  - automation_playbooks
+  - monitoring_setup
+  - operations_runbook
+  quality_checks:
+  - rollback_strategy_defined
+  - monitoring_configured
+  - secrets_managed_securely
+  constraints:
+  - never_deploy_without_rollback_strategy
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_devops-engineer
+      description: Role expert for infrastructure automation, CI/CD pipelines, monitoring,
+        and production operations across DevOps tooling.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: infrastructure requirements, deployment targets, and SLA
+              targets
+          context:
+            type: object
+            description: compliance constraints, team size, and existing tooling
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.api-architect
   title: API Architect Role Orchestrator
   domain: role_orchestrator
@@ -2039,6 +7387,121 @@ tools:
   examples:
   - Act as an API architect to design a microservices integration layer
   - Design a public API with authentication, rate limiting, and versioning
+  aliases:
+  - api-design-role
+  - integration-architect
+  dependencies: []
+  input_contract:
+    required: API consumers, data contracts, and latency requirements
+    optional: versioning strategy, federation boundaries, and compliance needs
+  output_artifacts:
+  - api_design
+  - security_model
+  - integration_architecture
+  - documentation_bundle
+  - testing_plan
+  quality_checks:
+  - versioning_strategy_defined
+  - rate_limiting_configured
+  - auth_model_documented
+  constraints:
+  - never_expose_internal_details_in_public_apis
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_api-architect
+      description: Role expert for API design, integration architecture, and backend
+        service communication patterns across REST, GraphQL, and event-driven systems.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API consumers, data contracts, and latency requirements
+          context:
+            type: object
+            description: versioning strategy, federation boundaries, and compliance
+              needs
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: role.aws-engineer
+  title: AWS Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/aws-engineer.md
+  description: Role expert for Amazon Web Services architecture, deployment, and operations
+    across compute, storage, networking, and security services.
+  tags:
+  - role
+  - aws-engineer
+  - amazon-web-services
+  - cloud-architecture
+  tool_hints:
+  - aws
+  - terraform
+  - docker
+  - kubectl
+  examples:
+  - Act as an AWS engineer to architect a serverless data pipeline
+  - Design AWS infrastructure with Terraform for a microservices platform
+  aliases:
+  - aws-role
+  - amazon-web-services-engineer
+  dependencies: []
+  input_contract:
+    required: workload type, availability target, and cost budget
+    optional: data residency requirements, compliance framework, and team structure
+  output_artifacts:
+  - architecture_design
+  - terraform_modules
+  - security_config
+  - deployment_pipeline
+  - cost_and_ops_plan
+  quality_checks:
+  - iam_least_privilege
+  - terraform_state_managed
+  - cost_alerts_configured
+  constraints:
+  - never_use_root_account_for_workload_operations
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_aws-engineer
+      description: Role expert for Amazon Web Services architecture, deployment, and
+        operations across compute, storage, networking, and security services.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: workload type, availability target, and cost budget
+          context:
+            type: object
+            description: data residency requirements, compliance framework, and team
+              structure
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.gcp-engineer
   title: GCP Engineer Role Orchestrator
   domain: role_orchestrator
@@ -2058,3 +7521,51 @@ tools:
   examples:
   - Act as a GCP engineer to architect a serverless data pipeline
   - Design a GCP infrastructure with Terraform for a microservices platform
+  aliases:
+  - gcp-role
+  - google-cloud-engineer
+  dependencies: []
+  input_contract:
+    required: workload type, availability target, and cost budget
+    optional: data residency requirements, compliance framework, and team structure
+  output_artifacts:
+  - architecture_design
+  - terraform_modules
+  - security_config
+  - deployment_pipeline
+  - cost_and_ops_plan
+  quality_checks:
+  - iam_least_privilege
+  - terraform_state_managed
+  - cost_alerts_configured
+  constraints:
+  - never_use_default_service_accounts_in_production
+  risk_level: medium
+  maturity: stable
+  metadata:
+    provider_support:
+    - codex
+    - claude
+    owner: community
+    catalog_tier: expanded
+    instruction_version: v1
+  invocation:
+    type: function
+    function:
+      name: role_gcp-engineer
+      description: Role expert for Google Cloud Platform architecture, deployment,
+        and operations across compute, storage, data, and messaging services.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: workload type, availability target, and cost budget
+          context:
+            type: object
+            description: data residency requirements, compliance framework, and team
+              structure
+        required:
+        - task
+        additionalProperties: true
+      strict: false

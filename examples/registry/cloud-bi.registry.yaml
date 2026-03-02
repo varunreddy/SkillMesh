@@ -10,6 +10,25 @@ tools:
   - role
   - bi-analyst
   - dashboard
+  invocation:
+    type: function
+    function:
+      name: role_bi-analyst
+      description: Role expert for KPI-centric business analysis, dashboard planning,
+        and governed reporting outputs for stakeholders.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business questions, KPI scope, and audience
+          context:
+            type: object
+            description: tooling preferences, refresh cadence, and governance policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.analytics-engineer
   title: Analytics Engineer Role Orchestrator
   domain: role_orchestrator
@@ -18,6 +37,25 @@ tools:
   - role
   - analytics-engineer
   - semantic-layer
+  invocation:
+    type: function
+    function:
+      name: role_analytics-engineer
+      description: Role expert for governed analytics delivery across semantic modeling,
+        tested transformations, and BI platform implementation.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business metric scope, source systems, and target BI platform
+          context:
+            type: object
+            description: governance constraints, ownership model, and release cadence
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.dashboard-design
   title: BI Dashboard Design and Storytelling
   domain: business_intelligence
@@ -26,6 +64,25 @@ tools:
   - business-intelligence
   - dashboard
   - kpi
+  invocation:
+    type: function
+    function:
+      name: bi_dashboard-design
+      description: Retrieve this expert for KPI-driven dashboard architecture, chart
+        selection, stakeholder communication, and adoption-focused BI reporting.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business objective, audience, and target KPIs
+          context:
+            type: object
+            description: dashboard tool choice, refresh cadence, and governance constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.metric-semantic-modeling
   title: BI Metric and Semantic Modeling
   domain: business_intelligence
@@ -34,6 +91,25 @@ tools:
   - business-intelligence
   - semantic-layer
   - metric-governance
+  invocation:
+    type: function
+    function:
+      name: bi_metric-semantic-modeling
+      description: Retrieve this expert for semantic layer design, metric governance,
+        dimensional modeling, and trusted KPI standardization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: entity definitions, required KPIs, and analysis grain
+          context:
+            type: object
+            description: lineage tool, SCD policy, and ownership model
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.tableau-authoring
   title: Tableau Authoring and Governance
   domain: business_intelligence
@@ -42,6 +118,25 @@ tools:
   - tableau
   - dashboard
   - publish
+  invocation:
+    type: function
+    function:
+      name: bi_tableau-authoring
+      description: Retrieve this expert for Tableau dashboard design, interaction
+        patterns, performance tuning, and governed publishing workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target business KPIs and dashboard audience
+          context:
+            type: object
+            description: publish environment, refresh cadence, and permission model
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.powerbi-modeling
   title: Power BI Modeling and DAX
   domain: business_intelligence
@@ -50,6 +145,25 @@ tools:
   - powerbi
   - dax
   - semantic-model
+  invocation:
+    type: function
+    function:
+      name: bi_powerbi-modeling
+      description: Retrieve this expert for Power BI data modeling, DAX measure design,
+        row-level security, and refresh strategy.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business KPIs, source schema, and report objectives
+          context:
+            type: object
+            description: security requirements, workspace policy, and refresh windows
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.looker-modeling
   title: Looker Modeling and LookML
   domain: business_intelligence
@@ -58,6 +172,25 @@ tools:
   - looker
   - lookml
   - semantic-layer
+  invocation:
+    type: function
+    function:
+      name: bi_looker-modeling
+      description: Retrieve this expert for LookML model design, explore governance,
+        and performant semantic delivery in Looker.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: entity model, metric requirements, and explore needs
+          context:
+            type: object
+            description: access policy, PDT strategy, and deployment workflow
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.sql-queries
   title: SQL Query Design and Optimization
   domain: data_engineering
@@ -66,6 +199,26 @@ tools:
   - sql
   - analytics
   - cte
+  invocation:
+    type: function
+    function:
+      name: data_sql-queries
+      description: Retrieve this expert for advanced SQL joins, CTE/window logic,
+        query optimization, and analytical data retrieval patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.dbt
   title: dbt Analytics Engineering
   domain: data_engineering
@@ -74,6 +227,26 @@ tools:
   - dbt
   - transformation
   - testing
+  invocation:
+    type: function
+    function:
+      name: data_dbt
+      description: Retrieve this expert for dbt model layering, testing, documentation,
+        and incremental transformation workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.spark
   title: Apache Spark Distributed Data Processing
   domain: data_engineering
@@ -82,6 +255,26 @@ tools:
   - spark
   - pyspark
   - distributed
+  invocation:
+    type: function
+    function:
+      name: data_spark
+      description: Retrieve this expert for Spark data pipelines, partitioning strategy,
+        performance tuning, and resilient distributed processing.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.azure-storage
   title: Azure Storage and Data Lake
   domain: cloud_infrastructure
@@ -90,6 +283,25 @@ tools:
   - azure
   - adls
   - storage
+  invocation:
+    type: function
+    function:
+      name: cloud_azure-storage
+      description: Retrieve this expert for Azure Blob and ADLS Gen2 architecture,
+        data layout, access policy, and lifecycle governance.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: data domains, retention policy, and access requirements
+          context:
+            type: object
+            description: cost constraints, lifecycle policy, and downstream consumers
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.azure-data-factory
   title: Azure Data Factory Pipelines
   domain: cloud_infrastructure
@@ -98,6 +310,25 @@ tools:
   - azure
   - data-factory
   - orchestration
+  invocation:
+    type: function
+    function:
+      name: cloud_azure-data-factory
+      description: Retrieve this expert for Azure Data Factory pipeline orchestration,
+        ETL scheduling, retries, and operational reliability patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source and target systems with freshness SLA
+          context:
+            type: object
+            description: retry policy, backfill windows, and quality threshold rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.azure-synapse
   title: Azure Synapse Analytics
   domain: cloud_infrastructure
@@ -106,6 +337,25 @@ tools:
   - azure
   - synapse
   - analytics
+  invocation:
+    type: function
+    function:
+      name: cloud_azure-synapse
+      description: Retrieve this expert for Synapse SQL and Spark architecture, serving
+        model design, and BI-facing optimization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: workload latency goals, concurrency profile, and source systems
+          context:
+            type: object
+            description: cost budget, security boundaries, and BI serving targets
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.aws-s3
   title: AWS S3 Architecture and Data Workflows
   domain: cloud_infrastructure
@@ -114,6 +364,27 @@ tools:
   - aws
   - s3
   - storage
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-s3
+      description: Retrieve this expert for S3 buckets, lifecycle policies, presigned
+        URLs, encryption, and secure object storage architecture.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.aws-lambda
   title: AWS Lambda Serverless Engineering
   domain: cloud_infrastructure
@@ -122,6 +393,27 @@ tools:
   - aws
   - lambda
   - serverless
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-lambda
+      description: Retrieve this expert for Lambda handlers, cold-start optimization,
+        packaging, observability, and event-driven serverless patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.aws-vpc
   title: AWS VPC Networking and Security
   domain: cloud_infrastructure
@@ -130,6 +422,27 @@ tools:
   - aws
   - vpc
   - networking
+  invocation:
+    type: function
+    function:
+      name: cloud_aws-vpc
+      description: Retrieve this expert for VPC design, subnet routing, security groups,
+        NAT, peering, and network segmentation decisions.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.terraform
   title: Terraform Infrastructure as Code
   domain: cloud_infrastructure
@@ -138,3 +451,24 @@ tools:
   - terraform
   - iac
   - cloud
+  invocation:
+    type: function
+    function:
+      name: cloud_terraform
+      description: Retrieve this expert for Terraform module design, remote state
+        safety, drift detection, and cloud IaC delivery workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false

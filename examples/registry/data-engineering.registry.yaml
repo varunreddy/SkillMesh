@@ -10,6 +10,25 @@ tools:
   - role
   - data-engineer
   - pipelines
+  invocation:
+    type: function
+    function:
+      name: role_data-engineer
+      description: Role expert for scalable data pipelines, quality enforcement, and
+        production-ready data platform delivery.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source datasets, target schema, and freshness expectations
+          context:
+            type: object
+            description: lineage requirements, cost constraints, and backfill policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.spark
   title: Apache Spark Distributed Data Processing
   domain: data_engineering
@@ -18,6 +37,26 @@ tools:
   - spark
   - pyspark
   - distributed
+  invocation:
+    type: function
+    function:
+      name: data_spark
+      description: Retrieve this expert for Spark data pipelines, partitioning strategy,
+        performance tuning, and resilient distributed processing.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.sql-queries
   title: SQL Query Design and Optimization
   domain: data_engineering
@@ -26,6 +65,26 @@ tools:
   - sql
   - query-optimization
   - cte
+  invocation:
+    type: function
+    function:
+      name: data_sql-queries
+      description: Retrieve this expert for advanced SQL joins, CTE/window logic,
+        query optimization, and analytical data retrieval patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.dbt
   title: dbt Analytics Engineering
   domain: data_engineering
@@ -34,6 +93,26 @@ tools:
   - dbt
   - transformation
   - testing
+  invocation:
+    type: function
+    function:
+      name: data_dbt
+      description: Retrieve this expert for dbt model layering, testing, documentation,
+        and incremental transformation workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.schema-normalization
   title: Data Cleaning and Schema Normalization
   domain: data_engineering
@@ -42,6 +121,26 @@ tools:
   - data-cleaning
   - schema
   - normalization
+  invocation:
+    type: function
+    function:
+      name: data_schema-normalization
+      description: Retrieve this expert for payload normalization, dataframe conversion,
+        and quarter/date alignment.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: raw payload/schema examples and expected canonical schema
+          context:
+            type: object
+            description: null-handling rules, date/quarter alignment policy, and quality
+              thresholds
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.pandas-advanced
   title: Advanced Pandas Data Workflows
   domain: data_engineering
@@ -50,6 +149,26 @@ tools:
   - pandas
   - dataframe
   - profiling
+  invocation:
+    type: function
+    function:
+      name: data_pandas-advanced
+      description: Retrieve this expert for high-performance pandas transformations,
+        memory optimization, and robust dataframe pipeline design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: web.sqlalchemy
   title: SQLAlchemy ORM and Sessions
   domain: web_api
@@ -58,6 +177,27 @@ tools:
   - sqlalchemy
   - orm
   - database
+  invocation:
+    type: function
+    function:
+      name: web_sqlalchemy
+      description: Retrieve this expert for SQLAlchemy model design, session lifecycle
+        management, migrations, and ORM query correctness.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API/auth objective, request-response expectations, and security
+              requirements
+          context:
+            type: object
+            description: backward-compatibility constraints, target clients, and deployment
+              environment
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.docker
   title: Docker Containerization Workflows
   domain: cloud_infrastructure
@@ -66,6 +206,27 @@ tools:
   - docker
   - container
   - runtime
+  invocation:
+    type: function
+    function:
+      name: cloud_docker
+      description: Retrieve this expert for production Dockerfiles, multi-stage builds,
+        secure runtime configs, and container image optimization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.kubernetes
   title: Kubernetes Deployment and Operations
   domain: cloud_infrastructure
@@ -74,6 +235,27 @@ tools:
   - kubernetes
   - deployment
   - operations
+  invocation:
+    type: function
+    function:
+      name: cloud_kubernetes
+      description: Retrieve this expert for Kubernetes deployments, scaling, networking,
+        RBAC, and production-grade cluster operations.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.terraform
   title: Terraform Infrastructure as Code
   domain: cloud_infrastructure
@@ -82,3 +264,24 @@ tools:
   - terraform
   - iac
   - cloud
+  invocation:
+    type: function
+    function:
+      name: cloud_terraform
+      description: Retrieve this expert for Terraform module design, remote state
+        safety, drift detection, and cloud IaC delivery workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target cloud environment, intended workload behavior, and
+              resource scope
+          context:
+            type: object
+            description: existing topology, compliance controls, cost and rollback
+              constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false

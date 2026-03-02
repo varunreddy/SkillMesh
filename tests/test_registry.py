@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
+import yaml
 
 from skill_registry_rag.registry import RegistryError, load_registry
 
@@ -74,6 +76,57 @@ def test_load_json_registry_fields():
     assert "processed_images" in cv.output_artifacts
     assert cv.risk_level == "medium"
     assert cv.metadata.get("install_extra") == "cv"
+
+    sk = by_id["ml.sklearn-modeling"]
+    assert sk.invocation.get("type") == "function"
+    assert sk.invocation.get("function", {}).get("name") == "sklearn_model_selection_cross_validate"
+    assert sk.invocation.get("function", {}).get("strict") is False
+
+    yaml_by_id = {c.id: c for c in yaml_cards}
+    yaml_sk = yaml_by_id["ml.sklearn-modeling"]
+    assert yaml_sk.invocation.get("type") == "function"
+    assert yaml_sk.invocation.get("function", {}).get("name") == "sklearn_model_selection_cross_validate"
+
+
+def test_all_cards_have_openai_function_schema_invocation():
+    root = Path(__file__).resolve().parents[1]
+    cards = load_registry(root / "examples" / "registry" / "tools.yaml")
+
+    for card in cards:
+        invocation = card.invocation
+        assert invocation.get("type") == "function"
+        function = invocation.get("function", {})
+        assert function.get("name")
+        assert function.get("description")
+        parameters = function.get("parameters", {})
+        assert parameters.get("type") == "object"
+
+
+def test_registry_sources_store_openai_function_schema_invocation():
+    root = Path(__file__).resolve().parents[1]
+    json_registry = json.loads(
+        (root / "examples" / "registry" / "tools.json").read_text(encoding="utf-8")
+    )
+    yaml_registry = yaml.safe_load(
+        (root / "examples" / "registry" / "tools.yaml").read_text(encoding="utf-8")
+    )
+
+    for payload in (json_registry, yaml_registry):
+        tools = payload.get("tools", [])
+        assert tools
+        for row in tools:
+            invocation = row.get("invocation", {})
+            assert invocation.get("type") == "function"
+            function = invocation.get("function", {})
+            assert function.get("name")
+            assert isinstance(function.get("parameters"), dict)
+
+
+def test_all_example_registry_catalogs_load_with_schema():
+    root = Path(__file__).resolve().parents[1] / "examples" / "registry"
+    for registry_path in sorted(root.glob("*.registry.yaml")):
+        cards = load_registry(registry_path)
+        assert cards
 
 
 def test_schema_validation_rejects_invalid_registry(tmp_path):

@@ -5,6 +5,8 @@ from contextlib import redirect_stdout
 from io import StringIO
 from pathlib import Path
 
+import pytest
+
 from skill_registry_rag.cli import main
 from skill_registry_rag.roles import install_role_bundle, list_role_offers
 from skill_registry_rag.registry import load_registry
@@ -24,6 +26,8 @@ def test_list_role_offers_includes_roles_and_dependency_counts():
     # This role has empty dependency list in tools.json and should fall back to role markdown.
     assert "role.devops-engineer" in by_id
     assert by_id["role.devops-engineer"]["dependency_count"] >= 8
+    assert "role.aws-engineer" in by_id
+    assert by_id["role.aws-engineer"]["dependency_count"] >= 18
 
 
 def test_install_role_bundle_creates_registry_with_role_and_dependencies(tmp_path):
@@ -41,6 +45,34 @@ def test_install_role_bundle_creates_registry_with_role_and_dependencies(tmp_pat
     assert "role.data-engineer" in ids
     assert "data.spark" in ids
     assert "cloud.terraform" in ids
+
+
+def test_install_aws_role_bundle_creates_registry_with_aws_dependencies(tmp_path):
+    target = tmp_path / "aws-installed.registry.yaml"
+    result = install_role_bundle(
+        catalog_registry=str(_catalog_path()),
+        target_registry=str(target),
+        role_id="role.aws-engineer",
+    )
+
+    assert target.exists()
+    assert "role.aws-engineer" in result["added_ids"]
+    cards = load_registry(target)
+    ids = {card.id for card in cards}
+    assert "role.aws-engineer" in ids
+    assert "cloud.aws-ec2" in ids
+    assert "cloud.aws-eks" in ids
+    assert "cloud.aws-s3" in ids
+    assert "cloud.aws-lambda" in ids
+    assert "cloud.aws-vpc" in ids
+    assert "cloud.aws-rds" in ids
+    assert "cloud.aws-dynamodb" in ids
+    assert "cloud.aws-api-gateway" in ids
+    assert "cloud.aws-cloudfront" in ids
+    assert "cloud.aws-sqs-sns-eventbridge" in ids
+    assert "cloud.aws-cloudwatch-observability" in ids
+    assert "cloud.aws-iam-identity-center" in ids
+    assert "cloud.aws-kms" in ids
 
 
 def test_install_role_bundle_skips_existing_cards(tmp_path):
@@ -134,6 +166,7 @@ def test_cli_roles_list_uses_friendly_role_display():
         code = main(["roles", "list", "--catalog", str(_catalog_path())])
     assert code == 0
     output = buf.getvalue()
+    assert "AWS-Engineer" in output
     assert "Machine-Learning-Researcher" in output
     assert "role.ml-researcher" not in output
 
@@ -184,3 +217,63 @@ def test_cli_friendly_shorthand_install_command(tmp_path):
     cards = load_registry(target)
     ids = {card.id for card in cards}
     assert "role.data-analyst" in ids
+
+
+def test_cli_roles_install_accepts_positional_selector(tmp_path):
+    target = tmp_path / "roles-install-positional.registry.yaml"
+    buf = StringIO()
+    with redirect_stdout(buf):
+        code = main(
+            [
+                "roles",
+                "install",
+                "Financial-Analyst",
+                "--catalog",
+                str(_catalog_path()),
+                "--registry",
+                str(target),
+            ]
+        )
+    assert code == 0
+    output = buf.getvalue()
+    assert "Installed role bundle: Financial-Analyst" in output
+    cards = load_registry(target)
+    ids = {card.id for card in cards}
+    assert "role.financial-analyst" in ids
+
+
+def test_cli_role_singular_alias_maps_to_roles_installed(tmp_path):
+    target = tmp_path / "role-alias.registry.yaml"
+    install_role_bundle(
+        catalog_registry=str(_catalog_path()),
+        target_registry=str(target),
+        role_id="role.data-analyst",
+    )
+
+    buf = StringIO()
+    with redirect_stdout(buf):
+        code = main(
+            [
+                "role",
+                "--catalog",
+                str(_catalog_path()),
+                "--registry",
+                str(target),
+            ]
+        )
+    assert code == 0
+    output = buf.getvalue()
+    assert "Installed roles: 1" in output
+    assert "Data-Analyst" in output
+
+
+def test_cli_roles_help_shows_subcommands():
+    buf = StringIO()
+    with pytest.raises(SystemExit) as exc:
+        with redirect_stdout(buf):
+            main(["roles", "--help"])
+
+    assert exc.value.code == 0
+    output = buf.getvalue()
+    assert "list" in output
+    assert "install" in output

@@ -10,6 +10,26 @@ tools:
   - role
   - api-architect
   - integration
+  invocation:
+    type: function
+    function:
+      name: role_api-architect
+      description: Role expert for API design, integration architecture, and backend
+        service communication patterns across REST, GraphQL, and event-driven systems.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API consumers, data contracts, and latency requirements
+          context:
+            type: object
+            description: versioning strategy, federation boundaries, and compliance
+              needs
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: web.rest-design
   title: REST API Design
   domain: web_api
@@ -18,6 +38,27 @@ tools:
   - rest
   - api-design
   - openapi
+  invocation:
+    type: function
+    function:
+      name: web_rest-design
+      description: Retrieve this expert for resource-oriented API design, pagination/error
+        contracts, and durable REST interface conventions.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API/auth objective, request-response expectations, and security
+              requirements
+          context:
+            type: object
+            description: backward-compatibility constraints, target clients, and deployment
+              environment
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.graphql
   title: GraphQL API Design
   domain: web_api
@@ -27,6 +68,26 @@ tools:
   - schema
   - resolvers
   - federation
+  invocation:
+    type: function
+    function:
+      name: webapi_graphql
+      description: Retrieve this expert for GraphQL schema design, resolver implementation,
+        N+1 prevention with DataLoader, and federation architecture.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: domain entities, relationships, and query patterns
+          context:
+            type: object
+            description: federation boundaries, subscription requirements, and caching
+              strategy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.api-gateway
   title: API Gateway and Service Mesh
   domain: web_api
@@ -35,6 +96,25 @@ tools:
   - api-gateway
   - service-mesh
   - circuit-breaker
+  invocation:
+    type: function
+    function:
+      name: webapi_api-gateway
+      description: Retrieve this expert for API gateway configuration, service mesh
+        patterns, circuit breakers, distributed tracing, and request routing.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: service topology, routing rules, and resilience requirements
+          context:
+            type: object
+            description: tracing backend, mTLS configuration, and canary routing rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.rate-limiting
   title: Rate Limiting and Throttling
   domain: web_api
@@ -43,6 +123,26 @@ tools:
   - rate-limiting
   - throttling
   - token-bucket
+  invocation:
+    type: function
+    function:
+      name: webapi_rate-limiting
+      description: Retrieve this expert for rate limiting strategies including token
+        bucket, sliding window, Redis-backed limiters, and backpressure patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: rate limit thresholds, key strategy (IP, user, API key),
+              and storage backend
+          context:
+            type: object
+            description: burst allowance, retry-after headers, and quota tiers
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.api-auth-patterns
   title: API Authentication Patterns
   domain: web_api
@@ -52,6 +152,27 @@ tools:
   - mtls
   - hmac
   - webhook-verification
+  invocation:
+    type: function
+    function:
+      name: webapi_api-auth-patterns
+      description: Retrieve this expert for API key management, mTLS, HMAC signatures,
+        webhook verification, and service-to-service authentication.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: authentication method, trust boundaries, and key management
+              strategy
+          context:
+            type: object
+            description: certificate authority, rotation schedule, and revocation
+              policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: webapi.websockets-sse
   title: WebSockets and Server-Sent Events
   domain: web_api
@@ -61,3 +182,23 @@ tools:
   - sse
   - real-time
   - streaming
+  invocation:
+    type: function
+    function:
+      name: webapi_websockets-sse
+      description: Retrieve this expert for real-time communication with WebSockets
+        and SSE including connection lifecycle, reconnection, heartbeats, and scaling.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: event types, message format, and connection requirements
+          context:
+            type: object
+            description: scaling strategy, authentication for connections, and message
+              ordering
+        required:
+        - task
+        additionalProperties: true
+      strict: false

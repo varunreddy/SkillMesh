@@ -145,6 +145,7 @@ def retrieve_cards_payload(
                 "aliases": hit.card.aliases,
                 "dependencies": hit.card.dependencies,
                 "input_contract": hit.card.input_contract,
+                "invocation": hit.card.invocation,
                 "output_artifacts": hit.card.output_artifacts,
                 "quality_checks": hit.card.quality_checks,
                 "constraints": hit.card.constraints,

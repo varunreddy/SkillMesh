@@ -61,6 +61,31 @@
         ],
         "install_extra": "viz",
         "owner": "community"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "viz_matplotlib-seaborn",
+          "description": "Publication-grade charting and statistical visualization workflows.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "tabular dataframe or tidy data"
+              },
+              "context": {
+                "type": "object",
+                "description": "style palette, chart type hints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -128,6 +153,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_model-export",
+          "description": "Retrieve this expert for saving trained models with reproducible metadata and deployment-safe export formats.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "trained model/pipeline object and target serving environment"
+              },
+              "context": {
+                "type": "object",
+                "description": "latency constraints, interoperability target (ONNX/joblib), and versioning policy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -165,6 +215,106 @@
       "input_contract": {
         "required": "feature matrix X and target y",
         "optional": "sample weights, groups for CV"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sklearn_model_selection_cross_validate",
+          "description": "Primary schema follows cross_validate. Train/test split and grid search argument examples are included for common modeling flows.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "estimator",
+              "X",
+              "y"
+            ],
+            "properties": {
+              "estimator": {
+                "type": "string",
+                "description": "Estimator instance expression, e.g. Pipeline(...)"
+              },
+              "X": {
+                "type": "string",
+                "description": "Feature matrix variable name"
+              },
+              "y": {
+                "type": "string",
+                "description": "Target vector variable name"
+              },
+              "groups": {
+                "type": "string"
+              },
+              "scoring": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              },
+              "cv": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 2
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              },
+              "n_jobs": {
+                "type": "integer"
+              },
+              "verbose": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "params": {
+                "type": "object"
+              },
+              "pre_dispatch": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "return_train_score": {
+                "type": "boolean"
+              },
+              "return_estimator": {
+                "type": "boolean"
+              },
+              "return_indices": {
+                "type": "boolean"
+              },
+              "error_score": {
+                "oneOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "strict": false
+        }
       },
       "output_artifacts": [
         "trained_pipeline",
@@ -248,6 +398,31 @@
           "claude"
         ],
         "install_extra": "boosting"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_gradient-boosting",
+          "description": "High-performance boosting, tuning, and SHAP-based attribution.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "tabular train/validation datasets"
+              },
+              "context": {
+                "type": "object",
+                "description": "class weights and monotonic constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -309,6 +484,31 @@
           "claude"
         ],
         "install_extra": "deep-learning"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "dl_pytorch-training",
+          "description": "PyTorch training loops with mixed precision, GPU, and checkpoints.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "tensor-ready dataset and model definition"
+              },
+              "context": {
+                "type": "object",
+                "description": "scheduler and mixed precision flag"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -369,6 +569,31 @@
           "claude"
         ],
         "install_extra": "stats"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "stats_scipy-statsmodels",
+          "description": "Hypothesis testing, ANOVA, and regression diagnostics.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "well-defined hypotheses and structured sample groups"
+              },
+              "context": {
+                "type": "object",
+                "description": "multiple-testing correction strategy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -435,6 +660,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "scipy_optimization-signal",
+          "description": "Retrieve this expert for optimization, curve fitting, integration, ODE solving, and signal processing tasks.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "mathematical objective, signal/data characteristics, and optimization constraints"
+              },
+              "context": {
+                "type": "object",
+                "description": "initial parameter guesses, bounds, and noise assumptions"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -492,6 +742,31 @@
           "claude"
         ],
         "install_extra": "chemistry"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "chemistry_rdkit-cheminformatics",
+          "description": "SMILES parsing, descriptors, fingerprints, and similarity workflows.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "canonical SMILES list"
+              },
+              "context": {
+                "type": "object",
+                "description": "substructure SMARTS query"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -560,6 +835,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "graph_networkx-analytics",
+          "description": "Retrieve this expert for graph construction, centrality analysis, community detection, and path-based reasoning tasks.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "graph definition, node-edge semantics, and analysis objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "graph size characteristics, weighting rules, and output visualization needs"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -621,6 +921,31 @@
           "claude"
         ],
         "install_extra": "cv"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cv_opencv-image-processing",
+          "description": "Image preprocessing, contour extraction, and edge/threshold pipelines.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "image path(s) or ndarray"
+              },
+              "context": {
+                "type": "object",
+                "description": "ROI masks and confidence thresholds"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -681,6 +1006,31 @@
           "claude"
         ],
         "install_extra": "geo"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "geo_geopandas-spatial",
+          "description": "Spatial joins, CRS transforms, and map-ready geodata prep.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "valid geometry columns with declared CRS"
+              },
+              "context": {
+                "type": "object",
+                "description": "boundary datasets and map styling"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -742,6 +1092,31 @@
           "claude"
         ],
         "install_extra": "nlp"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "nlp_spacy-transformers",
+          "description": "NER, text classification, and embedding-backed NLP workflows.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "text corpus with language context"
+              },
+              "context": {
+                "type": "object",
+                "description": "label schema and confidence thresholds"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -799,6 +1174,31 @@
           "claude"
         ],
         "install_extra": "docs"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "docs_pdf-generation",
+          "description": "Deterministic markdown/HTML to PDF rendering for reports.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "markdown/html content"
+              },
+              "context": {
+                "type": "object",
+                "description": "css overrides and output filename"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -856,6 +1256,31 @@
           "claude"
         ],
         "install_extra": "slides"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "docs_slides-pptx",
+          "description": "Narrative deck creation with PPTX output and chart integration.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "structured storyline or slide outline"
+              },
+              "context": {
+                "type": "object",
+                "description": "brand template and theme colors"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -920,6 +1345,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_schema-normalization",
+          "description": "Retrieve this expert for payload normalization, dataframe conversion, and quarter/date alignment.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "raw payload/schema examples and expected canonical schema"
+              },
+              "context": {
+                "type": "object",
+                "description": "null-handling rules, date/quarter alignment policy, and quality thresholds"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -986,6 +1436,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_accessibility",
+          "description": "Retrieve this expert for WCAG compliance, semantic HTML, keyboard navigation, and screen-reader safe UI patterns.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "UI feature intent, interaction states, and target device/browser requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "design tokens, brand constraints, and accessibility/performance targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1051,6 +1526,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "web_auth-jwt",
+          "description": "Retrieve this expert for JWT token issuance, validation, refresh flows, RBAC claims, and secure auth middleware patterns.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "API/auth objective, request-response expectations, and security requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "backward-compatibility constraints, target clients, and deployment environment"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1116,6 +1616,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "web_auth-oauth",
+          "description": "Retrieve this expert for OAuth2/OIDC authorization flows, PKCE, token exchange, and secure third-party identity integration.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "API/auth objective, request-response expectations, and security requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "backward-compatibility constraints, target clients, and deployment environment"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1181,6 +1706,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-lambda",
+          "description": "Retrieve this expert for Lambda handlers, cold-start optimization, packaging, observability, and event-driven serverless patterns.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1247,6 +1797,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-s3",
+          "description": "Retrieve this expert for S3 buckets, lifecycle policies, presigned URLs, encryption, and secure object storage architecture.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1312,6 +1887,926 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-vpc",
+          "description": "Retrieve this expert for VPC design, subnet routing, security groups, NAT, peering, and network segmentation decisions.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-ec2",
+      "title": "AWS EC2 Compute Instances",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-ec2.md",
+      "description": "Retrieve this expert for EC2 instance sizing, launch templates, autoscaling strategy, hardening baselines, and instance operations.",
+      "tags": [
+        "aws",
+        "ec2",
+        "compute",
+        "autoscaling",
+        "ami",
+        "ebs"
+      ],
+      "tool_hints": [
+        "aws ec2",
+        "aws autoscaling",
+        "cloud-init",
+        "ssm"
+      ],
+      "examples": [
+        "Design private EC2 application tier with autoscaling and SSM access",
+        "Harden EC2 launch template and patch baseline for production workloads"
+      ],
+      "aliases": [
+        "cloud-aws-ec2",
+        "aws-ec2-compute-instances"
+      ],
+      "dependencies": [
+        "awscli",
+        "boto3",
+        "cloudwatch-agent",
+        "ssm-agent"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "ami_patch_baseline_reviewed",
+        "instance_profile_least_privilege",
+        "autoscaling_and_health_checks_configured"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-ec2",
+          "description": "Retrieve this expert for EC2 instance sizing, launch templates, autoscaling strategy, hardening baselines, and instance operations.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-eks",
+      "title": "AWS EKS Kubernetes Clusters",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-eks.md",
+      "description": "Retrieve this expert for EKS cluster architecture, IRSA setup, node strategy, add-on governance, and production operations.",
+      "tags": [
+        "aws",
+        "eks",
+        "kubernetes",
+        "irsa",
+        "node-groups",
+        "autoscaling"
+      ],
+      "tool_hints": [
+        "aws eks",
+        "eksctl",
+        "kubectl",
+        "helm"
+      ],
+      "examples": [
+        "Design private EKS cluster with IRSA and managed node groups",
+        "Build EKS upgrade and add-on versioning strategy for production"
+      ],
+      "aliases": [
+        "cloud-aws-eks",
+        "aws-eks-kubernetes-clusters"
+      ],
+      "dependencies": [
+        "awscli",
+        "kubectl",
+        "helm",
+        "eksctl",
+        "terraform"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "irsa_configured",
+        "control_plane_logging_enabled",
+        "node_and_network_policies_reviewed"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-eks",
+          "description": "Retrieve this expert for EKS cluster architecture, IRSA setup, node strategy, add-on governance, and production operations.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-rds",
+      "title": "AWS RDS Managed Databases",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-rds.md",
+      "description": "Retrieve this expert for RDS/Aurora engine selection, HA topology, backup and recovery controls, and database operations.",
+      "tags": [
+        "aws",
+        "rds",
+        "aurora",
+        "postgres",
+        "mysql",
+        "database"
+      ],
+      "tool_hints": [
+        "aws rds",
+        "psql",
+        "mysql",
+        "cloudwatch"
+      ],
+      "examples": [
+        "Design Multi-AZ RDS architecture with backup and PITR controls",
+        "Tune RDS parameter groups and failover posture for production"
+      ],
+      "aliases": [
+        "cloud-aws-rds",
+        "aws-rds-managed-databases"
+      ],
+      "dependencies": [
+        "awscli",
+        "terraform",
+        "cloudwatch",
+        "psql",
+        "mysql"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "backups_and_pitr_enabled",
+        "encryption_and_kms_configured",
+        "multi_az_and_failover_validated"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-rds",
+          "description": "Retrieve this expert for RDS/Aurora engine selection, HA topology, backup and recovery controls, and database operations.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-dynamodb",
+      "title": "AWS DynamoDB NoSQL Design",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-dynamodb.md",
+      "description": "Retrieve this expert for DynamoDB access-pattern modeling, partition key design, indexing strategy, and scaling controls.",
+      "tags": [
+        "aws",
+        "dynamodb",
+        "nosql",
+        "partition-key",
+        "gsi",
+        "streams"
+      ],
+      "tool_hints": [
+        "aws dynamodb",
+        "boto3 dynamodb",
+        "dynamodb streams",
+        "cloudwatch"
+      ],
+      "examples": [
+        "Model DynamoDB table and GSIs from concrete read/write patterns",
+        "Design DynamoDB scaling and hot-partition mitigation strategy"
+      ],
+      "aliases": [
+        "cloud-aws-dynamodb",
+        "aws-dynamodb-nosql-design"
+      ],
+      "dependencies": [
+        "awscli",
+        "boto3",
+        "dynamodb-toolkit"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "partition_key_and_access_patterns_validated",
+        "capacity_mode_and_autoscaling_reviewed",
+        "backup_and_ttl_configuration_verified"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "require_access_pattern_driven_schema_design"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-dynamodb",
+          "description": "Retrieve this expert for DynamoDB access-pattern modeling, partition key design, indexing strategy, and scaling controls.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-api-gateway",
+      "title": "AWS API Gateway Delivery",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-api-gateway.md",
+      "description": "Retrieve this expert for API Gateway route design, authn/authz controls, throttling, and staged API delivery patterns.",
+      "tags": [
+        "aws",
+        "api-gateway",
+        "rest",
+        "http-api",
+        "authorizer",
+        "throttling"
+      ],
+      "tool_hints": [
+        "aws apigateway",
+        "aws apigatewayv2",
+        "lambda authorizer",
+        "wafv2"
+      ],
+      "examples": [
+        "Design versioned API Gateway routes with JWT authorizers and throttling",
+        "Implement staged API rollout with access logs and rollback controls"
+      ],
+      "aliases": [
+        "cloud-aws-api-gateway",
+        "aws-api-gateway-delivery"
+      ],
+      "dependencies": [
+        "awscli",
+        "boto3",
+        "lambda",
+        "wafv2"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "authn_authz_strategy_defined",
+        "throttling_and_waf_controls_configured",
+        "logging_and_versioning_configured"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "preserve_api_compatibility_or_version_explicitly"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-api-gateway",
+          "description": "Retrieve this expert for API Gateway route design, authn/authz controls, throttling, and staged API delivery patterns.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-cloudfront",
+      "title": "AWS CloudFront Edge Delivery",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-cloudfront.md",
+      "description": "Retrieve this expert for CloudFront caching strategy, origin security, TLS posture, and edge performance optimization.",
+      "tags": [
+        "aws",
+        "cloudfront",
+        "cdn",
+        "caching",
+        "waf",
+        "edge"
+      ],
+      "tool_hints": [
+        "aws cloudfront",
+        "oac",
+        "wafv2",
+        "s3 origin"
+      ],
+      "examples": [
+        "Configure CloudFront with secure S3 origin access and signed delivery",
+        "Tune CloudFront cache key/TTL strategy for API and static traffic"
+      ],
+      "aliases": [
+        "cloud-aws-cloudfront",
+        "aws-cloudfront-edge-delivery"
+      ],
+      "dependencies": [
+        "awscli",
+        "terraform",
+        "wafv2"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "origin_access_controls_enforced",
+        "cache_key_and_ttl_strategy_reviewed",
+        "tls_waf_and_geo_controls_validated"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "pin_or_version_infrastructure_artifacts"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-cloudfront",
+          "description": "Retrieve this expert for CloudFront caching strategy, origin security, TLS posture, and edge performance optimization.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-sqs-sns-eventbridge",
+      "title": "AWS Messaging and Event Routing",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-sqs-sns-eventbridge.md",
+      "description": "Retrieve this expert for SQS/SNS/EventBridge topology design, delivery guarantees, retries, dead-letter handling, and event governance.",
+      "tags": [
+        "aws",
+        "sqs",
+        "sns",
+        "eventbridge",
+        "messaging",
+        "dlq"
+      ],
+      "tool_hints": [
+        "aws sqs",
+        "aws sns",
+        "aws events",
+        "eventbridge rules"
+      ],
+      "examples": [
+        "Design asynchronous workflow with retries, DLQ, and idempotent consumers",
+        "Implement EventBridge event bus routing with schema and filter governance"
+      ],
+      "aliases": [
+        "cloud-aws-sqs-sns-eventbridge",
+        "aws-messaging-and-event-routing"
+      ],
+      "dependencies": [
+        "awscli",
+        "boto3"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "retry_and_dlq_strategy_defined",
+        "idempotency_and_deduplication_addressed",
+        "event_filtering_and_schema_contracts_documented"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "always_define_retry_or_dead_letter_strategy"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-sqs-sns-eventbridge",
+          "description": "Retrieve this expert for SQS/SNS/EventBridge topology design, delivery guarantees, retries, dead-letter handling, and event governance.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-cloudwatch-observability",
+      "title": "AWS CloudWatch Observability",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-cloudwatch-observability.md",
+      "description": "Retrieve this expert for CloudWatch metrics/logs/alarms, alert quality tuning, dashboarding, and operational observability controls.",
+      "tags": [
+        "aws",
+        "cloudwatch",
+        "observability",
+        "alarms",
+        "metrics",
+        "logs"
+      ],
+      "tool_hints": [
+        "aws cloudwatch",
+        "aws logs",
+        "cloudwatch dashboards",
+        "x-ray"
+      ],
+      "examples": [
+        "Build SLO-aligned CloudWatch alarm strategy with escalation policy",
+        "Standardize AWS log retention and dashboard design for production services"
+      ],
+      "aliases": [
+        "cloud-aws-cloudwatch-observability",
+        "aws-cloudwatch-observability"
+      ],
+      "dependencies": [
+        "awscli",
+        "cloudwatch-agent",
+        "xray"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "slo_aligned_alarms_defined",
+        "log_retention_and_cost_controls_reviewed",
+        "dashboards_and_runbooks_linked"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "do_not_log_secrets_or_pii"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-cloudwatch-observability",
+          "description": "Retrieve this expert for CloudWatch metrics/logs/alarms, alert quality tuning, dashboarding, and operational observability controls.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-iam-identity-center",
+      "title": "AWS IAM Identity Center",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-iam-identity-center.md",
+      "description": "Retrieve this expert for IAM Identity Center workforce access design, permission set governance, and multi-account access controls.",
+      "tags": [
+        "aws",
+        "iam",
+        "identity-center",
+        "sso",
+        "permission-sets",
+        "governance"
+      ],
+      "tool_hints": [
+        "aws sso-admin",
+        "aws identitystore",
+        "aws organizations",
+        "permission sets"
+      ],
+      "examples": [
+        "Design IAM Identity Center permission sets for multi-account enterprise teams",
+        "Migrate from IAM users to federated SSO with MFA and access review controls"
+      ],
+      "aliases": [
+        "cloud-aws-iam-identity-center",
+        "aws-iam-identity-center"
+      ],
+      "dependencies": [
+        "awscli",
+        "terraform",
+        "aws-organizations"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "permission_sets_least_privilege_reviewed",
+        "mfa_and_session_policies_enforced",
+        "access_review_and_recertification_defined"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "require_mfa_for_human_privileged_access"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-iam-identity-center",
+          "description": "Retrieve this expert for IAM Identity Center workforce access design, permission set governance, and multi-account access controls.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.aws-kms",
+      "title": "AWS KMS Key Management",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/aws-kms.md",
+      "description": "Retrieve this expert for KMS key policy design, rotation/deletion controls, and encryption integration across AWS services.",
+      "tags": [
+        "aws",
+        "kms",
+        "encryption",
+        "keys",
+        "key-management",
+        "compliance"
+      ],
+      "tool_hints": [
+        "aws kms",
+        "kms key policy",
+        "aws encryption sdk",
+        "secrets manager"
+      ],
+      "examples": [
+        "Design environment-scoped KMS key hierarchy with strict policy boundaries",
+        "Integrate KMS encryption controls across S3, RDS, and Secrets Manager"
+      ],
+      "aliases": [
+        "cloud-aws-kms",
+        "aws-kms-key-management"
+      ],
+      "dependencies": [
+        "awscli",
+        "boto3",
+        "aws-encryption-sdk"
+      ],
+      "input_contract": {
+        "required": "target cloud environment, intended workload behavior, and resource scope",
+        "optional": "existing topology, compliance controls, cost and rollback constraints"
+      },
+      "output_artifacts": [
+        "infrastructure_changeset",
+        "configuration_artifacts",
+        "operational_validation_report"
+      ],
+      "quality_checks": [
+        "key_policy_scope_reviewed",
+        "rotation_and_deletion_controls_configured",
+        "service_encryption_integrations_validated"
+      ],
+      "constraints": [
+        "avoid_unreviewed_production_changes",
+        "never_grant_broad_kms_decrypt_access"
+      ],
+      "risk_level": "high",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "cloud",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_aws-kms",
+          "description": "Retrieve this expert for KMS key policy design, rotation/deletion controls, and encryption integration across AWS services.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1374,6 +2869,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sys_concurrency",
+          "description": "Retrieve this expert for thread safety, async coordination, lock strategies, and race-condition resistant concurrent architectures.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "runtime constraints, correctness requirements, and interface boundaries"
+              },
+              "context": {
+                "type": "object",
+                "description": "throughput/latency goals, concurrency model, and platform targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1441,6 +2961,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sec_container-security",
+          "description": "Retrieve this expert for container image hardening, runtime controls, Kubernetes pod security, and CI vulnerability gates.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "authorized scope, threat context, and assets under assessment"
+              },
+              "context": {
+                "type": "object",
+                "description": "compliance framework mapping, risk tolerance, and remediation timeline"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1505,6 +3050,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sys_cpp-modern",
+          "description": "Retrieve this expert for modern C++ architecture, RAII safety, move semantics, templates, and performance-aware systems code.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "runtime constraints, correctness requirements, and interface boundaries"
+              },
+              "context": {
+                "type": "object",
+                "description": "throughput/latency goals, concurrency model, and platform targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1567,6 +3137,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_css-architecture",
+          "description": "Retrieve this expert for scalable CSS systems, design tokens, component theming, and responsive layout strategies.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "UI feature intent, interaction states, and target device/browser requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "design tokens, brand constraints, and accessibility/performance targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1629,6 +3224,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_dbt",
+          "description": "Retrieve this expert for dbt model layering, testing, documentation, and incremental transformation workflows.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "source schema/data samples and transformation objectives"
+              },
+              "context": {
+                "type": "object",
+                "description": "data volume profile, latency/SLA constraints, and governance rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1695,6 +3315,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sec_dependency-scanning",
+          "description": "Retrieve this expert for CVE triage, software composition analysis, SBOM workflows, and secure dependency governance.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "authorized scope, threat context, and assets under assessment"
+              },
+              "context": {
+                "type": "object",
+                "description": "compliance framework mapping, risk tolerance, and remediation timeline"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1757,6 +3402,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_docker",
+          "description": "Retrieve this expert for production Dockerfiles, multi-stage builds, secure runtime configs, and container image optimization.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1822,6 +3492,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "web_fastapi",
+          "description": "Retrieve this expert for FastAPI endpoint design, dependency injection, validation, middleware, and async API architecture.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "API/auth objective, request-response expectations, and security requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "backward-compatibility constraints, target clients, and deployment environment"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1885,6 +3580,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_feature-engineering",
+          "description": "Retrieve this expert for robust feature design, leakage-safe transforms, encoding strategies, and model-ready feature pipelines.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "problem definition, target variable, and evaluation metric"
+              },
+              "context": {
+                "type": "object",
+                "description": "feature constraints, compute budget, and deployment target"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -1922,6 +3642,87 @@
       "input_contract": {
         "required": "financial objective, modeling assumptions, and data time horizon",
         "optional": "scenario definitions, risk constraints, and benchmark references"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "finance_financial_modeling_run",
+          "description": "No single canonical API covers full financial modeling orchestration, so this schema is a strong workflow contract with API-backed NPV/IRR references.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "objective",
+              "historical_cashflows",
+              "forecast_horizon_periods",
+              "discount_rate"
+            ],
+            "properties": {
+              "objective": {
+                "type": "string",
+                "enum": [
+                  "valuation",
+                  "planning",
+                  "budgeting",
+                  "scenario_analysis"
+                ]
+              },
+              "historical_cashflows": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3
+              },
+              "forecast_horizon_periods": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "frequency": {
+                "type": "string",
+                "enum": [
+                  "monthly",
+                  "quarterly",
+                  "annual"
+                ]
+              },
+              "currency": {
+                "type": "string"
+              },
+              "discount_rate": {
+                "type": "number",
+                "minimum": 0
+              },
+              "terminal_growth_rate": {
+                "type": "number"
+              },
+              "tax_rate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "capex_percent_revenue": {
+                "type": "number"
+              },
+              "working_capital_percent_revenue": {
+                "type": "number"
+              },
+              "comparable_multiples": {
+                "type": "object"
+              },
+              "scenario_overrides": {
+                "type": "object"
+              },
+              "include_npv": {
+                "type": "boolean"
+              },
+              "include_irr": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          },
+          "strict": false
+        }
       },
       "output_artifacts": [
         "assumption_framework",
@@ -2013,6 +3814,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "web_flask",
+          "description": "Retrieve this expert for Flask app factory design, blueprints, extension wiring, and production-ready API/service patterns.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "API/auth objective, request-response expectations, and security requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "backward-compatibility constraints, target clients, and deployment environment"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2076,6 +3902,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "infra_github-actions",
+          "description": "Retrieve this expert for GitHub Actions pipelines, caching, reusable workflows, secure secrets handling, and deployment automation.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "pipeline objective, repository/workflow context, and deployment policy"
+              },
+              "context": {
+                "type": "object",
+                "description": "runner constraints, cache strategy, and release gating rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2138,6 +3989,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sys_go",
+          "description": "Retrieve this expert for idiomatic Go services, goroutine patterns, error handling discipline, and high-performance backend design.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "runtime constraints, correctness requirements, and interface boundaries"
+              },
+              "context": {
+                "type": "object",
+                "description": "throughput/latency goals, concurrency model, and platform targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2201,6 +4077,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_hyperparameter-tuning",
+          "description": "Retrieve this expert for systematic hyperparameter search, tuning strategy design, and objective-driven model optimization.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "problem definition, target variable, and evaluation metric"
+              },
+              "context": {
+                "type": "object",
+                "description": "feature constraints, compute budget, and deployment target"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2266,6 +4167,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sec_iam-policies",
+          "description": "Retrieve this expert for least-privilege IAM design, policy boundaries, role trust rules, and cloud access governance.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "authorized scope, threat context, and assets under assessment"
+              },
+              "context": {
+                "type": "object",
+                "description": "compliance framework mapping, risk tolerance, and remediation timeline"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2332,6 +4258,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_kubernetes",
+          "description": "Retrieve this expert for Kubernetes deployments, scaling, networking, RBAC, and production-grade cluster operations.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2397,6 +4348,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_nextjs",
+          "description": "Retrieve this expert for Next.js app/router architecture, SSR/SSG strategies, API routes, and performance optimization.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "UI feature intent, interaction states, and target device/browser requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "design tokens, brand constraints, and accessibility/performance targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2464,6 +4440,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sec_owasp-web",
+          "description": "Retrieve this expert for OWASP-aligned web security reviews, secure coding controls, and vulnerability remediation guidance.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "authorized scope, threat context, and assets under assessment"
+              },
+              "context": {
+                "type": "object",
+                "description": "compliance framework mapping, risk tolerance, and remediation timeline"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2526,6 +4527,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_pandas-advanced",
+          "description": "Retrieve this expert for high-performance pandas transformations, memory optimization, and robust dataframe pipeline design.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "source schema/data samples and transformation objectives"
+              },
+              "context": {
+                "type": "object",
+                "description": "data volume profile, latency/SLA constraints, and governance rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2593,6 +4619,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sec_penetration-testing",
+          "description": "Retrieve this expert for authorized penetration testing methodology, evidence collection, risk classification, and reporting.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "authorized scope, threat context, and assets under assessment"
+              },
+              "context": {
+                "type": "object",
+                "description": "compliance framework mapping, risk tolerance, and remediation timeline"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2630,6 +4681,107 @@
       "input_contract": {
         "required": "financial objective, modeling assumptions, and data time horizon",
         "optional": "scenario definitions, risk constraints, and benchmark references"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "scipy_optimize_minimize",
+          "description": "The primary optimization arguments align to scipy.optimize.minimize; regression arguments are included for common factor model diagnostics.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "fun",
+              "x0"
+            ],
+            "properties": {
+              "fun": {
+                "type": "string",
+                "description": "Objective callable expression, e.g. portfolio_variance"
+              },
+              "x0": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 1
+              },
+              "args": {
+                "type": "array"
+              },
+              "method": {
+                "type": "string"
+              },
+              "jac": {
+                "oneOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "hess": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              },
+              "bounds": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              },
+              "constraints": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "tol": {
+                "type": "number"
+              },
+              "options": {
+                "type": "object"
+              },
+              "regression_formula": {
+                "type": "string"
+              },
+              "regression_data": {
+                "type": "string"
+              },
+              "robust_cov": {
+                "type": "string",
+                "enum": [
+                  "nonrobust",
+                  "HC0",
+                  "HC1",
+                  "HC2",
+                  "HC3"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "strict": false
+        }
       },
       "output_artifacts": [
         "assumption_framework",
@@ -2718,6 +4870,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_react-native",
+          "description": "Retrieve this expert for React Native navigation, platform APIs, performance optimization, and production mobile release patterns.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "UI feature intent, interaction states, and target device/browser requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "design tokens, brand constraints, and accessibility/performance targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2780,6 +4957,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_react",
+          "description": "Retrieve this expert for React component design, hook strategy, state boundaries, and performance-oriented UI architecture.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "UI feature intent, interaction states, and target device/browser requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "design tokens, brand constraints, and accessibility/performance targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2842,6 +5044,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "web_rest-design",
+          "description": "Retrieve this expert for resource-oriented API design, pagination/error contracts, and durable REST interface conventions.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "API/auth objective, request-response expectations, and security requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "backward-compatibility constraints, target clients, and deployment environment"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2907,6 +5134,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sys_rust",
+          "description": "Retrieve this expert for idiomatic Rust design, ownership-safe implementations, async runtime patterns, and performance tuning.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "runtime constraints, correctness requirements, and interface boundaries"
+              },
+              "context": {
+                "type": "object",
+                "description": "throughput/latency goals, concurrency model, and platform targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -2973,6 +5225,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sec_secrets-management",
+          "description": "Retrieve this expert for secure secret storage, rotation policy, CI/CD secret hygiene, and credential incident response.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "authorized scope, threat context, and assets under assessment"
+              },
+              "context": {
+                "type": "object",
+                "description": "compliance framework mapping, risk tolerance, and remediation timeline"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3035,6 +5312,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_spark",
+          "description": "Retrieve this expert for Spark data pipelines, partitioning strategy, performance tuning, and resilient distributed processing.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "source schema/data samples and transformation objectives"
+              },
+              "context": {
+                "type": "object",
+                "description": "data volume profile, latency/SLA constraints, and governance rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3099,6 +5401,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_sql-queries",
+          "description": "Retrieve this expert for advanced SQL joins, CTE/window logic, query optimization, and analytical data retrieval patterns.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "source schema/data samples and transformation objectives"
+              },
+              "context": {
+                "type": "object",
+                "description": "data volume profile, latency/SLA constraints, and governance rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3162,6 +5489,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "web_sqlalchemy",
+          "description": "Retrieve this expert for SQLAlchemy model design, session lifecycle management, migrations, and ORM query correctness.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "API/auth objective, request-response expectations, and security requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "backward-compatibility constraints, target clients, and deployment environment"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3224,6 +5576,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_terraform",
+          "description": "Retrieve this expert for Terraform module design, remote state safety, drift detection, and cloud IaC delivery workflows.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target cloud environment, intended workload behavior, and resource scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "existing topology, compliance controls, cost and rollback constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3287,6 +5664,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_time-series",
+          "description": "Retrieve this expert for stationarity checks, decomposition, forecasting model selection, and time-aware validation.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "source schema/data samples and transformation objectives"
+              },
+              "context": {
+                "type": "object",
+                "description": "data volume profile, latency/SLA constraints, and governance rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3352,6 +5754,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v2"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "dl_transformers-finetuning",
+          "description": "Retrieve this expert for HuggingFace transformer fine-tuning, LoRA/QLoRA adaptation, and GPU-efficient training workflows.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "task definition, model family choice, and dataset readiness details"
+              },
+              "context": {
+                "type": "object",
+                "description": "GPU memory budget, adapter strategy, and checkpoint cadence"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3419,6 +5846,31 @@
         "owner": "community",
         "catalog_tier": "roles",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_data-analyst",
+          "description": "Role expert that orchestrates profiling, cleaning, EDA, baseline modeling, and visualization for tabular analytics tasks.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "tabular dataset and analysis objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "target metric, business context, and prediction requirement"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3462,6 +5914,83 @@
       "input_contract": {
         "required": "financial dataset with timeframe and target question",
         "optional": "scenario assumptions, risk tolerance, and reporting horizon"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_financial-analyst_execute",
+          "description": "Role-level orchestration contract that routes into dependent cards; fields represent execution intent rather than one library API signature.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "question",
+              "dataset_ref",
+              "target_metric"
+            ],
+            "properties": {
+              "question": {
+                "type": "string"
+              },
+              "dataset_ref": {
+                "type": "string",
+                "description": "Path, table, or URI for the primary financial dataset"
+              },
+              "target_metric": {
+                "type": "string"
+              },
+              "time_column": {
+                "type": "string"
+              },
+              "forecast_horizon_periods": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "frequency": {
+                "type": "string",
+                "enum": [
+                  "daily",
+                  "weekly",
+                  "monthly",
+                  "quarterly",
+                  "annual"
+                ]
+              },
+              "scenario_assumptions": {
+                "type": "object"
+              },
+              "risk_tolerance": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "valuation_mode": {
+                "type": "string",
+                "enum": [
+                  "dcf",
+                  "multiples",
+                  "blended",
+                  "none"
+                ]
+              },
+              "include_visuals": {
+                "type": "boolean"
+              },
+              "output_format": {
+                "type": "string",
+                "enum": [
+                  "markdown",
+                  "json",
+                  "notebook"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "strict": false
+        }
       },
       "output_artifacts": [
         "assumptions_table",
@@ -3528,6 +6057,118 @@
       "input_contract": {
         "required": "training dataset with target variable and deployment objective",
         "optional": "class imbalance profile, threshold policy, and serving constraints"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sklearn_pipeline_Pipeline",
+          "description": "Pipeline schema models init/persist/calibration arguments used in production packaging flows.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "steps"
+            ],
+            "properties": {
+              "steps": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "estimator"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "estimator": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "memory": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "verbose": {
+                "type": "boolean"
+              },
+              "calibration_method": {
+                "type": "string",
+                "enum": [
+                  "sigmoid",
+                  "isotonic"
+                ]
+              },
+              "calibration_cv": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 2
+                  },
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "calibration_n_jobs": {
+                "type": "integer"
+              },
+              "calibration_ensemble": {
+                "oneOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "auto"
+                    ]
+                  }
+                ]
+              },
+              "persist_path": {
+                "type": "string"
+              },
+              "persist_compress": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ]
+              },
+              "persist_protocol": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "strict": false
+        }
       },
       "output_artifacts": [
         "fitted_sklearn_pipeline",
@@ -3617,6 +6258,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "stats_experiment-design",
+          "description": "Retrieve this expert for experiment planning, power analysis, sample-size estimation, and robust A/B test interpretation.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "primary metric, hypothesis, and experiment constraints"
+              },
+              "context": {
+                "type": "object",
+                "description": "historical variance, expected effect size, and traffic allocation"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3681,6 +6347,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "stats_model-diagnostics",
+          "description": "Retrieve this expert for residual diagnostics, calibration assessment, cohort error analysis, and model reliability checks.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "trained model outputs, targets, and feature context"
+              },
+              "context": {
+                "type": "object",
+                "description": "cohort definitions, drift windows, and operating thresholds"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3764,6 +6455,31 @@
         "owner": "community",
         "catalog_tier": "roles",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_machine-learning-engineer",
+          "description": "Role expert for end-to-end ML delivery across feature pipelines, training, diagnostics, packaging, and deployment handoff.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "dataset, target objective, and model success metric"
+              },
+              "context": {
+                "type": "object",
+                "description": "latency constraints, deployment target, and compliance requirements"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3840,6 +6556,31 @@
         "owner": "community",
         "catalog_tier": "roles",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_data-engineer",
+          "description": "Role expert for scalable data pipelines, quality enforcement, and production-ready data platform delivery.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "source datasets, target schema, and freshness expectations"
+              },
+              "context": {
+                "type": "object",
+                "description": "lineage requirements, cost constraints, and backfill policy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3917,6 +6658,31 @@
         "owner": "community",
         "catalog_tier": "roles",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_ml-researcher",
+          "description": "Role expert for hypothesis-driven ML research, ablations, diagnostics, and reproducible experimental reporting.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "research objective, target metric, and baseline definition"
+              },
+              "context": {
+                "type": "object",
+                "description": "compute budget, experiment matrix, and publication criteria"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -3980,6 +6746,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "bi_dashboard-design",
+          "description": "Retrieve this expert for KPI-driven dashboard architecture, chart selection, stakeholder communication, and adoption-focused BI reporting.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "business objective, audience, and target KPIs"
+              },
+              "context": {
+                "type": "object",
+                "description": "dashboard tool choice, refresh cadence, and governance constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4043,6 +6834,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "bi_metric-semantic-modeling",
+          "description": "Retrieve this expert for semantic layer design, metric governance, dimensional modeling, and trusted KPI standardization.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "entity definitions, required KPIs, and analysis grain"
+              },
+              "context": {
+                "type": "object",
+                "description": "lineage tool, SCD policy, and ownership model"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4116,6 +6932,31 @@
         "owner": "community",
         "catalog_tier": "roles",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_bi-analyst",
+          "description": "Role expert for KPI-centric business analysis, dashboard planning, and governed reporting outputs for stakeholders.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "business questions, KPI scope, and audience"
+              },
+              "context": {
+                "type": "object",
+                "description": "tooling preferences, refresh cadence, and governance policy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4179,6 +7020,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "bi_tableau-authoring",
+          "description": "Retrieve this expert for Tableau dashboard design, interaction patterns, performance tuning, and governed publishing workflows.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target business KPIs and dashboard audience"
+              },
+              "context": {
+                "type": "object",
+                "description": "publish environment, refresh cadence, and permission model"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4242,6 +7108,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "bi_powerbi-modeling",
+          "description": "Retrieve this expert for Power BI data modeling, DAX measure design, row-level security, and refresh strategy.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "business KPIs, source schema, and report objectives"
+              },
+              "context": {
+                "type": "object",
+                "description": "security requirements, workspace policy, and refresh windows"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4305,6 +7196,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "bi_looker-modeling",
+          "description": "Retrieve this expert for LookML model design, explore governance, and performant semantic delivery in Looker.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "entity model, metric requirements, and explore needs"
+              },
+              "context": {
+                "type": "object",
+                "description": "access policy, PDT strategy, and deployment workflow"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4384,6 +7300,31 @@
         "owner": "community",
         "catalog_tier": "roles",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_analytics-engineer",
+          "description": "Role expert for governed analytics delivery across semantic modeling, tested transformations, and BI platform implementation.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "business metric scope, source systems, and target BI platform"
+              },
+              "context": {
+                "type": "object",
+                "description": "governance constraints, ownership model, and release cadence"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4447,6 +7388,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_azure-storage",
+          "description": "Retrieve this expert for Azure Blob and ADLS Gen2 architecture, data layout, access policy, and lifecycle governance.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "data domains, retention policy, and access requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "cost constraints, lifecycle policy, and downstream consumers"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4510,6 +7476,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_azure-data-factory",
+          "description": "Retrieve this expert for Azure Data Factory pipeline orchestration, ETL scheduling, retries, and operational reliability patterns.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "source and target systems with freshness SLA"
+              },
+              "context": {
+                "type": "object",
+                "description": "retry policy, backfill windows, and quality threshold rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4573,6 +7564,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_azure-synapse",
+          "description": "Retrieve this expert for Synapse SQL and Spark architecture, serving model design, and BI-facing optimization.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "workload latency goals, concurrency profile, and source systems"
+              },
+              "context": {
+                "type": "object",
+                "description": "cost budget, security boundaries, and BI serving targets"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4636,6 +7652,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_ansible",
+          "description": "Retrieve this expert for infrastructure automation with Ansible playbooks, roles, vault, and idempotent configuration management.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target hosts, desired state, and connectivity details"
+              },
+              "context": {
+                "type": "object",
+                "description": "vault password, custom roles, and inventory filters"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4697,6 +7738,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_nginx",
+          "description": "Retrieve this expert for Nginx reverse proxy configuration, SSL termination, rate limiting, and load balancing.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "upstream services, domain names, and traffic requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "SSL certificates, rate limit thresholds, and caching policies"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4756,6 +7822,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_systemd",
+          "description": "Retrieve this expert for systemd unit files, service management, journalctl diagnostics, timers, and resource limits.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "application binary or script path and runtime requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "resource limits, restart policies, and dependency ordering"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4820,6 +7911,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_prometheus-grafana",
+          "description": "Retrieve this expert for Prometheus metrics collection, PromQL queries, Grafana dashboards, alerting rules, and service discovery.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target services, metrics endpoints, and alerting thresholds"
+              },
+              "context": {
+                "type": "object",
+                "description": "custom recording rules, dashboard templates, and notification channels"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4885,6 +8001,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_elk-logging",
+          "description": "Retrieve this expert for centralized logging with Elasticsearch, Logstash, Kibana, and Filebeat including index lifecycle management.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "log sources, log format, and retention requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "custom grok patterns, index templates, and alerting rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -4945,6 +8086,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_cicd-patterns",
+          "description": "Retrieve this expert for deployment strategies including blue-green, canary, feature flags, rollback procedures, and pipeline design.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "application type, deployment target, and risk tolerance"
+              },
+              "context": {
+                "type": "object",
+                "description": "rollback criteria, traffic split percentages, and feature flag system"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5007,6 +8173,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_linux-admin",
+          "description": "Retrieve this expert for Linux system administration including user management, firewall configuration, SSH hardening, and package management.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "target Linux distribution and server role"
+              },
+              "context": {
+                "type": "object",
+                "description": "compliance requirements, user list, and network topology"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5070,6 +8261,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "webapi_graphql",
+          "description": "Retrieve this expert for GraphQL schema design, resolver implementation, N+1 prevention with DataLoader, and federation architecture.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "domain entities, relationships, and query patterns"
+              },
+              "context": {
+                "type": "object",
+                "description": "federation boundaries, subscription requirements, and caching strategy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5129,6 +8345,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "webapi_api-gateway",
+          "description": "Retrieve this expert for API gateway configuration, service mesh patterns, circuit breakers, distributed tracing, and request routing.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "service topology, routing rules, and resilience requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "tracing backend, mTLS configuration, and canary routing rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5190,6 +8431,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "webapi_rate-limiting",
+          "description": "Retrieve this expert for rate limiting strategies including token bucket, sliding window, Redis-backed limiters, and backpressure patterns.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "rate limit thresholds, key strategy (IP, user, API key), and storage backend"
+              },
+              "context": {
+                "type": "object",
+                "description": "burst allowance, retry-after headers, and quota tiers"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5250,6 +8516,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "webapi_api-auth-patterns",
+          "description": "Retrieve this expert for API key management, mTLS, HMAC signatures, webhook verification, and service-to-service authentication.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "authentication method, trust boundaries, and key management strategy"
+              },
+              "context": {
+                "type": "object",
+                "description": "certificate authority, rotation schedule, and revocation policy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5312,6 +8603,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "webapi_websockets-sse",
+          "description": "Retrieve this expert for real-time communication with WebSockets and SSE including connection lifecycle, reconnection, heartbeats, and scaling.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "event types, message format, and connection requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "scaling strategy, authentication for connections, and message ordering"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5373,6 +8689,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_gcp-gcs",
+          "description": "Retrieve this expert for Google Cloud Storage bucket management, lifecycle policies, signed URLs, IAM, and data transfer.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "bucket purpose, storage class, and access patterns"
+              },
+              "context": {
+                "type": "object",
+                "description": "lifecycle rules, CORS config, and retention policy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5434,6 +8775,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_gcp-bigquery",
+          "description": "Retrieve this expert for BigQuery table design, partitioning, clustering, cost optimization, BQML, and query performance tuning.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "data schema, query patterns, and cost constraints"
+              },
+              "context": {
+                "type": "object",
+                "description": "partitioning strategy, clustering columns, and materialized view candidates"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5494,6 +8860,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_gcp-cloud-run",
+          "description": "Retrieve this expert for deploying containers on Cloud Run with autoscaling, traffic splitting, VPC connectors, and revision management.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "container image, concurrency settings, and scaling limits"
+              },
+              "context": {
+                "type": "object",
+                "description": "VPC connector, custom domain, and traffic split percentages"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5554,6 +8945,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_gcp-cloud-functions",
+          "description": "Retrieve this expert for GCP Cloud Functions including event triggers, gen2 functions, cold start optimization, and connection pooling.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "trigger type, runtime, and function entry point"
+              },
+              "context": {
+                "type": "object",
+                "description": "environment variables, VPC connector, and memory/timeout settings"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5615,6 +9031,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_gcp-pubsub",
+          "description": "Retrieve this expert for Pub/Sub messaging including push/pull subscriptions, dead-letter queues, ordering keys, and exactly-once delivery.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "topic structure, subscription type, and delivery guarantees"
+              },
+              "context": {
+                "type": "object",
+                "description": "ordering keys, dead-letter config, and flow control settings"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5678,6 +9119,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_gcp-gke",
+          "description": "Retrieve this expert for GKE cluster management including Autopilot vs Standard, workload identity, node pools, and service mesh integration.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "cluster mode, workload requirements, and networking model"
+              },
+              "context": {
+                "type": "object",
+                "description": "node pool config, service mesh, and multi-cluster strategy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5738,6 +9204,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_devops-engineer",
+          "description": "Role expert for infrastructure automation, CI/CD pipelines, monitoring, and production operations across DevOps tooling.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "infrastructure requirements, deployment targets, and SLA targets"
+              },
+              "context": {
+                "type": "object",
+                "description": "compliance constraints, team size, and existing tooling"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5797,6 +9288,114 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_api-architect",
+          "description": "Role expert for API design, integration architecture, and backend service communication patterns across REST, GraphQL, and event-driven systems.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "API consumers, data contracts, and latency requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "versioning strategy, federation boundaries, and compliance needs"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "role.aws-engineer",
+      "title": "AWS Engineer Role Orchestrator",
+      "domain": "role_orchestrator",
+      "instruction_file": "roles/aws-engineer.md",
+      "description": "Role expert for Amazon Web Services architecture, deployment, and operations across compute, storage, networking, and security services.",
+      "tags": [
+        "role",
+        "aws-engineer",
+        "amazon-web-services",
+        "cloud-architecture"
+      ],
+      "tool_hints": [
+        "aws",
+        "terraform",
+        "docker",
+        "kubectl"
+      ],
+      "examples": [
+        "Act as an AWS engineer to architect a serverless data pipeline",
+        "Design AWS infrastructure with Terraform for a microservices platform"
+      ],
+      "aliases": [
+        "aws-role",
+        "amazon-web-services-engineer"
+      ],
+      "dependencies": [],
+      "input_contract": {
+        "required": "workload type, availability target, and cost budget",
+        "optional": "data residency requirements, compliance framework, and team structure"
+      },
+      "output_artifacts": [
+        "architecture_design",
+        "terraform_modules",
+        "security_config",
+        "deployment_pipeline",
+        "cost_and_ops_plan"
+      ],
+      "quality_checks": [
+        "iam_least_privilege",
+        "terraform_state_managed",
+        "cost_alerts_configured"
+      ],
+      "constraints": [
+        "never_use_root_account_for_workload_operations"
+      ],
+      "risk_level": "medium",
+      "maturity": "stable",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_aws-engineer",
+          "description": "Role expert for Amazon Web Services architecture, deployment, and operations across compute, storage, networking, and security services.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "workload type, availability target, and cost budget"
+              },
+              "context": {
+                "type": "object",
+                "description": "data residency requirements, compliance framework, and team structure"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     },
     {
@@ -5855,6 +9454,31 @@
         "owner": "community",
         "catalog_tier": "expanded",
         "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "role_gcp-engineer",
+          "description": "Role expert for Google Cloud Platform architecture, deployment, and operations across compute, storage, data, and messaging services.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "workload type, availability target, and cost budget"
+              },
+              "context": {
+                "type": "object",
+                "description": "data residency requirements, compliance framework, and team structure"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
       }
     }
   ]

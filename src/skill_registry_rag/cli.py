@@ -160,9 +160,76 @@ def _normalize_cli_argv(argv: list[str] | None) -> list[str]:
     if not args:
         return args
 
+    # Friendly alias: `skillmesh fetch ...` -> `skillmesh retrieve ...`
+    if args[0].strip().lower() == "fetch":
+        if len(args) == 1:
+            return ["retrieve"]
+        remaining = args[1:]
+        if any(token == "--query" or token.startswith("--query=") for token in remaining):
+            return ["retrieve", *remaining]
+        if remaining[0].startswith("-"):
+            return ["retrieve", *remaining]
+
+        query_parts: list[str] = []
+        idx = 0
+        while idx < len(remaining):
+            token = remaining[idx]
+            if token.startswith("-"):
+                break
+            query_parts.append(token)
+            idx += 1
+        if not query_parts:
+            return ["retrieve", *remaining]
+        return ["retrieve", "--query", " ".join(query_parts), *remaining[idx:]]
+
+    # Support singular alias: `skillmesh role` -> `skillmesh roles`
+    if args[0].strip().lower() == "role":
+        args[0] = "roles"
+
     # `skillmesh roles` -> show installed roles
     if args[0].strip().lower() == "roles":
-        if len(args) == 1 or args[1].startswith("-"):
+        # Friendly shorthand: `skillmesh roles install Data-Analyst`
+        if len(args) >= 3 and args[1].strip().lower() == "install":
+            role_id_flag_present = any(
+                token == "--role-id" or token.startswith("--role-id=")
+                for token in args[2:]
+            )
+            if not role_id_flag_present:
+                rest = args[2:]
+                selector_index = -1
+                i = 0
+                while i < len(rest):
+                    token = rest[i]
+                    if token in {"--catalog", "--registry"}:
+                        if i + 1 >= len(rest):
+                            return args
+                        i += 2
+                        continue
+                    if token.startswith("--catalog=") or token.startswith("--registry="):
+                        i += 1
+                        continue
+                    if token in {"--dry-run", "--json"}:
+                        i += 1
+                        continue
+                    if token.startswith("-"):
+                        return args
+                    selector_index = i
+                    break
+
+                if selector_index >= 0:
+                    selector = rest[selector_index]
+                    args = [
+                        "roles",
+                        "install",
+                        *rest[:selector_index],
+                        "--role-id",
+                        selector,
+                        *rest[selector_index + 1:],
+                    ]
+
+        if len(args) == 1:
+            return ["roles", "installed", *args[1:]]
+        if args[1].startswith("-") and args[1] not in {"-h", "--help"}:
             return ["roles", "installed", *args[1:]]
         return args
 
@@ -300,6 +367,7 @@ def _hits_payload(hits):
                 "aliases": hit.card.aliases,
                 "dependencies": hit.card.dependencies,
                 "input_contract": hit.card.input_contract,
+                "invocation": hit.card.invocation,
                 "output_artifacts": hit.card.output_artifacts,
                 "quality_checks": hit.card.quality_checks,
                 "constraints": hit.card.constraints,

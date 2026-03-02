@@ -1,6 +1,6 @@
 registry_name: skillmesh-roles-catalog
 version: 0.2.0
-updated_at: '2026-03-01'
+updated_at: '2026-03-02'
 tools:
 - id: role.data-analyst
   title: Data Analyst Role Orchestrator
@@ -13,6 +13,25 @@ tools:
   - data-analyst
   - analytics
   - eda
+  invocation:
+    type: function
+    function:
+      name: role_data-analyst
+      description: Role expert that orchestrates profiling, cleaning, EDA, baseline
+        modeling, and visualization for tabular analytics tasks.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: tabular dataset and analysis objective
+          context:
+            type: object
+            description: target metric, business context, and prediction requirement
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.financial-analyst
   title: Financial Analyst Role Orchestrator
   domain: role_orchestrator
@@ -24,6 +43,64 @@ tools:
   - financial-analyst
   - finance
   - forecasting
+  invocation:
+    type: function
+    function:
+      name: role_financial-analyst_execute
+      description: Role-level orchestration contract that routes into dependent cards;
+        fields represent execution intent rather than one library API signature.
+      parameters:
+        type: object
+        required:
+        - question
+        - dataset_ref
+        - target_metric
+        properties:
+          question:
+            type: string
+          dataset_ref:
+            type: string
+            description: Path, table, or URI for the primary financial dataset
+          target_metric:
+            type: string
+          time_column:
+            type: string
+          forecast_horizon_periods:
+            type: integer
+            minimum: 1
+          frequency:
+            type: string
+            enum:
+            - daily
+            - weekly
+            - monthly
+            - quarterly
+            - annual
+          scenario_assumptions:
+            type: object
+          risk_tolerance:
+            type: string
+            enum:
+            - low
+            - medium
+            - high
+          valuation_mode:
+            type: string
+            enum:
+            - dcf
+            - multiples
+            - blended
+            - none
+          include_visuals:
+            type: boolean
+          output_format:
+            type: string
+            enum:
+            - markdown
+            - json
+            - notebook
+        additionalProperties: false
+      strict: false
 - id: role.machine-learning-engineer
   title: Machine Learning Engineer Role Orchestrator
   domain: role_orchestrator
@@ -35,17 +112,55 @@ tools:
   - machine-learning-engineer
   - mlops
   - deployment
+  invocation:
+    type: function
+    function:
+      name: role_machine-learning-engineer
+      description: Role expert for end-to-end ML delivery across feature pipelines,
+        training, diagnostics, packaging, and deployment handoff.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: dataset, target objective, and model success metric
+          context:
+            type: object
+            description: latency constraints, deployment target, and compliance requirements
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.data-engineer
   title: Data Engineer Role Orchestrator
   domain: role_orchestrator
   instruction_file: roles/data-engineer.md
-  description: Role expert for scalable data pipelines, quality enforcement, and
-    production-ready data platform delivery.
+  description: Role expert for scalable data pipelines, quality enforcement, and production-ready
+    data platform delivery.
   tags:
   - role
   - data-engineer
   - spark
   - dbt
+  invocation:
+    type: function
+    function:
+      name: role_data-engineer
+      description: Role expert for scalable data pipelines, quality enforcement, and
+        production-ready data platform delivery.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source datasets, target schema, and freshness expectations
+          context:
+            type: object
+            description: lineage requirements, cost constraints, and backfill policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.ml-researcher
   title: ML Researcher Role Orchestrator
   domain: role_orchestrator
@@ -57,6 +172,25 @@ tools:
   - ml-researcher
   - experimentation
   - ablation
+  invocation:
+    type: function
+    function:
+      name: role_ml-researcher
+      description: Role expert for hypothesis-driven ML research, ablations, diagnostics,
+        and reproducible experimental reporting.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: research objective, target metric, and baseline definition
+          context:
+            type: object
+            description: compute budget, experiment matrix, and publication criteria
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.bi-analyst
   title: BI Analyst Role Orchestrator
   domain: role_orchestrator
@@ -68,6 +202,25 @@ tools:
   - bi-analyst
   - business-intelligence
   - dashboard
+  invocation:
+    type: function
+    function:
+      name: role_bi-analyst
+      description: Role expert for KPI-centric business analysis, dashboard planning,
+        and governed reporting outputs for stakeholders.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business questions, KPI scope, and audience
+          context:
+            type: object
+            description: tooling preferences, refresh cadence, and governance policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.analytics-engineer
   title: Analytics Engineer Role Orchestrator
   domain: role_orchestrator
@@ -79,6 +232,25 @@ tools:
   - analytics-engineer
   - semantic-layer
   - dbt
+  invocation:
+    type: function
+    function:
+      name: role_analytics-engineer
+      description: Role expert for governed analytics delivery across semantic modeling,
+        tested transformations, and BI platform implementation.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business metric scope, source systems, and target BI platform
+          context:
+            type: object
+            description: governance constraints, ownership model, and release cadence
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.devops-engineer
   title: DevOps Engineer Role Orchestrator
   domain: role_orchestrator
@@ -90,6 +262,26 @@ tools:
   - devops-engineer
   - infrastructure
   - cicd
+  invocation:
+    type: function
+    function:
+      name: role_devops-engineer
+      description: Role expert for infrastructure automation, CI/CD pipelines, monitoring,
+        and production operations across DevOps tooling.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: infrastructure requirements, deployment targets, and SLA
+              targets
+          context:
+            type: object
+            description: compliance constraints, team size, and existing tooling
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.api-architect
   title: API Architect Role Orchestrator
   domain: role_orchestrator
@@ -101,6 +293,57 @@ tools:
   - api-architect
   - api-design
   - integration
+  invocation:
+    type: function
+    function:
+      name: role_api-architect
+      description: Role expert for API design, integration architecture, and backend
+        service communication patterns across REST, GraphQL, and event-driven systems.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: API consumers, data contracts, and latency requirements
+          context:
+            type: object
+            description: versioning strategy, federation boundaries, and compliance
+              needs
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: role.aws-engineer
+  title: AWS Engineer Role Orchestrator
+  domain: role_orchestrator
+  instruction_file: roles/aws-engineer.md
+  description: Role expert for Amazon Web Services architecture, deployment, and operations
+    across compute, storage, networking, and security services.
+  tags:
+  - role
+  - aws-engineer
+  - amazon-web-services
+  - cloud-architecture
+  invocation:
+    type: function
+    function:
+      name: role_aws-engineer
+      description: Role expert for Amazon Web Services architecture, deployment, and
+        operations across compute, storage, networking, and security services.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: workload type, availability target, and cost budget
+          context:
+            type: object
+            description: data residency requirements, compliance framework, and team
+              structure
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.gcp-engineer
   title: GCP Engineer Role Orchestrator
   domain: role_orchestrator
@@ -112,3 +355,23 @@ tools:
   - gcp-engineer
   - google-cloud
   - cloud-architecture
+  invocation:
+    type: function
+    function:
+      name: role_gcp-engineer
+      description: Role expert for Google Cloud Platform architecture, deployment,
+        and operations across compute, storage, data, and messaging services.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: workload type, availability target, and cost budget
+          context:
+            type: object
+            description: data residency requirements, compliance framework, and team
+              structure
+        required:
+        - task
+        additionalProperties: true
+      strict: false

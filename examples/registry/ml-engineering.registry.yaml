@@ -10,6 +10,25 @@ tools:
   - role
   - machine-learning-engineer
   - mlops
+  invocation:
+    type: function
+    function:
+      name: role_machine-learning-engineer
+      description: Role expert for end-to-end ML delivery across feature pipelines,
+        training, diagnostics, packaging, and deployment handoff.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: dataset, target objective, and model success metric
+          context:
+            type: object
+            description: latency constraints, deployment target, and compliance requirements
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.ml-researcher
   title: ML Researcher Role Orchestrator
   domain: role_orchestrator
@@ -18,6 +37,25 @@ tools:
   - role
   - ml-researcher
   - research
+  invocation:
+    type: function
+    function:
+      name: role_ml-researcher
+      description: Role expert for hypothesis-driven ML research, ablations, diagnostics,
+        and reproducible experimental reporting.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: research objective, target metric, and baseline definition
+          context:
+            type: object
+            description: compute budget, experiment matrix, and publication criteria
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.pandas-advanced
   title: Advanced Pandas Data Workflows
   domain: data_engineering
@@ -26,6 +64,26 @@ tools:
   - pandas
   - dataframe
   - data-cleaning
+  invocation:
+    type: function
+    function:
+      name: data_pandas-advanced
+      description: Retrieve this expert for high-performance pandas transformations,
+        memory optimization, and robust dataframe pipeline design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: ml.feature-engineering
   title: Feature Engineering for ML
   domain: machine_learning
@@ -34,6 +92,25 @@ tools:
   - feature-engineering
   - leakage
   - tabular
+  invocation:
+    type: function
+    function:
+      name: ml_feature-engineering
+      description: Retrieve this expert for robust feature design, leakage-safe transforms,
+        encoding strategies, and model-ready feature pipelines.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: problem definition, target variable, and evaluation metric
+          context:
+            type: object
+            description: feature constraints, compute budget, and deployment target
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: ml.sklearn-modeling
   title: Scikit-learn Modeling and Evaluation
   domain: machine_learning
@@ -42,6 +119,65 @@ tools:
   - sklearn
   - cross-validation
   - metrics
+  invocation:
+    type: function
+    function:
+      name: sklearn_model_selection_cross_validate
+      description: Primary schema follows cross_validate. Train/test split and grid
+        search argument examples are included for common modeling flows.
+      parameters:
+        type: object
+        required:
+        - estimator
+        - X
+        - y
+        properties:
+          estimator:
+            type: string
+            description: Estimator instance expression, e.g. Pipeline(...)
+          X:
+            type: string
+            description: Feature matrix variable name
+          y:
+            type: string
+            description: Target vector variable name
+          groups:
+            type: string
+          scoring:
+            oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+            - type: object
+          cv:
+            oneOf:
+            - type: integer
+              minimum: 2
+            - type: object
+          n_jobs:
+            type: integer
+          verbose:
+            type: integer
+            minimum: 0
+          params:
+            type: object
+          pre_dispatch:
+            oneOf:
+            - type: integer
+            - type: string
+          return_train_score:
+            type: boolean
+          return_estimator:
+            type: boolean
+          return_indices:
+            type: boolean
+          error_score:
+            oneOf:
+            - type: number
+            - type: string
+        additionalProperties: false
+      strict: false
 - id: ml.sklearn-pipeline-ops
   title: Scikit-learn Pipeline Ops
   domain: machine_learning
@@ -50,6 +186,70 @@ tools:
   - sklearn
   - pipeline
   - model-ops
+  invocation:
+    type: function
+    function:
+      name: sklearn_pipeline_Pipeline
+      description: Pipeline schema models init/persist/calibration arguments used
+        in production packaging flows.
+      parameters:
+        type: object
+        required:
+        - steps
+        properties:
+          steps:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              required:
+              - name
+              - estimator
+              properties:
+                name:
+                  type: string
+                estimator:
+                  type: string
+              additionalProperties: false
+          memory:
+            oneOf:
+            - type: string
+            - type: 'null'
+          verbose:
+            type: boolean
+          calibration_method:
+            type: string
+            enum:
+            - sigmoid
+            - isotonic
+          calibration_cv:
+            oneOf:
+            - type: integer
+              minimum: 2
+            - type: object
+            - type: 'null'
+          calibration_n_jobs:
+            type: integer
+          calibration_ensemble:
+            oneOf:
+            - type: boolean
+            - type: string
+              enum:
+              - auto
+          persist_path:
+            type: string
+          persist_compress:
+            oneOf:
+            - type: integer
+              minimum: 0
+              maximum: 9
+            - type: boolean
+          persist_protocol:
+            oneOf:
+            - type: integer
+            - type: 'null'
+        additionalProperties: false
+      strict: false
 - id: ml.hyperparameter-tuning
   title: Hyperparameter Tuning and Search
   domain: machine_learning
@@ -58,6 +258,25 @@ tools:
   - hyperparameter
   - tuning
   - optimization
+  invocation:
+    type: function
+    function:
+      name: ml_hyperparameter-tuning
+      description: Retrieve this expert for systematic hyperparameter search, tuning
+        strategy design, and objective-driven model optimization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: problem definition, target variable, and evaluation metric
+          context:
+            type: object
+            description: feature constraints, compute budget, and deployment target
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: ml.gradient-boosting
   title: Gradient Boosting with XGBoost and LightGBM
   domain: machine_learning
@@ -66,6 +285,24 @@ tools:
   - xgboost
   - lightgbm
   - boosting
+  invocation:
+    type: function
+    function:
+      name: ml_gradient-boosting
+      description: High-performance boosting, tuning, and SHAP-based attribution.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: tabular train/validation datasets
+          context:
+            type: object
+            description: class weights and monotonic constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: dl.pytorch-training
   title: Deep Learning with PyTorch
   domain: deep_learning
@@ -74,6 +311,24 @@ tools:
   - pytorch
   - training-loop
   - gpu
+  invocation:
+    type: function
+    function:
+      name: dl_pytorch-training
+      description: PyTorch training loops with mixed precision, GPU, and checkpoints.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: tensor-ready dataset and model definition
+          context:
+            type: object
+            description: scheduler and mixed precision flag
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: dl.transformers-finetuning
   title: Transformers Fine-tuning
   domain: deep_learning
@@ -82,6 +337,26 @@ tools:
   - transformers
   - finetuning
   - lora
+  invocation:
+    type: function
+    function:
+      name: dl_transformers-finetuning
+      description: Retrieve this expert for HuggingFace transformer fine-tuning, LoRA/QLoRA
+        adaptation, and GPU-efficient training workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: task definition, model family choice, and dataset readiness
+              details
+          context:
+            type: object
+            description: GPU memory budget, adapter strategy, and checkpoint cadence
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: stats.scipy-statsmodels
   title: Statistical Inference with SciPy and Statsmodels
   domain: statistics
@@ -90,6 +365,24 @@ tools:
   - statistics
   - inference
   - diagnostics
+  invocation:
+    type: function
+    function:
+      name: stats_scipy-statsmodels
+      description: Hypothesis testing, ANOVA, and regression diagnostics.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: well-defined hypotheses and structured sample groups
+          context:
+            type: object
+            description: multiple-testing correction strategy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: stats.experiment-design
   title: Statistical Experiment Design and A/B Testing
   domain: statistics
@@ -98,6 +391,25 @@ tools:
   - ab-testing
   - power-analysis
   - experiment-design
+  invocation:
+    type: function
+    function:
+      name: stats_experiment-design
+      description: Retrieve this expert for experiment planning, power analysis, sample-size
+        estimation, and robust A/B test interpretation.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: primary metric, hypothesis, and experiment constraints
+          context:
+            type: object
+            description: historical variance, expected effect size, and traffic allocation
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: stats.model-diagnostics
   title: Statistical Model Diagnostics
   domain: statistics
@@ -106,6 +418,25 @@ tools:
   - diagnostics
   - calibration
   - residuals
+  invocation:
+    type: function
+    function:
+      name: stats_model-diagnostics
+      description: Retrieve this expert for residual diagnostics, calibration assessment,
+        cohort error analysis, and model reliability checks.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: trained model outputs, targets, and feature context
+          context:
+            type: object
+            description: cohort definitions, drift windows, and operating thresholds
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: ml.model-export
   title: Machine Learning Model Export and Packaging
   domain: machine_learning
@@ -114,6 +445,26 @@ tools:
   - model-export
   - onnx
   - joblib
+  invocation:
+    type: function
+    function:
+      name: ml_model-export
+      description: Retrieve this expert for saving trained models with reproducible
+        metadata and deployment-safe export formats.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: trained model/pipeline object and target serving environment
+          context:
+            type: object
+            description: latency constraints, interoperability target (ONNX/joblib),
+              and versioning policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: viz.matplotlib-seaborn
   title: Visualization with Matplotlib and Seaborn
   domain: visualization
@@ -122,3 +473,21 @@ tools:
   - visualization
   - matplotlib
   - seaborn
+  invocation:
+    type: function
+    function:
+      name: viz_matplotlib-seaborn
+      description: Publication-grade charting and statistical visualization workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: tabular dataframe or tidy data
+          context:
+            type: object
+            description: style palette, chart type hints
+        required:
+        - task
+        additionalProperties: true
+      strict: false

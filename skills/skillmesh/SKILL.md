@@ -22,6 +22,7 @@ List available roles and install a role bundle (role card + missing dependency c
 skillmesh roles
 skillmesh roles list
 skillmesh Data-Analyst install
+skillmesh roles install Data-Analyst
 ```
 
 Use `--dry-run` to preview install changes.

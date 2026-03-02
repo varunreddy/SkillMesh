@@ -16,7 +16,7 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "title", "domain", "instruction_file"],
+        "required": ["id", "title", "domain", "instruction_file", "invocation"],
         "properties": {
           "id": {"type": "string", "minLength": 1},
           "title": {"type": "string", "minLength": 1},
@@ -35,6 +35,28 @@
             "type": "object",
             "additionalProperties": {"type": "string"}
           },
+          "invocation": {
+            "type": "object",
+            "required": ["type", "function"],
+            "properties": {
+              "type": {"type": "string", "const": "function"},
+              "function": {
+                "type": "object",
+                "required": ["name", "parameters"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{1,64}$"
+                  },
+                  "description": {"type": "string"},
+                  "parameters": {"type": "object"},
+                  "strict": {"type": "boolean"}
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
           "risk_level": {"type": "string", "enum": ["", "low", "medium", "high"]},
           "maturity": {"type": "string", "enum": ["", "alpha", "beta", "stable", "deprecated"]},
           "metadata": {"type": "object"}
@@ -47,7 +69,7 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "title", "domain", "instruction_file"],
+        "required": ["id", "title", "domain", "instruction_file", "invocation"],
         "properties": {
           "id": {"type": "string", "minLength": 1},
           "title": {"type": "string", "minLength": 1},
@@ -65,6 +87,28 @@
           "input_contract": {
             "type": "object",
             "additionalProperties": {"type": "string"}
+          },
+          "invocation": {
+            "type": "object",
+            "required": ["type", "function"],
+            "properties": {
+              "type": {"type": "string", "const": "function"},
+              "function": {
+                "type": "object",
+                "required": ["name", "parameters"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{1,64}$"
+                  },
+                  "description": {"type": "string"},
+                  "parameters": {"type": "object"},
+                  "strict": {"type": "boolean"}
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
           },
           "risk_level": {"type": "string", "enum": ["", "low", "medium", "high"]},
           "maturity": {"type": "string", "enum": ["", "alpha", "beta", "stable", "deprecated"]},

@@ -10,6 +10,26 @@ tools:
   - role
   - gcp-engineer
   - google-cloud
+  invocation:
+    type: function
+    function:
+      name: role_gcp-engineer
+      description: Role expert for Google Cloud Platform architecture, deployment,
+        and operations across compute, storage, data, and messaging services.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: workload type, availability target, and cost budget
+          context:
+            type: object
+            description: data residency requirements, compliance framework, and team
+              structure
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-gcs
   title: Google Cloud Storage
   domain: cloud_infrastructure
@@ -19,6 +39,25 @@ tools:
   - cloud-storage
   - buckets
   - signed-urls
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-gcs
+      description: Retrieve this expert for Google Cloud Storage bucket management,
+        lifecycle policies, signed URLs, IAM, and data transfer.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: bucket purpose, storage class, and access patterns
+          context:
+            type: object
+            description: lifecycle rules, CORS config, and retention policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-bigquery
   title: BigQuery Analytics
   domain: cloud_infrastructure
@@ -28,6 +67,26 @@ tools:
   - bigquery
   - analytics
   - sql
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-bigquery
+      description: Retrieve this expert for BigQuery table design, partitioning, clustering,
+        cost optimization, BQML, and query performance tuning.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: data schema, query patterns, and cost constraints
+          context:
+            type: object
+            description: partitioning strategy, clustering columns, and materialized
+              view candidates
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-cloud-run
   title: Cloud Run Serverless Containers
   domain: cloud_infrastructure
@@ -37,6 +96,25 @@ tools:
   - cloud-run
   - serverless
   - containers
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-cloud-run
+      description: Retrieve this expert for deploying containers on Cloud Run with
+        autoscaling, traffic splitting, VPC connectors, and revision management.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: container image, concurrency settings, and scaling limits
+          context:
+            type: object
+            description: VPC connector, custom domain, and traffic split percentages
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-cloud-functions
   title: Cloud Functions
   domain: cloud_infrastructure
@@ -46,6 +124,26 @@ tools:
   - cloud-functions
   - serverless
   - event-driven
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-cloud-functions
+      description: Retrieve this expert for GCP Cloud Functions including event triggers,
+        gen2 functions, cold start optimization, and connection pooling.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: trigger type, runtime, and function entry point
+          context:
+            type: object
+            description: environment variables, VPC connector, and memory/timeout
+              settings
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-pubsub
   title: Google Cloud Pub/Sub
   domain: cloud_infrastructure
@@ -55,6 +153,25 @@ tools:
   - pubsub
   - messaging
   - event-streaming
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-pubsub
+      description: Retrieve this expert for Pub/Sub messaging including push/pull
+        subscriptions, dead-letter queues, ordering keys, and exactly-once delivery.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: topic structure, subscription type, and delivery guarantees
+          context:
+            type: object
+            description: ordering keys, dead-letter config, and flow control settings
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: cloud.gcp-gke
   title: Google Kubernetes Engine
   domain: cloud_infrastructure
@@ -64,3 +181,22 @@ tools:
   - gke
   - kubernetes
   - autopilot
+  invocation:
+    type: function
+    function:
+      name: cloud_gcp-gke
+      description: Retrieve this expert for GKE cluster management including Autopilot
+        vs Standard, workload identity, node pools, and service mesh integration.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: cluster mode, workload requirements, and networking model
+          context:
+            type: object
+            description: node pool config, service mesh, and multi-cluster strategy
+        required:
+        - task
+        additionalProperties: true
+      strict: false

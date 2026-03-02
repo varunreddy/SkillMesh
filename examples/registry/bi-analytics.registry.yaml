@@ -10,6 +10,25 @@ tools:
   - role
   - bi-analyst
   - dashboard
+  invocation:
+    type: function
+    function:
+      name: role_bi-analyst
+      description: Role expert for KPI-centric business analysis, dashboard planning,
+        and governed reporting outputs for stakeholders.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business questions, KPI scope, and audience
+          context:
+            type: object
+            description: tooling preferences, refresh cadence, and governance policy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: role.analytics-engineer
   title: Analytics Engineer Role Orchestrator
   domain: role_orchestrator
@@ -18,6 +37,25 @@ tools:
   - role
   - analytics-engineer
   - semantic-layer
+  invocation:
+    type: function
+    function:
+      name: role_analytics-engineer
+      description: Role expert for governed analytics delivery across semantic modeling,
+        tested transformations, and BI platform implementation.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business metric scope, source systems, and target BI platform
+          context:
+            type: object
+            description: governance constraints, ownership model, and release cadence
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.dashboard-design
   title: BI Dashboard Design and Storytelling
   domain: business_intelligence
@@ -26,6 +64,25 @@ tools:
   - business-intelligence
   - dashboard
   - kpi
+  invocation:
+    type: function
+    function:
+      name: bi_dashboard-design
+      description: Retrieve this expert for KPI-driven dashboard architecture, chart
+        selection, stakeholder communication, and adoption-focused BI reporting.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business objective, audience, and target KPIs
+          context:
+            type: object
+            description: dashboard tool choice, refresh cadence, and governance constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.metric-semantic-modeling
   title: BI Metric and Semantic Modeling
   domain: business_intelligence
@@ -34,6 +91,25 @@ tools:
   - business-intelligence
   - semantic-layer
   - metric-governance
+  invocation:
+    type: function
+    function:
+      name: bi_metric-semantic-modeling
+      description: Retrieve this expert for semantic layer design, metric governance,
+        dimensional modeling, and trusted KPI standardization.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: entity definitions, required KPIs, and analysis grain
+          context:
+            type: object
+            description: lineage tool, SCD policy, and ownership model
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.tableau-authoring
   title: Tableau Authoring and Governance
   domain: business_intelligence
@@ -42,6 +118,25 @@ tools:
   - business-intelligence
   - tableau
   - dashboard
+  invocation:
+    type: function
+    function:
+      name: bi_tableau-authoring
+      description: Retrieve this expert for Tableau dashboard design, interaction
+        patterns, performance tuning, and governed publishing workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: target business KPIs and dashboard audience
+          context:
+            type: object
+            description: publish environment, refresh cadence, and permission model
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.powerbi-modeling
   title: Power BI Modeling and DAX
   domain: business_intelligence
@@ -50,6 +145,25 @@ tools:
   - business-intelligence
   - powerbi
   - dax
+  invocation:
+    type: function
+    function:
+      name: bi_powerbi-modeling
+      description: Retrieve this expert for Power BI data modeling, DAX measure design,
+        row-level security, and refresh strategy.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: business KPIs, source schema, and report objectives
+          context:
+            type: object
+            description: security requirements, workspace policy, and refresh windows
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: bi.looker-modeling
   title: Looker Modeling and LookML
   domain: business_intelligence
@@ -58,6 +172,25 @@ tools:
   - business-intelligence
   - looker
   - lookml
+  invocation:
+    type: function
+    function:
+      name: bi_looker-modeling
+      description: Retrieve this expert for LookML model design, explore governance,
+        and performant semantic delivery in Looker.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: entity model, metric requirements, and explore needs
+          context:
+            type: object
+            description: access policy, PDT strategy, and deployment workflow
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.sql-queries
   title: SQL Query Design and Optimization
   domain: data_engineering
@@ -66,6 +199,26 @@ tools:
   - sql
   - analytics
   - cte
+  invocation:
+    type: function
+    function:
+      name: data_sql-queries
+      description: Retrieve this expert for advanced SQL joins, CTE/window logic,
+        query optimization, and analytical data retrieval patterns.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.dbt
   title: dbt Analytics Engineering
   domain: data_engineering
@@ -74,6 +227,26 @@ tools:
   - dbt
   - transformation
   - testing
+  invocation:
+    type: function
+    function:
+      name: data_dbt
+      description: Retrieve this expert for dbt model layering, testing, documentation,
+        and incremental transformation workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: data.pandas-advanced
   title: Advanced Pandas Data Workflows
   domain: data_engineering
@@ -82,6 +255,26 @@ tools:
   - pandas
   - profiling
   - dataframe
+  invocation:
+    type: function
+    function:
+      name: data_pandas-advanced
+      description: Retrieve this expert for high-performance pandas transformations,
+        memory optimization, and robust dataframe pipeline design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: source schema/data samples and transformation objectives
+          context:
+            type: object
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: stats.scipy-statsmodels
   title: Statistical Inference with SciPy and Statsmodels
   domain: statistics
@@ -90,6 +283,24 @@ tools:
   - statistics
   - inference
   - hypothesis-testing
+  invocation:
+    type: function
+    function:
+      name: stats_scipy-statsmodels
+      description: Hypothesis testing, ANOVA, and regression diagnostics.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: well-defined hypotheses and structured sample groups
+          context:
+            type: object
+            description: multiple-testing correction strategy
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: viz.matplotlib-seaborn
   title: Visualization with Matplotlib and Seaborn
   domain: visualization
@@ -98,3 +309,21 @@ tools:
   - visualization
   - matplotlib
   - seaborn
+  invocation:
+    type: function
+    function:
+      name: viz_matplotlib-seaborn
+      description: Publication-grade charting and statistical visualization workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: tabular dataframe or tidy data
+          context:
+            type: object
+            description: style palette, chart type hints
+        required:
+        - task
+        additionalProperties: true
+      strict: false

@@ -30,6 +30,8 @@ def friendly_role_name(role_id: str) -> str:
             expanded.extend(["Business", "Intelligence"])
         elif low == "api":
             expanded.append("API")
+        elif low == "aws":
+            expanded.append("AWS")
         elif low == "gcp":
             expanded.append("GCP")
         elif low == "devops":

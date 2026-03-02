@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import skill_registry_rag.backends.chroma as chroma_backend
 from skill_registry_rag.registry import load_registry
 from skill_registry_rag.retriever import SkillRetriever
 
@@ -148,3 +149,18 @@ def test_retriever_cloud_s3_query_returns_s3_expert():
 
     assert hits
     assert hits[0].card.id == "cloud.aws-s3"
+
+
+def test_retriever_auto_backend_falls_back_to_memory_when_chroma_fails(monkeypatch):
+    class FailingChromaBackend:
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError("chroma init failed")
+
+    monkeypatch.setattr(chroma_backend, "ChromaBackend", FailingChromaBackend)
+
+    cards = _load_json_cards()
+    retriever = SkillRetriever(cards, use_dense=False, backend="auto")
+    hits = retriever.retrieve("opencv contour edge threshold cv2", top_k=2)
+
+    assert hits
+    assert hits[0].card.id == "cv.opencv-image-processing"

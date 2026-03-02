@@ -26,6 +26,22 @@ def test_retrieve_cards_payload_for_known_query():
 
     assert payload["hits"]
     assert payload["hits"][0]["id"] == "cv.opencv-image-processing"
+    assert "invocation" in payload["hits"][0]
+
+
+def test_retrieve_cards_payload_includes_invocation_details():
+    payload = retrieve_cards_payload(
+        query="sklearn cross validation pipeline",
+        registry=str(_example_registry()),
+        top_k=1,
+        backend="memory",
+    )
+
+    assert payload["hits"]
+    hit = payload["hits"][0]
+    assert hit["id"] == "ml.sklearn-modeling"
+    assert hit["invocation"]["type"] == "function"
+    assert hit["invocation"]["function"]["name"] == "sklearn_model_selection_cross_validate"
 
 
 def test_build_routed_context_claude_format():

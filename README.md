@@ -6,11 +6,37 @@
 
 **Stop stuffing hundreds of tools into your LLM prompt. Route to the right ones.**
 
+SkillMesh is a retrieval router for agent tool catalogs. Instead of loading every skill/tool into every prompt, it selects the best few cards for the query and injects only those.
+
+## Why Teams Adopt SkillMesh
+
+- Keeps prompts small as your catalog grows (top-K instead of full dump)
+- Improves tool selection quality on multi-domain tasks
+- Cuts token cost per call by avoiding irrelevant tool context
+- Works with Claude (MCP), Codex (skill bundle), and local CLI workflows
+- Standardized OpenAI-style function schemas for tool expansion
+
 ## The Problem
 
 LLM agents break when you load every tool into the prompt. Token counts explode, accuracy drops, and cost scales linearly with your catalog size. Teams with 50+ skills end up with bloated system prompts that confuse the model and burn budget.
 
 SkillMesh solves this with retrieval-based routing: given a user query, it selects only the top-K most relevant expert cards and injects them into the prompt — keeping context small, accurate, and cheap.
+
+## High-Value Use Cases
+
+- Internal AI assistants with large tool/skill catalogs (50+ cards)
+- Multi-step workflows crossing domains (data -> ML -> infra -> reporting)
+- Teams using MCP where tool overload hurts selection quality
+- Role-based execution flows (`Data-Analyst`, `Financial-Analyst`, `AWS-Engineer`)
+
+## SkillMesh vs Static Skill Docs
+
+| | Static `SKILL.md` only | SkillMesh routing |
+|---|---|---|
+| Prompt strategy | Load broad instructions every turn | Inject only relevant top-K cards |
+| Scale behavior | Gets noisy as catalog grows | Remains focused with retrieval |
+| Multi-domain tasks | Manual tool prompting | Query-driven cross-domain routing |
+| Expansion | Add docs and hope model picks right one | Add cards + retrieval handles selection |
 
 ## Before vs After
 
@@ -99,7 +125,7 @@ Output (truncated):
 </context>
 ```
 
-Only the relevant experts are injected — the rest of the 90+ card catalog stays out of the prompt.
+Only the relevant experts are injected — the rest of the 100+ card catalog stays out of the prompt.
 
 ## Integrations
 
@@ -120,7 +146,7 @@ skillmesh-mcp
 
 The server auto-discovers the registry: env var `SKILLMESH_REGISTRY` → repo root → bundled registry.
 
-Exposes two tools via MCP:
+Exposes five tools via MCP:
 - `route_with_skillmesh(query, top_k)` — provider-formatted context block
 - `retrieve_skillmesh_cards(query, top_k)` — structured JSON payload
 - `list_skillmesh_roles(catalog?, registry?)` — full role list with installed status
@@ -141,6 +167,7 @@ Direct role commands in SkillMesh:
 skillmesh roles
 skillmesh roles list
 skillmesh Data-Analyst install
+skillmesh roles install Data-Analyst
 ```
 
 Or via installed bundle wrapper:
@@ -192,15 +219,15 @@ Use domain-specific registries for tighter routing:
 
 | Registry | Domain | Cards |
 |---|---|---|
-| `tools.json` / `tools.yaml` | Full catalog | 90+ |
+| `tools.json` / `tools.yaml` | Full catalog | 103 |
 | `ml-engineering.registry.yaml` | ML training & evaluation | 15 |
 | `data-engineering.registry.yaml` | Pipelines & data platforms | 10 |
-| `bi-analytics.registry.yaml` | BI & dashboards | 10 |
+| `bi-analytics.registry.yaml` | BI & dashboards | 12 |
 | `devops.registry.yaml` | DevOps & infrastructure | 8 |
 | `web-apis.registry.yaml` | API design & patterns | 7 |
 | `cloud-gcp.registry.yaml` | Google Cloud Platform | 7 |
-| `cloud-bi.registry.yaml` | Cloud BI | 5 |
-| `roles.registry.yaml` | Role orchestrators | 10 |
+| `cloud-bi.registry.yaml` | Cloud BI | 17 |
+| `roles.registry.yaml` | Role orchestrators | 11 |
 
 ```bash
 skillmesh emit \
@@ -221,12 +248,16 @@ Use the reproducible benchmark template:
 | Command | Description |
 |---|---|
 | `skillmesh retrieve` | Top-K retrieval payload (JSON) |
+| `skillmesh fetch` | Alias for `retrieve` (supports free-text query shorthand) |
 | `skillmesh emit` | Provider-formatted context block |
 | `skillmesh index` | Index registry into Chroma for persistent retrieval |
 | `skillmesh roles wizard` | Interactive role picker and installer |
 | `skillmesh roles list` | List available role cards from a catalog |
 | `skillmesh roles install` | Install role card + missing dependency cards into target registry |
+| `skillmesh role` | Alias for `roles` |
 | `skillmesh-mcp` | Stdio MCP server for Claude |
+
+`skillmesh retrieve`/MCP payloads include `invocation` in OpenAI function-tool format for every card.
 
 ```bash
 skillmesh --help

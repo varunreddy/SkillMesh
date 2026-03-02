@@ -20,6 +20,7 @@ class ToolCard:
     quality_checks: list[str] = field(default_factory=list)
     constraints: list[str] = field(default_factory=list)
     input_contract: dict[str, str] = field(default_factory=dict)
+    invocation: dict[str, Any] = field(default_factory=dict)
     risk_level: str = ""
     maturity: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)

@@ -17,7 +17,7 @@ class SkillRetriever:
             try:
                 from .backends.chroma import ChromaBackend
                 self._backend = ChromaBackend()
-            except ImportError:
+            except Exception:
                 self._backend = InMemoryBackend(use_dense=use_dense)
         self._backend.index(cards)
 
