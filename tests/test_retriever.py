@@ -164,3 +164,29 @@ def test_retriever_auto_backend_falls_back_to_memory_when_chroma_fails(monkeypat
 
     assert hits
     assert hits[0].card.id == "cv.opencv-image-processing"
+
+
+def test_retriever_passes_dense_and_hybrid_defaults_to_chroma(monkeypatch):
+    captured: dict[str, object] = {}
+
+    class StubChromaBackend:
+        def __init__(self, *args, **kwargs):
+            captured.update(kwargs)
+
+        def index(self, cards):
+            return None
+
+        def query(self, text, top_k=3):
+            return []
+
+    monkeypatch.setattr(chroma_backend, "ChromaBackend", StubChromaBackend)
+
+    cards = _load_json_cards()
+    retriever = SkillRetriever(cards, use_dense=True, backend="chroma")
+    retriever.retrieve("any query", top_k=1)
+
+    assert captured["use_dense"] is True
+    assert captured["sparse_weight"] == 0.8
+    assert captured["dense_weight"] == 0.2
+    assert captured["min_dense_candidates"] == 100
+    assert captured["dense_candidates_multiplier"] == 10

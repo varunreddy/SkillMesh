@@ -84,7 +84,7 @@ def _normalize_provider(provider: str) -> str:
 
 
 def _normalize_backend(backend: str) -> str:
-    normalized = str(backend or "auto").strip().lower()
+    normalized = str(backend or "chroma").strip().lower()
     if normalized not in _VALID_BACKENDS:
         raise ValueError("`backend` must be one of: auto, memory, chroma.")
     return normalized
@@ -122,7 +122,7 @@ def retrieve_cards_payload(
     query: str,
     registry: str | None = None,
     top_k: int = 5,
-    backend: str = "auto",
+    backend: str = "chroma",
     dense: bool = False,
 ) -> dict[str, Any]:
     resolved_query, registry_path, hits = _retrieve_hits(
@@ -170,7 +170,7 @@ def build_routed_context(
     query: str,
     registry: str | None = None,
     top_k: int = 5,
-    backend: str = "auto",
+    backend: str = "chroma",
     dense: bool = False,
     provider: str = "claude",
     instruction_chars: int = 700,
@@ -261,7 +261,7 @@ def create_mcp_server():
         query: str,
         top_k: int = 5,
         registry: str | None = None,
-        backend: str = "auto",
+        backend: str = "chroma",
         dense: bool = False,
         provider: str = "claude",
         instruction_chars: int = 700,
@@ -282,7 +282,7 @@ def create_mcp_server():
         query: str,
         top_k: int = 5,
         registry: str | None = None,
-        backend: str = "auto",
+        backend: str = "chroma",
         dense: bool = False,
     ) -> dict[str, Any]:
         """Return top-K SkillMesh cards as structured JSON payload."""

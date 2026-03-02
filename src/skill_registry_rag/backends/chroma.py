@@ -9,7 +9,7 @@ import numpy as np
 from rank_bm25 import BM25Okapi
 
 from ..models import ExpertCard, RetrievalHit
-from .memory import _tokenize, _rrf
+from .memory import _tokenize
 
 
 def _default_data_dir() -> Path:
@@ -43,17 +43,37 @@ def _compose_doc(card: ExpertCard) -> str:
 
 
 class ChromaBackend:
-    def __init__(self, *, collection_name: str = "skillmesh_experts", data_dir: str | Path | None = None, ephemeral: bool = False):
-        import chromadb
-
+    def __init__(
+        self,
+        *,
+        collection_name: str = "skillmesh_experts",
+        data_dir: str | Path | None = None,
+        ephemeral: bool = False,
+        use_dense: bool = True,
+        sparse_weight: float = 0.8,
+        dense_weight: float = 0.2,
+        min_dense_candidates: int = 100,
+        dense_candidates_multiplier: int = 10,
+    ):
         self._collection_name = collection_name
         self._ephemeral = ephemeral
+        self._use_dense = bool(use_dense)
+        self._sparse_weight = max(0.0, float(sparse_weight))
+        self._dense_weight = max(0.0, float(dense_weight))
+        if self._sparse_weight == 0.0 and self._dense_weight == 0.0:
+            self._sparse_weight = 1.0
+        self._min_dense_candidates = max(1, int(min_dense_candidates))
+        self._dense_candidates_multiplier = max(1, int(dense_candidates_multiplier))
 
-        if ephemeral:
-            self._client = chromadb.Client()
-        else:
-            persist_dir = str(Path(data_dir) if data_dir else _default_data_dir())
-            self._client = chromadb.PersistentClient(path=persist_dir)
+        self._client = None
+        if self._use_dense:
+            import chromadb
+
+            if ephemeral:
+                self._client = chromadb.Client()
+            else:
+                persist_dir = str(Path(data_dir) if data_dir else _default_data_dir())
+                self._client = chromadb.PersistentClient(path=persist_dir)
 
         self._cards: list[ExpertCard] = []
         self._card_map: dict[str, ExpertCard] = {}
@@ -76,6 +96,10 @@ class ChromaBackend:
         doc_texts = [_compose_doc(c) for c in cards]
         self._tokens = [_tokenize(d) for d in doc_texts]
         self._bm25 = BM25Okapi(self._tokens) if self._tokens else None
+
+        if not self._use_dense or self._client is None:
+            self._collection = None
+            return
 
         try:
             self._client.delete_collection(self._collection_name)
@@ -123,49 +147,52 @@ class ChromaBackend:
         return np.zeros(n, dtype=np.float32)
 
     def query(self, text: str, top_k: int = 3) -> list[RetrievalHit]:
-        if not self._cards or self._collection is None:
+        if not self._cards:
             return []
         top_k = max(1, min(int(top_k), min(20, len(self._cards))))
 
-        n_candidates = min(len(self._cards), max(top_k * 3, 20))
-        results = self._collection.query(query_texts=[text], n_results=n_candidates)
-
+        sparse = self._sparse_scores(text)
         n = len(self._cards)
         dense_scores = np.zeros(n, dtype=np.float32)
-        id_to_idx = {c.id: i for i, c in enumerate(self._cards)}
+        if self._use_dense and self._collection is not None:
+            n_candidates = min(
+                len(self._cards),
+                max(top_k * self._dense_candidates_multiplier, self._min_dense_candidates),
+            )
+            results = self._collection.query(query_texts=[text], n_results=n_candidates)
 
-        if results and results["ids"] and results["ids"][0]:
-            chroma_ids = results["ids"][0]
-            chroma_dists = results["distances"][0] if results.get("distances") else None
-            for rank, cid in enumerate(chroma_ids):
-                if cid in id_to_idx:
-                    idx = id_to_idx[cid]
-                    if chroma_dists is not None:
-                        dense_scores[idx] = 1.0 - chroma_dists[rank]
-                    else:
-                        dense_scores[idx] = 1.0 / (rank + 1)
+            id_to_idx = {c.id: i for i, c in enumerate(self._cards)}
+            if results and results["ids"] and results["ids"][0]:
+                chroma_ids = results["ids"][0]
+                chroma_dists = results["distances"][0] if results.get("distances") else None
+                for rank, cid in enumerate(chroma_ids):
+                    if cid in id_to_idx:
+                        idx = id_to_idx[cid]
+                        if chroma_dists is not None:
+                            dense_scores[idx] = 1.0 - chroma_dists[rank]
+                        else:
+                            dense_scores[idx] = 1.0 / (rank + 1)
 
-        mx = float(np.max(dense_scores)) if np.any(dense_scores) else 0.0
-        mn = float(np.min(dense_scores[dense_scores > 0])) if np.any(dense_scores > 0) else 0.0
-        if mx - mn > 1e-9:
-            mask = dense_scores > 0
-            dense_scores[mask] = (dense_scores[mask] - mn) / (mx - mn)
+            mx = float(np.max(dense_scores)) if np.any(dense_scores) else 0.0
+            mn = float(np.min(dense_scores[dense_scores > 0])) if np.any(dense_scores > 0) else 0.0
+            if mx - mn > 1e-9:
+                mask = dense_scores > 0
+                dense_scores[mask] = (dense_scores[mask] - mn) / (mx - mn)
 
-        sparse = self._sparse_scores(text)
-
-        sparse_rank = np.argsort(-sparse)
-        dense_rank = np.argsort(-dense_scores)
-        hybrid = _rrf([sparse_rank, dense_rank], n_docs=n)
+            hybrid = (self._sparse_weight * sparse) + (self._dense_weight * dense_scores)
+        else:
+            hybrid = sparse
 
         idx = np.argsort(-hybrid)[:top_k]
         hits: list[RetrievalHit] = []
         for i in idx:
+            dense_score = None if not self._use_dense else float(dense_scores[int(i)])
             hits.append(
                 RetrievalHit(
                     card=self._cards[int(i)],
                     score=float(hybrid[int(i)]),
                     sparse_score=float(sparse[int(i)]),
-                    dense_score=float(dense_scores[int(i)]),
+                    dense_score=dense_score,
                 )
             )
         return hits

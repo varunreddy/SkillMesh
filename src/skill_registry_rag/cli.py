@@ -264,7 +264,7 @@ def _build_parser() -> argparse.ArgumentParser:
     retrieve.add_argument("--query", required=True, help="User query")
     retrieve.add_argument("--top-k", type=int, default=3, help="Top-k hits")
     retrieve.add_argument("--dense", action="store_true", help="Enable optional dense scoring")
-    retrieve.add_argument("--backend", choices=["auto", "memory", "chroma"], default="auto", help="Retrieval backend")
+    retrieve.add_argument("--backend", choices=["auto", "memory", "chroma"], default="chroma", help="Retrieval backend")
 
     emit = sub.add_parser("emit", help="Emit provider-specific context block")
     emit.add_argument("--provider", required=True, choices=["codex", "claude"], help="Target provider")
@@ -272,7 +272,7 @@ def _build_parser() -> argparse.ArgumentParser:
     emit.add_argument("--query", required=True, help="User query")
     emit.add_argument("--top-k", type=int, default=3, help="Top-k hits")
     emit.add_argument("--dense", action="store_true", help="Enable optional dense scoring")
-    emit.add_argument("--backend", choices=["auto", "memory", "chroma"], default="auto", help="Retrieval backend")
+    emit.add_argument("--backend", choices=["auto", "memory", "chroma"], default="chroma", help="Retrieval backend")
     emit.add_argument(
         "--instruction-chars",
         type=int,
