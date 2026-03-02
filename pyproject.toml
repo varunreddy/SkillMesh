@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "skillmesh"
-version = "0.3.0"
+version = "0.4.0"
 description = "A retrieval-gated skill architecture for LLM agents that scales to hundreds of tools by exposing only the top-K relevant capabilities per request."
 readme = "README.md"
 requires-python = ">=3.10"
