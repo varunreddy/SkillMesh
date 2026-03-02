@@ -1,6 +1,6 @@
 registry_name: skillmesh-devops-catalog
 version: 0.1.0
-updated_at: '2026-03-01'
+updated_at: '2026-03-02'
 tools:
 - id: role.devops-engineer
   title: DevOps Engineer Role Orchestrator
@@ -14,15 +14,14 @@ tools:
     type: function
     function:
       name: role_devops-engineer
-      description: Role expert for infrastructure automation, CI/CD pipelines, monitoring,
-        and production operations across DevOps tooling.
+      description: Role expert for infrastructure automation, CI/CD pipelines, monitoring, and production operations 
+        across DevOps tooling.
       parameters:
         type: object
         properties:
           task:
             type: string
-            description: infrastructure requirements, deployment targets, and SLA
-              targets
+            description: infrastructure requirements, deployment targets, and SLA targets
           context:
             type: object
             description: compliance constraints, team size, and existing tooling
@@ -42,8 +41,8 @@ tools:
     type: function
     function:
       name: devops_ansible
-      description: Retrieve this expert for infrastructure automation with Ansible
-        playbooks, roles, vault, and idempotent configuration management.
+      description: Retrieve this expert for infrastructure automation with Ansible playbooks, roles, vault, and 
+        idempotent configuration management.
       parameters:
         type: object
         properties:
@@ -69,8 +68,8 @@ tools:
     type: function
     function:
       name: devops_nginx
-      description: Retrieve this expert for Nginx reverse proxy configuration, SSL
-        termination, rate limiting, and load balancing.
+      description: Retrieve this expert for Nginx reverse proxy configuration, SSL termination, rate limiting, and load 
+        balancing.
       parameters:
         type: object
         properties:
@@ -96,8 +95,8 @@ tools:
     type: function
     function:
       name: devops_systemd
-      description: Retrieve this expert for systemd unit files, service management,
-        journalctl diagnostics, timers, and resource limits.
+      description: Retrieve this expert for systemd unit files, service management, journalctl diagnostics, timers, and 
+        resource limits.
       parameters:
         type: object
         properties:
@@ -124,8 +123,8 @@ tools:
     type: function
     function:
       name: devops_prometheus-grafana
-      description: Retrieve this expert for Prometheus metrics collection, PromQL
-        queries, Grafana dashboards, alerting rules, and service discovery.
+      description: Retrieve this expert for Prometheus metrics collection, PromQL queries, Grafana dashboards, alerting 
+        rules, and service discovery.
       parameters:
         type: object
         properties:
@@ -134,8 +133,7 @@ tools:
             description: target services, metrics endpoints, and alerting thresholds
           context:
             type: object
-            description: custom recording rules, dashboard templates, and notification
-              channels
+            description: custom recording rules, dashboard templates, and notification channels
         required:
         - task
         additionalProperties: true
@@ -153,8 +151,8 @@ tools:
     type: function
     function:
       name: devops_elk-logging
-      description: Retrieve this expert for centralized logging with Elasticsearch,
-        Logstash, Kibana, and Filebeat including index lifecycle management.
+      description: Retrieve this expert for centralized logging with Elasticsearch, Logstash, Kibana, and Filebeat 
+        including index lifecycle management.
       parameters:
         type: object
         properties:
@@ -181,8 +179,8 @@ tools:
     type: function
     function:
       name: devops_cicd-patterns
-      description: Retrieve this expert for deployment strategies including blue-green,
-        canary, feature flags, rollback procedures, and pipeline design.
+      description: Retrieve this expert for deployment strategies including blue-green, canary, feature flags, rollback 
+        procedures, and pipeline design.
       parameters:
         type: object
         properties:
@@ -191,8 +189,114 @@ tools:
             description: application type, deployment target, and risk tolerance
           context:
             type: object
-            description: rollback criteria, traffic split percentages, and feature
-              flag system
+            description: rollback criteria, traffic split percentages, and feature flag system
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: devops.release-strategies
+  title: Release Strategies and Progressive Delivery
+  domain: devops
+  instruction_file: instructions/devops-release-strategies.md
+  tags:
+  - devops
+  - release
+  - canary
+  invocation:
+    type: function
+    function:
+      name: devops_release-strategies
+      description: Retrieve this expert for blue-green, canary, rolling, and feature-flag rollout strategy design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: release objective and deployment risk profile
+          context:
+            type: object
+            description: traffic controls, rollback, and observability constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: devops.sli-slo-observability
+  title: SLI/SLO and Error Budget Observability
+  domain: devops
+  instruction_file: instructions/devops-sli-slo-observability.md
+  tags:
+  - devops
+  - sli
+  - slo
+  invocation:
+    type: function
+    function:
+      name: devops_sli-slo-observability
+      description: Retrieve this expert for service-level indicators, objectives, error budgets, and burn-rate alert 
+        design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: sli/slo objective and target services
+          context:
+            type: object
+            description: alert routing, error budget policy, and incident constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: devops.incident-response
+  title: Incident Response and On-Call Operations
+  domain: devops
+  instruction_file: instructions/devops-incident-response.md
+  tags:
+  - devops
+  - incident-response
+  - on-call
+  invocation:
+    type: function
+    function:
+      name: devops_incident-response
+      description: Retrieve this expert for incident triage, escalation, mitigation, and postmortem improvement 
+        workflows.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: incident response objective and impacted services
+          context:
+            type: object
+            description: severity policy, escalation paths, and communication constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: sec.identity-access-hardening
+  title: Identity and Access Hardening
+  domain: security
+  instruction_file: instructions/sec-identity-access-hardening.md
+  tags:
+  - security
+  - iam
+  - least-privilege
+  invocation:
+    type: function
+    function:
+      name: sec_identity-access-hardening
+      description: Retrieve this expert for least-privilege IAM hardening, entitlement review, and credential hygiene 
+        controls.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: identity hardening objective and system scope
+          context:
+            type: object
+            description: privilege constraints, compliance, and review cadence
         required:
         - task
         additionalProperties: true
@@ -210,8 +314,8 @@ tools:
     type: function
     function:
       name: devops_linux-admin
-      description: Retrieve this expert for Linux system administration including
-        user management, firewall configuration, SSH hardening, and package management.
+      description: Retrieve this expert for Linux system administration including user management, firewall 
+        configuration, SSH hardening, and package management.
       parameters:
         type: object
         properties:
@@ -221,6 +325,166 @@ tools:
           context:
             type: object
             description: compliance requirements, user list, and network topology
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.infrastructure-cost-optimization
+  title: Cloud Infrastructure Cost Optimization
+  domain: cloud_infrastructure
+  instruction_file: instructions/cloud-cost-optimization.md
+  tags:
+  - cloud
+  - cost-optimization
+  - finops
+  invocation:
+    type: function
+    function:
+      name: cloud_infrastructure-cost-optimization
+      description: Retrieve this expert for cloud cost optimization, right-sizing, and FinOps control design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: cloud cost optimization objective and scope
+          context:
+            type: object
+            description: budget policy, ownership model, and commitment constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.security-posture-management
+  title: Cloud Security Posture Management
+  domain: cloud_infrastructure
+  instruction_file: instructions/cloud-security-posture.md
+  tags:
+  - cloud
+  - security-posture
+  - misconfiguration
+  invocation:
+    type: function
+    function:
+      name: cloud_security-posture-management
+      description: Retrieve this expert for cloud security baseline hardening, posture monitoring, and misconfiguration 
+        remediation.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: cloud security posture objective
+          context:
+            type: object
+            description: baseline controls, compliance, and remediation constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.multi-environment-strategy
+  title: Cloud Multi-Environment Strategy
+  domain: cloud_infrastructure
+  instruction_file: instructions/cloud-multi-environment-strategy.md
+  tags:
+  - cloud
+  - environments
+  - promotion
+  invocation:
+    type: function
+    function:
+      name: cloud_multi-environment-strategy
+      description: Retrieve this expert for environment topology, promotion workflows, and configuration isolation 
+        across cloud environments.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: environment strategy objective and deployment model
+          context:
+            type: object
+            description: promotion controls, isolation needs, and governance rules
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.backup-disaster-recovery
+  title: Cloud Backup and Disaster Recovery
+  domain: cloud_infrastructure
+  instruction_file: instructions/cloud-backup-dr.md
+  tags:
+  - cloud
+  - backup
+  - disaster-recovery
+  invocation:
+    type: function
+    function:
+      name: cloud_backup-disaster-recovery
+      description: Retrieve this expert for cloud backup strategy, restore drills, and disaster recovery architecture.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: backup/disaster recovery objective
+          context:
+            type: object
+            description: rpo/rto targets and resilience constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.service-reliability-architecture
+  title: Cloud Service Reliability Architecture
+  domain: cloud_infrastructure
+  instruction_file: instructions/cloud-reliability-architecture.md
+  tags:
+  - cloud
+  - reliability
+  - availability
+  invocation:
+    type: function
+    function:
+      name: cloud_service-reliability-architecture
+      description: Retrieve this expert for resilient cloud architecture, failure isolation, and graceful degradation 
+        design.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: reliability architecture objective
+          context:
+            type: object
+            description: availability targets and failure assumptions
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: cloud.platform-governance-policy
+  title: Cloud Platform Governance Policies
+  domain: cloud_infrastructure
+  instruction_file: instructions/cloud-platform-governance.md
+  tags:
+  - cloud
+  - governance
+  - policy-as-code
+  invocation:
+    type: function
+    function:
+      name: cloud_platform-governance-policy
+      description: Retrieve this expert for cloud policy governance, guardrail enforcement, and compliance operating 
+        models.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: cloud governance objective and policy scope
+          context:
+            type: object
+            description: guardrail model, exceptions, and compliance constraints
         required:
         - task
         additionalProperties: true

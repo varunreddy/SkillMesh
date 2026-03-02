@@ -1,6 +1,6 @@
 registry_name: skillmesh-ml-engineering-catalog
 version: 0.1.0
-updated_at: '2026-02-28'
+updated_at: '2026-03-02'
 tools:
 - id: role.machine-learning-engineer
   title: Machine Learning Engineer Role Orchestrator
@@ -14,8 +14,8 @@ tools:
     type: function
     function:
       name: role_machine-learning-engineer
-      description: Role expert for end-to-end ML delivery across feature pipelines,
-        training, diagnostics, packaging, and deployment handoff.
+      description: Role expert for end-to-end ML delivery across feature pipelines, training, diagnostics, packaging, 
+        and deployment handoff.
       parameters:
         type: object
         properties:
@@ -41,8 +41,8 @@ tools:
     type: function
     function:
       name: role_ml-researcher
-      description: Role expert for hypothesis-driven ML research, ablations, diagnostics,
-        and reproducible experimental reporting.
+      description: Role expert for hypothesis-driven ML research, ablations, diagnostics, and reproducible experimental 
+        reporting.
       parameters:
         type: object
         properties:
@@ -68,8 +68,8 @@ tools:
     type: function
     function:
       name: data_pandas-advanced
-      description: Retrieve this expert for high-performance pandas transformations,
-        memory optimization, and robust dataframe pipeline design.
+      description: Retrieve this expert for high-performance pandas transformations, memory optimization, and robust 
+        dataframe pipeline design.
       parameters:
         type: object
         properties:
@@ -78,8 +78,7 @@ tools:
             description: source schema/data samples and transformation objectives
           context:
             type: object
-            description: data volume profile, latency/SLA constraints, and governance
-              rules
+            description: data volume profile, latency/SLA constraints, and governance rules
         required:
         - task
         additionalProperties: true
@@ -96,8 +95,8 @@ tools:
     type: function
     function:
       name: ml_feature-engineering
-      description: Retrieve this expert for robust feature design, leakage-safe transforms,
-        encoding strategies, and model-ready feature pipelines.
+      description: Retrieve this expert for robust feature design, leakage-safe transforms, encoding strategies, and 
+        model-ready feature pipelines.
       parameters:
         type: object
         properties:
@@ -123,8 +122,8 @@ tools:
     type: function
     function:
       name: sklearn_model_selection_cross_validate
-      description: Primary schema follows cross_validate. Train/test split and grid
-        search argument examples are included for common modeling flows.
+      description: Primary schema follows cross_validate. Train/test split and grid search argument examples are 
+        included for common modeling flows.
       parameters:
         type: object
         required:
@@ -178,6 +177,354 @@ tools:
             - type: string
         additionalProperties: false
       strict: false
+- id: ml.sklearn-model-selection
+  title: Scikit-learn Model Selection and Validation
+  domain: machine_learning
+  instruction_file: instructions/sklearn-model-selection.md
+  tags:
+  - sklearn
+  - model-selection
+  - cross-validation
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-model-selection
+      description: Retrieve this expert for leakage-safe cross-validation strategy, fair model comparison, and 
+        reproducible hyperparameter search in sklearn.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: selection objective, candidate models, and target metric
+          context:
+            type: object
+            description: split constraints, compute limits, and deployment priorities
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-feature-selection
+  title: Scikit-learn Feature Selection
+  domain: machine_learning
+  instruction_file: instructions/sklearn-feature-selection.md
+  tags:
+  - sklearn
+  - feature-selection
+  - dimensionality
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-feature-selection
+      description: Retrieve this expert for filter, wrapper, and embedded feature selection with stability checks in 
+        sklearn.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: feature selection objective and modeling target
+          context:
+            type: object
+            description: feature budget, compute constraints, and interpretability goals
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-svm
+  title: Scikit-learn Support Vector Machines
+  domain: machine_learning
+  instruction_file: instructions/sklearn-svm.md
+  tags:
+  - sklearn
+  - svm
+  - svc
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-svm
+      description: Retrieve this expert for SVC/SVR/LinearSVC modeling with kernel and margin tuning in sklearn.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: SVM objective, dataset profile, and target metric
+          context:
+            type: object
+            description: kernel choice, calibration need, and compute constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-neighbors
+  title: Scikit-learn Nearest Neighbors Models
+  domain: machine_learning
+  instruction_file: instructions/sklearn-neighbors.md
+  tags:
+  - sklearn
+  - knn
+  - neighbors
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-neighbors
+      description: Retrieve this expert for KNN classification/regression and neighbor-search tradeoffs in sklearn.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: KNN modeling objective and evaluation criteria
+          context:
+            type: object
+            description: distance metric choices, data scale, and serving constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-naive-bayes
+  title: Scikit-learn Naive Bayes Models
+  domain: machine_learning
+  instruction_file: instructions/sklearn-naive-bayes.md
+  tags:
+  - sklearn
+  - naive-bayes
+  - probabilistic-models
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-naive-bayes
+      description: Retrieve this expert for Gaussian/Multinomial/Bernoulli/Complement Naive Bayes workflows in sklearn.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: Naive Bayes objective and data representation
+          context:
+            type: object
+            description: priors, smoothing preferences, and calibration constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-imputation-encoding
+  title: Scikit-learn Imputation and Encoding Pipelines
+  domain: machine_learning
+  instruction_file: instructions/sklearn-imputation-encoding.md
+  tags:
+  - sklearn
+  - imputation
+  - encoding
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-imputation-encoding
+      description: Retrieve this expert for missing-value handling and categorical encoding design with sklearn 
+        pipelines.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: preprocessing objective, schema, and downstream model target
+          context:
+            type: object
+            description: missingness patterns, cardinality constraints, and deployment requirements
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-ensemble-stacking
+  title: Scikit-learn Bagging, Voting, and Stacking Ensembles
+  domain: machine_learning
+  instruction_file: instructions/sklearn-ensemble-stacking.md
+  tags:
+  - sklearn
+  - ensemble
+  - stacking
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-ensemble-stacking
+      description: Retrieve this expert for bagging, voting, and stacking ensemble design in sklearn with leakage-safe 
+        meta-modeling.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: ensemble objective and baseline candidate models
+          context:
+            type: object
+            description: meta-model constraints, compute budget, and deployment latency target
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-anomaly-detection
+  title: Scikit-learn Anomaly Detection
+  domain: machine_learning
+  instruction_file: instructions/sklearn-anomaly-detection.md
+  tags:
+  - sklearn
+  - anomaly-detection
+  - outlier-detection
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-anomaly-detection
+      description: Retrieve this expert for anomaly and novelty detection using IsolationForest, LOF, OneClassSVM, and 
+        related sklearn methods.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: anomaly objective, data profile, and evaluation needs
+          context:
+            type: object
+            description: threshold policy, contamination assumptions, and operational constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-linear-models
+  title: Scikit-learn Linear Models
+  domain: machine_learning
+  instruction_file: instructions/sklearn-linear-models.md
+  tags:
+  - sklearn
+  - linear-models
+  - regression
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-linear-models
+      description: Retrieve this expert for interpretable linear baselines in sklearn, including regression and linear 
+        classification pipelines.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: feature matrix, target objective, and baseline requirements
+          context:
+            type: object
+            description: class imbalance profile, split strategy, and interpretability constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-regularized-regression
+  title: Scikit-learn Regularized Regression (L1/L2/ElasticNet)
+  domain: machine_learning
+  instruction_file: instructions/sklearn-regularized-regression.md
+  tags:
+  - sklearn
+  - ridge
+  - lasso
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-regularized-regression
+      description: Retrieve this expert for Ridge, Lasso, and ElasticNet workflows with cross-validated regularization 
+        and coefficient stability checks.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: regression objective, metric, and data constraints
+          context:
+            type: object
+            description: alpha/l1_ratio ranges, sparsity preference, and deployment constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-tree-forest-models
+  title: Scikit-learn Tree and Forest Models
+  domain: machine_learning
+  instruction_file: instructions/sklearn-tree-forest-models.md
+  tags:
+  - sklearn
+  - decision-tree
+  - random-forest
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-tree-forest-models
+      description: Retrieve this expert for DecisionTree, RandomForest, and ExtraTrees modeling with controlled 
+        overfitting and robust feature-importance diagnostics.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: problem type, target metric, and dataset profile
+          context:
+            type: object
+            description: depth constraints, imbalance handling, and interpretability requirements
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-clustering-gmm
+  title: Scikit-learn Clustering and Gaussian Mixtures
+  domain: machine_learning
+  instruction_file: instructions/sklearn-clustering-gmm.md
+  tags:
+  - sklearn
+  - clustering
+  - kmeans
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-clustering-gmm
+      description: Retrieve this expert for unsupervised segmentation using KMeans, DBSCAN, agglomerative clustering, 
+        and Gaussian Mixture Models.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: feature dataset, clustering objective, and evaluation goal
+          context:
+            type: object
+            description: expected cluster behavior, noise profile, and downstream use case
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: ml.sklearn-dimensionality-reduction
+  title: Scikit-learn Dimensionality Reduction
+  domain: machine_learning
+  instruction_file: instructions/sklearn-dimensionality-reduction.md
+  tags:
+  - sklearn
+  - pca
+  - svd
+  invocation:
+    type: function
+    function:
+      name: ml_sklearn-dimensionality-reduction
+      description: Retrieve this expert for PCA/SVD/ICA workflows that reduce dimensionality while preserving downstream
+        model quality.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: feature-space reduction objective and downstream model goal
+          context:
+            type: object
+            description: variance target, sparsity constraints, and interpretability requirements
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: ml.sklearn-pipeline-ops
   title: Scikit-learn Pipeline Ops
   domain: machine_learning
@@ -190,8 +537,7 @@ tools:
     type: function
     function:
       name: sklearn_pipeline_Pipeline
-      description: Pipeline schema models init/persist/calibration arguments used
-        in production packaging flows.
+      description: Pipeline schema models init/persist/calibration arguments used in production packaging flows.
       parameters:
         type: object
         required:
@@ -262,8 +608,8 @@ tools:
     type: function
     function:
       name: ml_hyperparameter-tuning
-      description: Retrieve this expert for systematic hyperparameter search, tuning
-        strategy design, and objective-driven model optimization.
+      description: Retrieve this expert for systematic hyperparameter search, tuning strategy design, and 
+        objective-driven model optimization.
       parameters:
         type: object
         properties:
@@ -341,15 +687,14 @@ tools:
     type: function
     function:
       name: dl_transformers-finetuning
-      description: Retrieve this expert for HuggingFace transformer fine-tuning, LoRA/QLoRA
-        adaptation, and GPU-efficient training workflows.
+      description: Retrieve this expert for HuggingFace transformer fine-tuning, LoRA/QLoRA adaptation, and 
+        GPU-efficient training workflows.
       parameters:
         type: object
         properties:
           task:
             type: string
-            description: task definition, model family choice, and dataset readiness
-              details
+            description: task definition, model family choice, and dataset readiness details
           context:
             type: object
             description: GPU memory budget, adapter strategy, and checkpoint cadence
@@ -383,6 +728,140 @@ tools:
         - task
         additionalProperties: true
       strict: false
+- id: stats.hypothesis-testing
+  title: Statistical Hypothesis Testing
+  domain: statistics
+  instruction_file: instructions/stats-hypothesis-testing.md
+  tags:
+  - statistics
+  - hypothesis-testing
+  - t-test
+  invocation:
+    type: function
+    function:
+      name: stats_hypothesis-testing
+      description: Retrieve this expert for parametric hypothesis testing workflows with effect-size and 
+        confidence-interval reporting.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: hypothesis question and test design
+          context:
+            type: object
+            description: alpha, tails, and comparison settings
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: stats.regression-inference
+  title: Regression Inference and Coefficient Analysis
+  domain: statistics
+  instruction_file: instructions/stats-regression-inference.md
+  tags:
+  - statistics
+  - regression
+  - inference
+  invocation:
+    type: function
+    function:
+      name: stats_regression-inference
+      description: Retrieve this expert for regression coefficient inference, confidence intervals, and assumption 
+        diagnostics.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: regression inference objective and model form
+          context:
+            type: object
+            description: robustness checks and interpretation constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: stats.nonparametric-tests
+  title: Nonparametric Statistical Tests
+  domain: statistics
+  instruction_file: instructions/stats-nonparametric-tests.md
+  tags:
+  - statistics
+  - nonparametric
+  - mann-whitney
+  invocation:
+    type: function
+    function:
+      name: stats_nonparametric-tests
+      description: Retrieve this expert for rank-based and distribution-free hypothesis tests when parametric 
+        assumptions fail.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: nonparametric testing objective
+          context:
+            type: object
+            description: sample structure, ties, and robustness settings
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: stats.power-sample-size
+  title: Power Analysis and Sample Size Planning
+  domain: statistics
+  instruction_file: instructions/stats-power-sample-size.md
+  tags:
+  - statistics
+  - power-analysis
+  - sample-size
+  invocation:
+    type: function
+    function:
+      name: stats_power-sample-size
+      description: Retrieve this expert for sample-size planning, MDE analysis, and statistical power tradeoff modeling.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: sample-size planning objective
+          context:
+            type: object
+            description: effect-size assumptions and constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: stats.bayesian-basics
+  title: Bayesian Inference Basics
+  domain: statistics
+  instruction_file: instructions/stats-bayesian-basics.md
+  tags:
+  - statistics
+  - bayesian
+  - posterior
+  invocation:
+    type: function
+    function:
+      name: stats_bayesian-basics
+      description: Retrieve this expert for prior/posterior reasoning, credible intervals, and Bayesian decision 
+        framing.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: bayesian modeling objective
+          context:
+            type: object
+            description: prior assumptions and uncertainty constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
 - id: stats.experiment-design
   title: Statistical Experiment Design and A/B Testing
   domain: statistics
@@ -395,8 +874,8 @@ tools:
     type: function
     function:
       name: stats_experiment-design
-      description: Retrieve this expert for experiment planning, power analysis, sample-size
-        estimation, and robust A/B test interpretation.
+      description: Retrieve this expert for experiment planning, power analysis, sample-size estimation, and robust A/B 
+        test interpretation.
       parameters:
         type: object
         properties:
@@ -422,8 +901,8 @@ tools:
     type: function
     function:
       name: stats_model-diagnostics
-      description: Retrieve this expert for residual diagnostics, calibration assessment,
-        cohort error analysis, and model reliability checks.
+      description: Retrieve this expert for residual diagnostics, calibration assessment, cohort error analysis, and 
+        model reliability checks.
       parameters:
         type: object
         properties:
@@ -449,8 +928,8 @@ tools:
     type: function
     function:
       name: ml_model-export
-      description: Retrieve this expert for saving trained models with reproducible
-        metadata and deployment-safe export formats.
+      description: Retrieve this expert for saving trained models with reproducible metadata and deployment-safe export 
+        formats.
       parameters:
         type: object
         properties:
@@ -459,8 +938,7 @@ tools:
             description: trained model/pipeline object and target serving environment
           context:
             type: object
-            description: latency constraints, interoperability target (ONNX/joblib),
-              and versioning policy
+            description: latency constraints, interoperability target (ONNX/joblib), and versioning policy
         required:
         - task
         additionalProperties: true

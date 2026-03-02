@@ -1,0 +1,8 @@
+config_id,config,n_ratings,avg_quality,median_quality,stdev_quality,top_box_rate_pct
+A,"All-cards baseline (full catalog, top-k=all)",20,4.8,5.0,0.4,100.0
+B1,"Routed (full catalog, top-k=1)",20,4.4,5.0,1.2,80.0
+B3,"Routed (full catalog, top-k=3)",20,4.6,5.0,0.917,90.0
+B5,"Routed (full catalog, top-k=5)",20,4.8,5.0,0.4,100.0
+C1,"Role+Routed (installed roles, top-k=1)",20,4.7,5.0,0.9,90.0
+C3,"Role+Routed (installed roles, top-k=3)",20,4.9,5.0,0.3,100.0
+C5,"Role+Routed (installed roles, top-k=5)",20,4.9,5.0,0.3,100.0

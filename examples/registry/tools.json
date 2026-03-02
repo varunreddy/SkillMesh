@@ -8,7 +8,7 @@
       "title": "Visualization with Matplotlib and Seaborn",
       "domain": "visualization",
       "instruction_file": "instructions/visualization-matplotlib-seaborn.md",
-      "description": "Publication-grade charting and statistical visualization workflows.",
+      "description": "Publication-grade statistical visualization workflows with chart selection, uncertainty communication, and reproducible Matplotlib/Seaborn styling patterns.",
       "tags": [
         "matplotlib",
         "seaborn",
@@ -66,7 +66,7 @@
         "type": "function",
         "function": {
           "name": "viz_matplotlib-seaborn",
-          "description": "Publication-grade charting and statistical visualization workflows.",
+          "description": "Publication-grade statistical visualization workflows with chart selection, uncertainty communication, and reproducible Matplotlib/Seaborn styling patterns.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -77,6 +77,455 @@
               "context": {
                 "type": "object",
                 "description": "style palette, chart type hints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "viz.chart-selection",
+      "title": "Visualization Chart Selection and Design",
+      "domain": "visualization",
+      "instruction_file": "instructions/visualization-chart-selection.md",
+      "description": "Retrieve this expert for selecting the right chart type based on analytical intent, audience, and data shape.",
+      "tags": [
+        "visualization",
+        "chart-selection",
+        "dashboard-design",
+        "communication",
+        "storytelling"
+      ],
+      "tool_hints": [
+        "matplotlib",
+        "seaborn",
+        "plotly",
+        "altair"
+      ],
+      "examples": [
+        "Choose between bar, line, area, or table for executive KPI reporting",
+        "Design chart encoding and annotation plan for a board-ready narrative"
+      ],
+      "aliases": [
+        "viz-chart-selection",
+        "chart-recommendation"
+      ],
+      "dependencies": [
+        "matplotlib",
+        "seaborn",
+        "plotly",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "business question, data shape summary, and target audience",
+        "optional": "design system constraints, accessibility rules, and reporting cadence"
+      },
+      "output_artifacts": [
+        "chart_recommendation",
+        "encoding_plan",
+        "narrative_annotation_spec"
+      ],
+      "quality_checks": [
+        "question_to_chart_mapping_explicit",
+        "axis_semantics_validated",
+        "interpretation_risks_documented"
+      ],
+      "constraints": [
+        "no_chart_choice_without_question_mapping",
+        "no_unexplained_dual_axis_designs"
+      ],
+      "risk_level": "low",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "viz",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "viz_chart-selection",
+          "description": "Retrieve this expert for selecting the right chart type based on analytical intent, audience, and data shape.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "analytical question and communication objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "data profile, audience level, and platform constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "viz.distribution-diagnostics",
+      "title": "Distribution and Outlier Visualization",
+      "domain": "visualization",
+      "instruction_file": "instructions/visualization-distribution-diagnostics.md",
+      "description": "Retrieve this expert for histogram, KDE, box, violin, and outlier-focused visuals used in analysis and diagnostics.",
+      "tags": [
+        "visualization",
+        "distribution",
+        "outliers",
+        "histogram",
+        "boxplot",
+        "violin"
+      ],
+      "tool_hints": [
+        "seaborn",
+        "matplotlib",
+        "scipy.stats",
+        "pandas"
+      ],
+      "examples": [
+        "Compare distribution shifts across cohorts with consistent binning",
+        "Build residual distribution visuals with outlier callouts"
+      ],
+      "aliases": [
+        "viz-distribution-diagnostics",
+        "distribution-plots"
+      ],
+      "dependencies": [
+        "matplotlib",
+        "seaborn",
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "numeric fields and comparison objective",
+        "optional": "outlier policy, cohort definitions, and threshold rules"
+      },
+      "output_artifacts": [
+        "distribution_plot_spec",
+        "outlier_summary",
+        "cohort_distribution_report"
+      ],
+      "quality_checks": [
+        "binning_or_bandwidth_documented",
+        "scale_consistency_across_groups",
+        "outlier_rule_explicit"
+      ],
+      "constraints": [
+        "no_hidden_tail_ranges",
+        "no_inconsistent_binning_for_comparison"
+      ],
+      "risk_level": "low",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "viz",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "viz_distribution-diagnostics",
+          "description": "Retrieve this expert for histogram, KDE, box, violin, and outlier-focused visuals used in analysis and diagnostics.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "distribution analysis objective and target fields"
+              },
+              "context": {
+                "type": "object",
+                "description": "cohorts, outlier policy, and communication constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "viz.relationship-plots",
+      "title": "Relationship and Correlation Plots",
+      "domain": "visualization",
+      "instruction_file": "instructions/visualization-relationship-plots.md",
+      "description": "Retrieve this expert for scatter, bubble, and hexbin-style visuals that explain variable relationships and interactions.",
+      "tags": [
+        "visualization",
+        "scatter",
+        "bubble",
+        "hexbin",
+        "correlation",
+        "relationship"
+      ],
+      "tool_hints": [
+        "seaborn",
+        "matplotlib",
+        "plotly",
+        "pandas"
+      ],
+      "examples": [
+        "Render high-density relationship plots with hexbin and trend overlays",
+        "Design bubble chart encodings with robust legend safeguards"
+      ],
+      "aliases": [
+        "viz-relationship-plots",
+        "correlation-visualization"
+      ],
+      "dependencies": [
+        "matplotlib",
+        "seaborn",
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "variables for x/y relationship and analysis objective",
+        "optional": "subgroup dimensions, point-density profile, and smoothing preference"
+      },
+      "output_artifacts": [
+        "relationship_plot_spec",
+        "overplotting_mitigation_plan",
+        "relationship_summary_notes"
+      ],
+      "quality_checks": [
+        "overplotting_strategy_applied",
+        "encoding_semantics_consistent",
+        "causality_caveat_explicit"
+      ],
+      "constraints": [
+        "no_causality_claim_from_correlation_only",
+        "no_misleading_bubble_size_encoding"
+      ],
+      "risk_level": "low",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "viz",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "viz_relationship-plots",
+          "description": "Retrieve this expert for scatter, bubble, and hexbin-style visuals that explain variable relationships and interactions.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "relationship question, variables, and key hypothesis"
+              },
+              "context": {
+                "type": "object",
+                "description": "density profile, subgroup dimensions, and communication audience"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "viz.hierarchy-flow",
+      "title": "Hierarchy, Flow, and Network Visualization",
+      "domain": "visualization",
+      "instruction_file": "instructions/visualization-hierarchy-flow.md",
+      "description": "Retrieve this expert for treemap, sunburst, funnel, waterfall, sankey, and network-style visual narratives.",
+      "tags": [
+        "visualization",
+        "treemap",
+        "sankey",
+        "funnel",
+        "waterfall",
+        "network"
+      ],
+      "tool_hints": [
+        "plotly",
+        "matplotlib",
+        "networkx",
+        "pandas"
+      ],
+      "examples": [
+        "Build a sankey view for stage-to-stage conversion flow",
+        "Design treemap and waterfall visuals for contribution analysis"
+      ],
+      "aliases": [
+        "viz-hierarchy-flow",
+        "flow-network-visualization"
+      ],
+      "dependencies": [
+        "plotly",
+        "matplotlib",
+        "pandas",
+        "networkx"
+      ],
+      "input_contract": {
+        "required": "hierarchy tree or source-target flow dataset",
+        "optional": "aggregation granularity, filtering rules, and labeling constraints"
+      },
+      "output_artifacts": [
+        "hierarchy_or_flow_chart_spec",
+        "path_contribution_summary",
+        "interpretation_notes"
+      ],
+      "quality_checks": [
+        "node_edge_aggregation_consistent",
+        "dominant_path_highlighted",
+        "layout_limitations_documented"
+      ],
+      "constraints": [
+        "no_overcrowded_flow_without_thresholding",
+        "no_quantitative_distance_claims_from_layout_only"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "viz",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "viz_hierarchy-flow",
+          "description": "Retrieve this expert for treemap, sunburst, funnel, waterfall, sankey, and network-style visual narratives.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "hierarchy or flow analysis objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "aggregation level, readability constraints, and audience focus"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "viz.geo-timeline",
+      "title": "Geo and Timeline Visualization",
+      "domain": "visualization",
+      "instruction_file": "instructions/visualization-geo-timeline.md",
+      "description": "Retrieve this expert for choropleth, proportional-symbol maps, timeline, and Gantt-style schedule visualizations.",
+      "tags": [
+        "visualization",
+        "maps",
+        "choropleth",
+        "timeline",
+        "gantt",
+        "geospatial"
+      ],
+      "tool_hints": [
+        "geopandas",
+        "plotly",
+        "matplotlib",
+        "pandas"
+      ],
+      "examples": [
+        "Create normalized choropleth map with hotspot callouts",
+        "Build project timeline and Gantt visual with dependency highlights"
+      ],
+      "aliases": [
+        "viz-geo-timeline",
+        "map-timeline-visualization"
+      ],
+      "dependencies": [
+        "geopandas",
+        "matplotlib",
+        "plotly",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "geographic keys or timeline schema with start/end fields",
+        "optional": "normalization denominator, timezone policy, and map boundary source"
+      },
+      "output_artifacts": [
+        "geo_or_timeline_chart_spec",
+        "hotspot_or_schedule_risk_summary",
+        "assumption_log"
+      ],
+      "quality_checks": [
+        "geography_or_time_schema_validated",
+        "normalization_policy_explicit",
+        "legend_and_scale_reviewed"
+      ],
+      "constraints": [
+        "no_raw_count_choropleth_without_normalization_review",
+        "no_hidden_timezone_assumptions"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "viz",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "viz_geo-timeline",
+          "description": "Retrieve this expert for choropleth, proportional-symbol maps, timeline, and Gantt-style schedule visualizations.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "geo or timeline reporting objective and target outputs"
+              },
+              "context": {
+                "type": "object",
+                "description": "boundary source, normalization, and scheduling constraints"
               }
             },
             "required": [
@@ -185,7 +634,7 @@
       "title": "Scikit-learn Modeling and Evaluation",
       "domain": "machine_learning",
       "instruction_file": "instructions/sklearn-modeling.md",
-      "description": "Leakage-safe sklearn pipelines with CV, tuning, and diagnostics.",
+      "description": "Leakage-safe sklearn modeling with preprocessing pipelines, cross-validation, hyperparameter tuning, calibration checks, and diagnostic error analysis.",
       "tags": [
         "sklearn",
         "pipeline",
@@ -340,11 +789,1161 @@
       }
     },
     {
+      "id": "ml.sklearn-model-selection",
+      "title": "Scikit-learn Model Selection and Validation",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-model-selection.md",
+      "description": "Retrieve this expert for leakage-safe cross-validation strategy, fair model comparison, and reproducible hyperparameter search in sklearn.",
+      "tags": [
+        "sklearn",
+        "model-selection",
+        "cross-validation",
+        "search",
+        "evaluation"
+      ],
+      "tool_hints": [
+        "sklearn.model_selection",
+        "sklearn.metrics",
+        "sklearn.pipeline",
+        "numpy"
+      ],
+      "examples": [
+        "Compare candidate estimators with stratified cross-validation",
+        "Design group-aware validation and hyperparameter search matrix"
+      ],
+      "aliases": [
+        "sklearn-model-selection",
+        "sklearn-validation-strategy"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "candidate estimators, objective metric, and data split constraints",
+        "optional": "group identifiers, compute budget, and model latency constraints"
+      },
+      "output_artifacts": [
+        "validation_strategy_spec",
+        "model_comparison_table",
+        "search_configuration"
+      ],
+      "quality_checks": [
+        "cv_strategy_matches_data_shape",
+        "test_set_untouched_for_tuning",
+        "variance_reported_across_folds"
+      ],
+      "constraints": [
+        "no_test_set_tuning",
+        "no_random_split_for_temporal_or_grouped_data"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-model-selection",
+          "description": "Retrieve this expert for leakage-safe cross-validation strategy, fair model comparison, and reproducible hyperparameter search in sklearn.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "selection objective, candidate models, and target metric"
+              },
+              "context": {
+                "type": "object",
+                "description": "split constraints, compute limits, and deployment priorities"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-feature-selection",
+      "title": "Scikit-learn Feature Selection",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-feature-selection.md",
+      "description": "Retrieve this expert for filter, wrapper, and embedded feature selection with stability checks in sklearn.",
+      "tags": [
+        "sklearn",
+        "feature-selection",
+        "dimensionality",
+        "regularization",
+        "rfecv"
+      ],
+      "tool_hints": [
+        "sklearn.feature_selection",
+        "sklearn.model_selection",
+        "sklearn.pipeline",
+        "numpy"
+      ],
+      "examples": [
+        "Run SelectFromModel and RFECV with leakage-safe validation",
+        "Compare performance before and after feature subset selection"
+      ],
+      "aliases": [
+        "sklearn-feature-selection",
+        "sklearn-selectfrommodel"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "training dataset, target metric, and feature constraints",
+        "optional": "max feature budget, interpretability requirements, and latency limits"
+      },
+      "output_artifacts": [
+        "selected_feature_set",
+        "selection_method_report",
+        "performance_delta_summary"
+      ],
+      "quality_checks": [
+        "selection_inside_cv_only",
+        "stability_across_folds_checked",
+        "baseline_vs_selected_features_compared"
+      ],
+      "constraints": [
+        "no_global_pre_split_selection",
+        "no_single_seed_selection_without_stability_review"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-feature-selection",
+          "description": "Retrieve this expert for filter, wrapper, and embedded feature selection with stability checks in sklearn.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "feature selection objective and modeling target"
+              },
+              "context": {
+                "type": "object",
+                "description": "feature budget, compute constraints, and interpretability goals"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-svm",
+      "title": "Scikit-learn Support Vector Machines",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-svm.md",
+      "description": "Retrieve this expert for SVC/SVR/LinearSVC modeling with kernel and margin tuning in sklearn.",
+      "tags": [
+        "sklearn",
+        "svm",
+        "svc",
+        "svr",
+        "classification",
+        "regression"
+      ],
+      "tool_hints": [
+        "sklearn.svm",
+        "sklearn.pipeline",
+        "sklearn.preprocessing",
+        "sklearn.model_selection"
+      ],
+      "examples": [
+        "Tune kernel SVC with log-scale C and gamma search",
+        "Build standardized LinearSVC baseline for high-dimensional classification"
+      ],
+      "aliases": [
+        "sklearn-svm",
+        "sklearn-support-vector-machines"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "dataset, task type, and target metric",
+        "optional": "kernel preference, calibration requirements, and inference latency limits"
+      },
+      "output_artifacts": [
+        "svm_pipeline",
+        "hyperparameter_search_results",
+        "classification_or_regression_report"
+      ],
+      "quality_checks": [
+        "feature_scaling_in_pipeline",
+        "log_scale_hyperparameter_search",
+        "support_vector_complexity_reviewed"
+      ],
+      "constraints": [
+        "no_unscaled_svm_features",
+        "no_large_kernel_svm_without_compute_review"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-svm",
+          "description": "Retrieve this expert for SVC/SVR/LinearSVC modeling with kernel and margin tuning in sklearn.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "SVM objective, dataset profile, and target metric"
+              },
+              "context": {
+                "type": "object",
+                "description": "kernel choice, calibration need, and compute constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-neighbors",
+      "title": "Scikit-learn Nearest Neighbors Models",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-neighbors.md",
+      "description": "Retrieve this expert for KNN classification/regression and neighbor-search tradeoffs in sklearn.",
+      "tags": [
+        "sklearn",
+        "knn",
+        "neighbors",
+        "distance-metrics",
+        "nonparametric"
+      ],
+      "tool_hints": [
+        "sklearn.neighbors",
+        "sklearn.preprocessing",
+        "sklearn.pipeline",
+        "sklearn.model_selection"
+      ],
+      "examples": [
+        "Tune n_neighbors and distance metrics for KNN classifier",
+        "Evaluate KNN latency and memory tradeoffs for production use"
+      ],
+      "aliases": [
+        "sklearn-neighbors",
+        "sklearn-knn-models"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "feature dataset and prediction objective",
+        "optional": "distance metric constraints, latency budget, and index method preference"
+      },
+      "output_artifacts": [
+        "knn_model_config",
+        "quality_vs_latency_report",
+        "distance_metric_rationale"
+      ],
+      "quality_checks": [
+        "scaled_features_for_distance_methods",
+        "neighbor_count_tuned",
+        "inference_complexity_reviewed"
+      ],
+      "constraints": [
+        "no_unscaled_distance_features",
+        "no_knn_without_latency_assessment"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-neighbors",
+          "description": "Retrieve this expert for KNN classification/regression and neighbor-search tradeoffs in sklearn.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "KNN modeling objective and evaluation criteria"
+              },
+              "context": {
+                "type": "object",
+                "description": "distance metric choices, data scale, and serving constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-naive-bayes",
+      "title": "Scikit-learn Naive Bayes Models",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-naive-bayes.md",
+      "description": "Retrieve this expert for Gaussian/Multinomial/Bernoulli/Complement Naive Bayes workflows in sklearn.",
+      "tags": [
+        "sklearn",
+        "naive-bayes",
+        "probabilistic-models",
+        "text-classification",
+        "baseline"
+      ],
+      "tool_hints": [
+        "sklearn.naive_bayes",
+        "sklearn.pipeline",
+        "sklearn.metrics",
+        "sklearn.calibration"
+      ],
+      "examples": [
+        "Build MultinomialNB baseline for sparse text features",
+        "Compare GaussianNB and logistic baseline with calibration checks"
+      ],
+      "aliases": [
+        "sklearn-naive-bayes",
+        "sklearn-nb-models"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "classification dataset and class labels",
+        "optional": "feature distribution assumptions, class priors, and calibration needs"
+      },
+      "output_artifacts": [
+        "naive_bayes_model_report",
+        "variant_selection_rationale",
+        "calibration_check_summary"
+      ],
+      "quality_checks": [
+        "variant_matches_feature_type",
+        "smoothing_tuned_or_justified",
+        "probability_calibration_reviewed"
+      ],
+      "constraints": [
+        "no_variant_mismatch_to_feature_distribution",
+        "no_probability_claim_without_calibration_check"
+      ],
+      "risk_level": "low",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-naive-bayes",
+          "description": "Retrieve this expert for Gaussian/Multinomial/Bernoulli/Complement Naive Bayes workflows in sklearn.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "Naive Bayes objective and data representation"
+              },
+              "context": {
+                "type": "object",
+                "description": "priors, smoothing preferences, and calibration constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-imputation-encoding",
+      "title": "Scikit-learn Imputation and Encoding Pipelines",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-imputation-encoding.md",
+      "description": "Retrieve this expert for missing-value handling and categorical encoding design with sklearn pipelines.",
+      "tags": [
+        "sklearn",
+        "imputation",
+        "encoding",
+        "columntransformer",
+        "preprocessing"
+      ],
+      "tool_hints": [
+        "sklearn.impute",
+        "sklearn.preprocessing",
+        "sklearn.compose",
+        "sklearn.pipeline"
+      ],
+      "examples": [
+        "Design leakage-safe imputation and encoding strategy per feature type",
+        "Build ColumnTransformer pipeline with schema parity checks"
+      ],
+      "aliases": [
+        "sklearn-imputation-encoding",
+        "sklearn-preprocessing-pipeline"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "feature schema with missingness and categorical profile",
+        "optional": "cardinality limits, model family, and deployment schema constraints"
+      },
+      "output_artifacts": [
+        "preprocessing_pipeline_spec",
+        "feature_schema_mapping",
+        "data_quality_guardrail_report"
+      ],
+      "quality_checks": [
+        "fit_transform_only_on_train",
+        "categorical_strategy_matches_cardinality",
+        "train_inference_schema_parity_checked"
+      ],
+      "constraints": [
+        "no_manual_preprocessing_outside_pipeline",
+        "no_blind_one_hot_for_high_cardinality"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-imputation-encoding",
+          "description": "Retrieve this expert for missing-value handling and categorical encoding design with sklearn pipelines.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "preprocessing objective, schema, and downstream model target"
+              },
+              "context": {
+                "type": "object",
+                "description": "missingness patterns, cardinality constraints, and deployment requirements"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-ensemble-stacking",
+      "title": "Scikit-learn Bagging, Voting, and Stacking Ensembles",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-ensemble-stacking.md",
+      "description": "Retrieve this expert for bagging, voting, and stacking ensemble design in sklearn with leakage-safe meta-modeling.",
+      "tags": [
+        "sklearn",
+        "ensemble",
+        "stacking",
+        "bagging",
+        "voting"
+      ],
+      "tool_hints": [
+        "sklearn.ensemble",
+        "sklearn.model_selection",
+        "sklearn.pipeline",
+        "sklearn.metrics"
+      ],
+      "examples": [
+        "Build stacking classifier with out-of-fold meta-features",
+        "Compare voting and stacking quality/latency tradeoffs"
+      ],
+      "aliases": [
+        "sklearn-ensemble-stacking",
+        "sklearn-voting-bagging"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "base estimators, objective metric, and serving constraints",
+        "optional": "diversity strategy, meta-model preference, and latency budget"
+      },
+      "output_artifacts": [
+        "ensemble_architecture_spec",
+        "baseline_vs_ensemble_comparison",
+        "inference_cost_report"
+      ],
+      "quality_checks": [
+        "out_of_fold_stacking_only",
+        "base_model_diversity_justified",
+        "latency_cost_tradeoff_reported"
+      ],
+      "constraints": [
+        "no_in_fold_meta_feature_leakage",
+        "no_ensemble_without_single_model_baseline"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-ensemble-stacking",
+          "description": "Retrieve this expert for bagging, voting, and stacking ensemble design in sklearn with leakage-safe meta-modeling.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "ensemble objective and baseline candidate models"
+              },
+              "context": {
+                "type": "object",
+                "description": "meta-model constraints, compute budget, and deployment latency target"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-anomaly-detection",
+      "title": "Scikit-learn Anomaly Detection",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-anomaly-detection.md",
+      "description": "Retrieve this expert for anomaly and novelty detection using IsolationForest, LOF, OneClassSVM, and related sklearn methods.",
+      "tags": [
+        "sklearn",
+        "anomaly-detection",
+        "outlier-detection",
+        "novelty",
+        "isolation-forest"
+      ],
+      "tool_hints": [
+        "sklearn.ensemble",
+        "sklearn.neighbors",
+        "sklearn.svm",
+        "sklearn.covariance"
+      ],
+      "examples": [
+        "Configure IsolationForest contamination threshold for alerting",
+        "Compare LOF and OneClassSVM for novelty detection scenarios"
+      ],
+      "aliases": [
+        "sklearn-anomaly-detection",
+        "sklearn-outlier-detection"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "feature dataset and anomaly detection objective",
+        "optional": "contamination assumptions, alert budget, and triage policy"
+      },
+      "output_artifacts": [
+        "anomaly_detection_config",
+        "threshold_policy",
+        "alert_quality_summary"
+      ],
+      "quality_checks": [
+        "threshold_or_contamination_justified",
+        "false_positive_tradeoff_reviewed",
+        "operational_triage_defined"
+      ],
+      "constraints": [
+        "no_default_contamination_without_validation",
+        "no_probability_claim_from_raw_anomaly_scores"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-anomaly-detection",
+          "description": "Retrieve this expert for anomaly and novelty detection using IsolationForest, LOF, OneClassSVM, and related sklearn methods.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "anomaly objective, data profile, and evaluation needs"
+              },
+              "context": {
+                "type": "object",
+                "description": "threshold policy, contamination assumptions, and operational constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-linear-models",
+      "title": "Scikit-learn Linear Models",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-linear-models.md",
+      "description": "Retrieve this expert for interpretable linear baselines in sklearn, including regression and linear classification pipelines.",
+      "tags": [
+        "sklearn",
+        "linear-models",
+        "regression",
+        "classification",
+        "interpretability",
+        "baseline"
+      ],
+      "tool_hints": [
+        "sklearn.linear_model",
+        "sklearn.svm",
+        "sklearn.pipeline",
+        "sklearn.preprocessing"
+      ],
+      "examples": [
+        "Build an interpretable linear baseline with leakage-safe preprocessing",
+        "Train logistic regression with class-weighted threshold tuning"
+      ],
+      "aliases": [
+        "sklearn-linear-models",
+        "linear-baseline-modeling"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "feature matrix X, target y, and objective metric",
+        "optional": "class imbalance profile, group splits, and interpretability requirements"
+      },
+      "output_artifacts": [
+        "fitted_linear_pipeline",
+        "metric_report",
+        "coefficient_summary"
+      ],
+      "quality_checks": [
+        "train_validation_split",
+        "coefficient_stability_checked",
+        "metric_selection_matches_objective"
+      ],
+      "constraints": [
+        "no_full_dataset_preprocessing_before_split",
+        "no_train_only_performance_reporting"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-linear-models",
+          "description": "Retrieve this expert for interpretable linear baselines in sklearn, including regression and linear classification pipelines.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "feature matrix, target objective, and baseline requirements"
+              },
+              "context": {
+                "type": "object",
+                "description": "class imbalance profile, split strategy, and interpretability constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-regularized-regression",
+      "title": "Scikit-learn Regularized Regression (L1/L2/ElasticNet)",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-regularized-regression.md",
+      "description": "Retrieve this expert for Ridge, Lasso, and ElasticNet workflows with cross-validated regularization and coefficient stability checks.",
+      "tags": [
+        "sklearn",
+        "ridge",
+        "lasso",
+        "elasticnet",
+        "regularization",
+        "regression"
+      ],
+      "tool_hints": [
+        "sklearn.linear_model",
+        "sklearn.model_selection",
+        "sklearn.pipeline",
+        "sklearn.preprocessing"
+      ],
+      "examples": [
+        "Tune RidgeCV vs LassoCV for collinear tabular features",
+        "Use ElasticNetCV to balance sparsity and predictive error"
+      ],
+      "aliases": [
+        "sklearn-regularized-regression",
+        "lasso-ridge-elasticnet"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "regression dataset with feature matrix X and target y",
+        "optional": "alpha search bounds, l1_ratio bounds, and business loss preference"
+      },
+      "output_artifacts": [
+        "regularized_regression_pipeline",
+        "hyperparameter_cv_summary",
+        "coefficient_sparsity_report"
+      ],
+      "quality_checks": [
+        "alpha_selected_via_cv",
+        "scaled_features_for_penalized_models",
+        "coefficient_stability_checked"
+      ],
+      "constraints": [
+        "no_test_set_hyperparameter_selection",
+        "no_unscaled_penalized_linear_model"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-regularized-regression",
+          "description": "Retrieve this expert for Ridge, Lasso, and ElasticNet workflows with cross-validated regularization and coefficient stability checks.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "regression objective, metric, and data constraints"
+              },
+              "context": {
+                "type": "object",
+                "description": "alpha/l1_ratio ranges, sparsity preference, and deployment constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-tree-forest-models",
+      "title": "Scikit-learn Tree and Forest Models",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-tree-forest-models.md",
+      "description": "Retrieve this expert for DecisionTree, RandomForest, and ExtraTrees modeling with controlled overfitting and robust feature-importance diagnostics.",
+      "tags": [
+        "sklearn",
+        "decision-tree",
+        "random-forest",
+        "extra-trees",
+        "tabular",
+        "nonlinear"
+      ],
+      "tool_hints": [
+        "sklearn.tree",
+        "sklearn.ensemble",
+        "sklearn.inspection",
+        "sklearn.model_selection"
+      ],
+      "examples": [
+        "Build depth-constrained decision tree baseline with holdout validation",
+        "Tune random forest and compare permutation importance stability"
+      ],
+      "aliases": [
+        "sklearn-tree-models",
+        "sklearn-random-forest"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "labeled tabular dataset with evaluation objective",
+        "optional": "class imbalance policy, latency constraints, and explanation requirements"
+      },
+      "output_artifacts": [
+        "fitted_tree_or_forest_model",
+        "permutation_importance_report",
+        "validation_score_summary"
+      ],
+      "quality_checks": [
+        "depth_or_leaf_regularization_applied",
+        "importance_method_not_impurity_only",
+        "cross_seed_stability_reviewed"
+      ],
+      "constraints": [
+        "no_unbounded_tree_depth_on_small_data",
+        "no_train_only_feature_importance_reporting"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-tree-forest-models",
+          "description": "Retrieve this expert for DecisionTree, RandomForest, and ExtraTrees modeling with controlled overfitting and robust feature-importance diagnostics.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "problem type, target metric, and dataset profile"
+              },
+              "context": {
+                "type": "object",
+                "description": "depth constraints, imbalance handling, and interpretability requirements"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-clustering-gmm",
+      "title": "Scikit-learn Clustering and Gaussian Mixtures",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-clustering-gmm.md",
+      "description": "Retrieve this expert for unsupervised segmentation using KMeans, DBSCAN, agglomerative clustering, and Gaussian Mixture Models.",
+      "tags": [
+        "sklearn",
+        "clustering",
+        "kmeans",
+        "dbscan",
+        "gmm",
+        "unsupervised"
+      ],
+      "tool_hints": [
+        "sklearn.cluster",
+        "sklearn.mixture",
+        "sklearn.metrics",
+        "sklearn.preprocessing"
+      ],
+      "examples": [
+        "Compare KMeans and GMM for soft vs hard segment assignments",
+        "Run DBSCAN for noisy arbitrary-shape clusters and profile segments"
+      ],
+      "aliases": [
+        "sklearn-clustering",
+        "sklearn-gmm-segmentation"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "unlabeled feature dataset and segmentation objective",
+        "optional": "expected segment count, noise tolerance, and business profiling criteria"
+      },
+      "output_artifacts": [
+        "cluster_assignment_table",
+        "cluster_quality_metrics",
+        "segment_profile_report"
+      ],
+      "quality_checks": [
+        "feature_scaling_confirmed",
+        "cluster_stability_checked",
+        "multiple_internal_metrics_reported"
+      ],
+      "constraints": [
+        "no_single_metric_cluster_selection",
+        "no_ordinal_interpretation_of_cluster_labels"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-clustering-gmm",
+          "description": "Retrieve this expert for unsupervised segmentation using KMeans, DBSCAN, agglomerative clustering, and Gaussian Mixture Models.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "feature dataset, clustering objective, and evaluation goal"
+              },
+              "context": {
+                "type": "object",
+                "description": "expected cluster behavior, noise profile, and downstream use case"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "ml.sklearn-dimensionality-reduction",
+      "title": "Scikit-learn Dimensionality Reduction",
+      "domain": "machine_learning",
+      "instruction_file": "instructions/sklearn-dimensionality-reduction.md",
+      "description": "Retrieve this expert for PCA/SVD/ICA workflows that reduce dimensionality while preserving downstream model quality.",
+      "tags": [
+        "sklearn",
+        "pca",
+        "svd",
+        "ica",
+        "dimensionality-reduction",
+        "feature-space"
+      ],
+      "tool_hints": [
+        "sklearn.decomposition",
+        "sklearn.cross_decomposition",
+        "sklearn.pipeline",
+        "sklearn.model_selection"
+      ],
+      "examples": [
+        "Select PCA component count by explained variance and validation metric",
+        "Use TruncatedSVD for sparse high-dimensional features before modeling"
+      ],
+      "aliases": [
+        "sklearn-pca",
+        "sklearn-dimensionality-reduction"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "feature matrix and downstream objective metric",
+        "optional": "variance retention target, sparsity profile, and interpretability preference"
+      },
+      "output_artifacts": [
+        "fitted_reducer_pipeline",
+        "variance_retention_summary",
+        "downstream_metric_comparison"
+      ],
+      "quality_checks": [
+        "reducer_fit_only_on_training_data",
+        "component_count_justified",
+        "downstream_performance_compared_to_baseline"
+      ],
+      "constraints": [
+        "no_pre_split_decomposition_fit",
+        "no_component_count_by_visual_preference_only"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "install_extra": "ml",
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "ml_sklearn-dimensionality-reduction",
+          "description": "Retrieve this expert for PCA/SVD/ICA workflows that reduce dimensionality while preserving downstream model quality.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "feature-space reduction objective and downstream model goal"
+              },
+              "context": {
+                "type": "object",
+                "description": "variance target, sparsity constraints, and interpretability requirements"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
       "id": "ml.gradient-boosting",
       "title": "Gradient Boosting with XGBoost and LightGBM",
       "domain": "machine_learning",
       "instruction_file": "instructions/gradient-boosting-xgb-lgbm.md",
-      "description": "High-performance boosting, tuning, and SHAP-based attribution.",
+      "description": "Gradient boosting workflows (XGBoost/LightGBM/CatBoost): robust tuning, early stopping, feature attribution, and reliability checks for deployment.",
       "tags": [
         "xgboost",
         "lightgbm",
@@ -403,7 +2002,7 @@
         "type": "function",
         "function": {
           "name": "ml_gradient-boosting",
-          "description": "High-performance boosting, tuning, and SHAP-based attribution.",
+          "description": "Gradient boosting workflows (XGBoost/LightGBM/CatBoost): robust tuning, early stopping, feature attribution, and reliability checks for deployment.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -430,7 +2029,7 @@
       "title": "Deep Learning with PyTorch",
       "domain": "deep_learning",
       "instruction_file": "instructions/pytorch-training.md",
-      "description": "PyTorch training loops with mixed precision, GPU, and checkpoints.",
+      "description": "PyTorch training and fine-tuning loops with mixed precision, distributed GPU execution, checkpointing, and reproducible experiment tracking.",
       "tags": [
         "pytorch",
         "torch",
@@ -489,7 +2088,7 @@
         "type": "function",
         "function": {
           "name": "dl_pytorch-training",
-          "description": "PyTorch training loops with mixed precision, GPU, and checkpoints.",
+          "description": "PyTorch training and fine-tuning loops with mixed precision, distributed GPU execution, checkpointing, and reproducible experiment tracking.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -516,7 +2115,7 @@
       "title": "Statistical Inference with SciPy and Statsmodels",
       "domain": "statistics",
       "instruction_file": "instructions/statistics-scipy-statsmodels.md",
-      "description": "Hypothesis testing, ANOVA, and regression diagnostics.",
+      "description": "Applied statistical inference with SciPy/Statsmodels: hypothesis testing, ANOVA, regression diagnostics, assumptions, and interpretation guidance.",
       "tags": [
         "scipy",
         "statsmodels",
@@ -574,7 +2173,7 @@
         "type": "function",
         "function": {
           "name": "stats_scipy-statsmodels",
-          "description": "Hypothesis testing, ANOVA, and regression diagnostics.",
+          "description": "Applied statistical inference with SciPy/Statsmodels: hypothesis testing, ANOVA, regression diagnostics, assumptions, and interpretation guidance.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -585,6 +2184,434 @@
               "context": {
                 "type": "object",
                 "description": "multiple-testing correction strategy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "stats.hypothesis-testing",
+      "title": "Statistical Hypothesis Testing",
+      "domain": "statistics",
+      "instruction_file": "instructions/stats-hypothesis-testing.md",
+      "description": "Retrieve this expert for parametric hypothesis testing workflows with effect-size and confidence-interval reporting.",
+      "tags": [
+        "statistics",
+        "hypothesis-testing",
+        "t-test",
+        "z-test",
+        "inference"
+      ],
+      "tool_hints": [
+        "scipy.stats",
+        "statsmodels",
+        "numpy",
+        "pandas"
+      ],
+      "examples": [
+        "Run two-sample hypothesis test with effect-size reporting"
+      ],
+      "aliases": [
+        "stats-hypothesis-testing",
+        "parametric-tests"
+      ],
+      "dependencies": [
+        "scipy",
+        "statsmodels",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "null hypothesis, sample groups, and alpha level",
+        "optional": "test direction and multiple-comparison context"
+      },
+      "output_artifacts": [
+        "hypothesis_test_summary",
+        "effect_size_table",
+        "assumption_check_notes"
+      ],
+      "quality_checks": [
+        "effect_size_reported",
+        "confidence_interval_reported",
+        "assumptions_checked"
+      ],
+      "constraints": [
+        "no_pvalue_only_reporting"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "stats_hypothesis-testing",
+          "description": "Retrieve this expert for parametric hypothesis testing workflows with effect-size and confidence-interval reporting.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "hypothesis question and test design"
+              },
+              "context": {
+                "type": "object",
+                "description": "alpha, tails, and comparison settings"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "stats.regression-inference",
+      "title": "Regression Inference and Coefficient Analysis",
+      "domain": "statistics",
+      "instruction_file": "instructions/stats-regression-inference.md",
+      "description": "Retrieve this expert for regression coefficient inference, confidence intervals, and assumption diagnostics.",
+      "tags": [
+        "statistics",
+        "regression",
+        "inference",
+        "coefficients",
+        "confidence-intervals"
+      ],
+      "tool_hints": [
+        "statsmodels",
+        "scipy.stats",
+        "pandas",
+        "numpy"
+      ],
+      "examples": [
+        "Interpret linear model coefficients with uncertainty and diagnostics"
+      ],
+      "aliases": [
+        "stats-regression-inference",
+        "coefficient-analysis"
+      ],
+      "dependencies": [
+        "statsmodels",
+        "scipy",
+        "pandas",
+        "numpy"
+      ],
+      "input_contract": {
+        "required": "regression specification and dataset",
+        "optional": "covariate controls and robustness requirements"
+      },
+      "output_artifacts": [
+        "coefficient_inference_report",
+        "diagnostic_summary",
+        "assumption_risk_notes"
+      ],
+      "quality_checks": [
+        "confidence_intervals_reported",
+        "multicollinearity_reviewed",
+        "residual_diagnostics_included"
+      ],
+      "constraints": [
+        "no_causal_claim_without_design_support"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "stats_regression-inference",
+          "description": "Retrieve this expert for regression coefficient inference, confidence intervals, and assumption diagnostics.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "regression inference objective and model form"
+              },
+              "context": {
+                "type": "object",
+                "description": "robustness checks and interpretation constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "stats.nonparametric-tests",
+      "title": "Nonparametric Statistical Tests",
+      "domain": "statistics",
+      "instruction_file": "instructions/stats-nonparametric-tests.md",
+      "description": "Retrieve this expert for rank-based and distribution-free hypothesis tests when parametric assumptions fail.",
+      "tags": [
+        "statistics",
+        "nonparametric",
+        "mann-whitney",
+        "wilcoxon",
+        "kruskal-wallis"
+      ],
+      "tool_hints": [
+        "scipy.stats",
+        "numpy",
+        "pandas",
+        "statsmodels"
+      ],
+      "examples": [
+        "Run nonparametric group comparison for skewed data"
+      ],
+      "aliases": [
+        "stats-nonparametric-tests",
+        "rank-based-tests"
+      ],
+      "dependencies": [
+        "scipy",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "test objective and sample design",
+        "optional": "tie handling and permutation/bootstrap preference"
+      },
+      "output_artifacts": [
+        "nonparametric_test_report",
+        "effect_size_proxy_summary",
+        "limitation_notes"
+      ],
+      "quality_checks": [
+        "test_matches_design",
+        "effect_proxy_reported",
+        "assumption_limits_documented"
+      ],
+      "constraints": [
+        "no_cross_test_pvalue_ranking"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "stats_nonparametric-tests",
+          "description": "Retrieve this expert for rank-based and distribution-free hypothesis tests when parametric assumptions fail.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "nonparametric testing objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "sample structure, ties, and robustness settings"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "stats.power-sample-size",
+      "title": "Power Analysis and Sample Size Planning",
+      "domain": "statistics",
+      "instruction_file": "instructions/stats-power-sample-size.md",
+      "description": "Retrieve this expert for sample-size planning, MDE analysis, and statistical power tradeoff modeling.",
+      "tags": [
+        "statistics",
+        "power-analysis",
+        "sample-size",
+        "mde",
+        "experiment-design"
+      ],
+      "tool_hints": [
+        "statsmodels.stats.power",
+        "scipy.stats",
+        "numpy",
+        "pandas"
+      ],
+      "examples": [
+        "Compute required sample size for target MDE and power"
+      ],
+      "aliases": [
+        "stats-power-sample-size",
+        "mde-planning"
+      ],
+      "dependencies": [
+        "statsmodels",
+        "scipy",
+        "numpy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "primary metric, alpha, power target, and effect-size assumptions",
+        "optional": "variance prior and budget constraints"
+      },
+      "output_artifacts": [
+        "sample_size_plan",
+        "sensitivity_table",
+        "assumption_log"
+      ],
+      "quality_checks": [
+        "assumptions_explicit",
+        "sensitivity_analysis_included",
+        "operational_feasibility_reviewed"
+      ],
+      "constraints": [
+        "no_posthoc_power_as_primary_decision_basis"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "stats_power-sample-size",
+          "description": "Retrieve this expert for sample-size planning, MDE analysis, and statistical power tradeoff modeling.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "sample-size planning objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "effect-size assumptions and constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "stats.bayesian-basics",
+      "title": "Bayesian Inference Basics",
+      "domain": "statistics",
+      "instruction_file": "instructions/stats-bayesian-basics.md",
+      "description": "Retrieve this expert for prior/posterior reasoning, credible intervals, and Bayesian decision framing.",
+      "tags": [
+        "statistics",
+        "bayesian",
+        "posterior",
+        "credible-interval",
+        "inference"
+      ],
+      "tool_hints": [
+        "scipy.stats",
+        "numpy",
+        "pandas",
+        "pymc"
+      ],
+      "examples": [
+        "Build prior-to-posterior summary for uncertain parameter estimates"
+      ],
+      "aliases": [
+        "stats-bayesian-basics",
+        "bayesian-inference-basics"
+      ],
+      "dependencies": [
+        "numpy",
+        "scipy",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "likelihood assumptions and prior choices",
+        "optional": "sensitivity requirements and decision thresholds"
+      },
+      "output_artifacts": [
+        "posterior_summary",
+        "credible_interval_report",
+        "prior_sensitivity_notes"
+      ],
+      "quality_checks": [
+        "prior_assumptions_stated",
+        "credible_intervals_reported",
+        "sensitivity_reviewed"
+      ],
+      "constraints": [
+        "no_mixed_interval_interpretation_without_clarity"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "stats_bayesian-basics",
+          "description": "Retrieve this expert for prior/posterior reasoning, credible intervals, and Bayesian decision framing.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "bayesian modeling objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "prior assumptions and uncertainty constraints"
               }
             },
             "required": [
@@ -692,7 +2719,7 @@
       "title": "Chemistry and Cheminformatics (RDKit)",
       "domain": "chemistry",
       "instruction_file": "instructions/chemistry-rdkit.md",
-      "description": "SMILES parsing, descriptors, fingerprints, and similarity workflows.",
+      "description": "RDKit cheminformatics workflows for SMILES validation, descriptor generation, fingerprint similarity, and structure-aware molecular analysis.",
       "tags": [
         "chemistry",
         "rdkit",
@@ -747,7 +2774,7 @@
         "type": "function",
         "function": {
           "name": "chemistry_rdkit-cheminformatics",
-          "description": "SMILES parsing, descriptors, fingerprints, and similarity workflows.",
+          "description": "RDKit cheminformatics workflows for SMILES validation, descriptor generation, fingerprint similarity, and structure-aware molecular analysis.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -953,7 +2980,7 @@
       "title": "Geospatial Analysis with GeoPandas",
       "domain": "geospatial",
       "instruction_file": "instructions/geospatial-geopandas.md",
-      "description": "Spatial joins, CRS transforms, and map-ready geodata prep.",
+      "description": "GeoPandas spatial analytics for joins, CRS transformations, geocoding-ready cleanup, and map-ready geospatial feature engineering.",
       "tags": [
         "geopandas",
         "shapely",
@@ -1011,7 +3038,7 @@
         "type": "function",
         "function": {
           "name": "geo_geopandas-spatial",
-          "description": "Spatial joins, CRS transforms, and map-ready geodata prep.",
+          "description": "GeoPandas spatial analytics for joins, CRS transformations, geocoding-ready cleanup, and map-ready geospatial feature engineering.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -1038,7 +3065,7 @@
       "title": "NLP Pipelines with spaCy and Transformers",
       "domain": "nlp",
       "instruction_file": "instructions/nlp-spacy-transformers.md",
-      "description": "NER, text classification, and embedding-backed NLP workflows.",
+      "description": "spaCy + transformers NLP workflows for NER, classification, entity linking, and embedding-backed retrieval pipelines.",
       "tags": [
         "nlp",
         "spacy",
@@ -1097,7 +3124,7 @@
         "type": "function",
         "function": {
           "name": "nlp_spacy-transformers",
-          "description": "NER, text classification, and embedding-backed NLP workflows.",
+          "description": "spaCy + transformers NLP workflows for NER, classification, entity linking, and embedding-backed retrieval pipelines.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -1124,7 +3151,7 @@
       "title": "PDF Report Generation",
       "domain": "document_generation",
       "instruction_file": "instructions/pdf-creation.md",
-      "description": "Deterministic markdown/HTML to PDF rendering for reports.",
+      "description": "Deterministic PDF generation from Markdown/HTML with print-ready pagination, asset embedding, and reproducible report rendering workflows.",
       "tags": [
         "pdf",
         "weasyprint",
@@ -1179,7 +3206,7 @@
         "type": "function",
         "function": {
           "name": "docs_pdf-generation",
-          "description": "Deterministic markdown/HTML to PDF rendering for reports.",
+          "description": "Deterministic PDF generation from Markdown/HTML with print-ready pagination, asset embedding, and reproducible report rendering workflows.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -1206,7 +3233,7 @@
       "title": "Slide Deck Creation (PPTX)",
       "domain": "presentation_generation",
       "instruction_file": "instructions/slide-creation.md",
-      "description": "Narrative deck creation with PPTX output and chart integration.",
+      "description": "Programmatic PPTX deck generation for executive storytelling with chart/table integration, slide templates, and narrative structure controls.",
       "tags": [
         "slides",
         "pptx",
@@ -1261,7 +3288,7 @@
         "type": "function",
         "function": {
           "name": "docs_slides-pptx",
-          "description": "Narrative deck creation with PPTX output and chart integration.",
+          "description": "Programmatic PPTX deck generation for executive storytelling with chart/table integration, slide templates, and narrative structure controls.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -4468,6 +6495,255 @@
       }
     },
     {
+      "id": "sec.threat-modeling",
+      "title": "Threat Modeling and Risk Prioritization",
+      "domain": "security",
+      "instruction_file": "instructions/sec-threat-modeling.md",
+      "description": "Retrieve this expert for structured threat modeling, risk ranking, and mitigation planning.",
+      "tags": [
+        "security",
+        "threat-modeling",
+        "risk-analysis",
+        "stride",
+        "architecture-review"
+      ],
+      "tool_hints": [
+        "owasp",
+        "threat-modeling",
+        "iam",
+        "networking"
+      ],
+      "examples": [
+        "Produce threat model and mitigation roadmap for new service"
+      ],
+      "aliases": [
+        "sec-threat-modeling",
+        "security-risk-modeling"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "system architecture and asset inventory",
+        "optional": "attacker assumptions and compliance requirements"
+      },
+      "output_artifacts": [
+        "threat_model_matrix",
+        "risk_ranked_mitigations",
+        "residual_risk_summary"
+      ],
+      "quality_checks": [
+        "trust_boundaries_defined",
+        "threats_prioritized",
+        "mitigation_owners_assigned"
+      ],
+      "constraints": [
+        "no_threat_list_without_action_plan"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sec_threat-modeling",
+          "description": "Retrieve this expert for structured threat modeling, risk ranking, and mitigation planning.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "threat modeling objective and architecture scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "risk tolerance, attacker model, and compliance context"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "sec.appsec-testing",
+      "title": "Application Security Testing (SAST/DAST)",
+      "domain": "security",
+      "instruction_file": "instructions/sec-appsec-testing.md",
+      "description": "Retrieve this expert for AppSec testing strategy across SAST, DAST, and dependency scanning in CI/CD.",
+      "tags": [
+        "security",
+        "appsec",
+        "sast",
+        "dast",
+        "ci-cd-security"
+      ],
+      "tool_hints": [
+        "semgrep",
+        "zap",
+        "snyk",
+        "github-actions"
+      ],
+      "examples": [
+        "Define AppSec testing gates and triage workflow in CI"
+      ],
+      "aliases": [
+        "sec-appsec-testing",
+        "sast-dast-strategy"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "application architecture and release process",
+        "optional": "severity policy and remediation SLA"
+      },
+      "output_artifacts": [
+        "appsec_test_matrix",
+        "ci_security_gate_policy",
+        "finding_triage_flow"
+      ],
+      "quality_checks": [
+        "coverage_by_test_type_mapped",
+        "severity_thresholds_defined",
+        "triage_owners_assigned"
+      ],
+      "constraints": [
+        "no_security_scan_without_triage_workflow"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sec_appsec-testing",
+          "description": "Retrieve this expert for AppSec testing strategy across SAST, DAST, and dependency scanning in CI/CD.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "appsec testing objective and deployment workflow"
+              },
+              "context": {
+                "type": "object",
+                "description": "severity policy, gating, and remediation constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "sec.identity-access-hardening",
+      "title": "Identity and Access Hardening",
+      "domain": "security",
+      "instruction_file": "instructions/sec-identity-access-hardening.md",
+      "description": "Retrieve this expert for least-privilege IAM hardening, entitlement review, and credential hygiene controls.",
+      "tags": [
+        "security",
+        "iam",
+        "least-privilege",
+        "access-review",
+        "identity"
+      ],
+      "tool_hints": [
+        "iam",
+        "aws-iam",
+        "gcp-iam",
+        "azure-ad"
+      ],
+      "examples": [
+        "Reduce broad IAM privileges with role segmentation and access review"
+      ],
+      "aliases": [
+        "sec-identity-access-hardening",
+        "iam-hardening"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "identity inventory and current role/permission mapping",
+        "optional": "mfa policy and access review cadence"
+      },
+      "output_artifacts": [
+        "iam_hardening_plan",
+        "privilege_reduction_diff",
+        "access_review_schedule"
+      ],
+      "quality_checks": [
+        "least_privilege_gaps_identified",
+        "credential_hygiene_controls_defined",
+        "review_cadence_owned"
+      ],
+      "constraints": [
+        "no_wildcard_permissions_without_exception_record"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "sec_identity-access-hardening",
+          "description": "Retrieve this expert for least-privilege IAM hardening, entitlement review, and credential hygiene controls.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "identity hardening objective and system scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "privilege constraints, compliance, and review cadence"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
       "id": "data.pandas-advanced",
       "title": "Advanced Pandas Data Workflows",
       "domain": "data_engineering",
@@ -4985,6 +7261,426 @@
       }
     },
     {
+      "id": "fe.state-management-patterns",
+      "title": "Frontend State Management Patterns",
+      "domain": "frontend",
+      "instruction_file": "instructions/frontend-state-management.md",
+      "description": "Retrieve this expert for scalable frontend state architecture across local, global, and server state boundaries.",
+      "tags": [
+        "frontend",
+        "state-management",
+        "react",
+        "architecture",
+        "ui-state"
+      ],
+      "tool_hints": [
+        "react",
+        "redux",
+        "zustand",
+        "tanstack-query"
+      ],
+      "examples": [
+        "Design state boundaries and invalidation policy for complex UI flows"
+      ],
+      "aliases": [
+        "fe-state-management-patterns",
+        "frontend-state-architecture"
+      ],
+      "dependencies": [
+        "react",
+        "typescript"
+      ],
+      "input_contract": {
+        "required": "ui workflow and shared-state requirements",
+        "optional": "data-fetching model and cache invalidation constraints"
+      },
+      "output_artifacts": [
+        "state_architecture_map",
+        "state_boundary_spec",
+        "invalidation_policy"
+      ],
+      "quality_checks": [
+        "state_scope_minimized",
+        "server_state_separated",
+        "debug_strategy_defined"
+      ],
+      "constraints": [
+        "no_global_state_without_scope_rationale"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_state-management-patterns",
+          "description": "Retrieve this expert for scalable frontend state architecture across local, global, and server state boundaries.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "frontend state management objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "component complexity, data flow, and sync requirements"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "fe.performance-optimization",
+      "title": "Frontend Performance Optimization",
+      "domain": "frontend",
+      "instruction_file": "instructions/frontend-performance-optimization.md",
+      "description": "Retrieve this expert for render, bundle, and interaction performance optimization in frontend applications.",
+      "tags": [
+        "frontend",
+        "performance",
+        "core-web-vitals",
+        "rendering",
+        "bundle-size"
+      ],
+      "tool_hints": [
+        "lighthouse",
+        "webpack",
+        "vite",
+        "react-profiler"
+      ],
+      "examples": [
+        "Reduce UI interaction latency and improve Core Web Vitals"
+      ],
+      "aliases": [
+        "fe-performance-optimization",
+        "frontend-performance-tuning"
+      ],
+      "dependencies": [
+        "react",
+        "typescript"
+      ],
+      "input_contract": {
+        "required": "performance targets and critical user flows",
+        "optional": "current telemetry and bundle constraints"
+      },
+      "output_artifacts": [
+        "performance_bottleneck_report",
+        "optimization_plan",
+        "before_after_metrics"
+      ],
+      "quality_checks": [
+        "tail_latency_measured",
+        "render_hotspots_profiled",
+        "improvement_validated_with_metrics"
+      ],
+      "constraints": [
+        "no_perf_claim_without_measurement"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_performance-optimization",
+          "description": "Retrieve this expert for render, bundle, and interaction performance optimization in frontend applications.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "frontend performance objective and affected journeys"
+              },
+              "context": {
+                "type": "object",
+                "description": "target vitals, bundle profile, and runtime constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "fe.testing-quality",
+      "title": "Frontend Testing and Quality Strategy",
+      "domain": "frontend",
+      "instruction_file": "instructions/frontend-testing-quality.md",
+      "description": "Retrieve this expert for risk-based frontend testing strategy, stable UI tests, and release quality gates.",
+      "tags": [
+        "frontend",
+        "testing",
+        "quality",
+        "e2e",
+        "ci"
+      ],
+      "tool_hints": [
+        "jest",
+        "vitest",
+        "playwright",
+        "cypress"
+      ],
+      "examples": [
+        "Define frontend testing matrix and CI quality thresholds"
+      ],
+      "aliases": [
+        "fe-testing-quality",
+        "frontend-test-strategy"
+      ],
+      "dependencies": [
+        "pytest",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "critical user journeys and release risk profile",
+        "optional": "existing coverage and flaky test history"
+      },
+      "output_artifacts": [
+        "frontend_test_strategy",
+        "critical_path_e2e_suite",
+        "quality_gate_policy"
+      ],
+      "quality_checks": [
+        "risk_based_coverage_defined",
+        "flakiness_controls_included",
+        "release_gates_documented"
+      ],
+      "constraints": [
+        "no_e2e_overexpansion_without_roi"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_testing-quality",
+          "description": "Retrieve this expert for risk-based frontend testing strategy, stable UI tests, and release quality gates.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "frontend quality objective and release needs"
+              },
+              "context": {
+                "type": "object",
+                "description": "test tooling, coverage goals, and ci constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "fe.design-system-implementation",
+      "title": "Frontend Design System Implementation",
+      "domain": "frontend",
+      "instruction_file": "instructions/frontend-design-system.md",
+      "description": "Retrieve this expert for design system architecture, component governance, and token-driven UI consistency.",
+      "tags": [
+        "frontend",
+        "design-system",
+        "components",
+        "tokens",
+        "ui-governance"
+      ],
+      "tool_hints": [
+        "react",
+        "storybook",
+        "figma",
+        "css-variables"
+      ],
+      "examples": [
+        "Define design system token and component governance strategy"
+      ],
+      "aliases": [
+        "fe-design-system-implementation",
+        "frontend-design-system"
+      ],
+      "dependencies": [
+        "react",
+        "typescript"
+      ],
+      "input_contract": {
+        "required": "component scope and design governance goals",
+        "optional": "legacy migration constraints and accessibility standards"
+      },
+      "output_artifacts": [
+        "design_system_architecture",
+        "token_component_governance",
+        "migration_roadmap"
+      ],
+      "quality_checks": [
+        "component_api_standards_defined",
+        "token_model_documented",
+        "migration_plan_prioritized"
+      ],
+      "constraints": [
+        "no_component_library_without_governance_model"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_design-system-implementation",
+          "description": "Retrieve this expert for design system architecture, component governance, and token-driven UI consistency.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "design system implementation objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "team model, component scope, and migration constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "fe.data-viz-integration",
+      "title": "Frontend Data Visualization Integration",
+      "domain": "frontend",
+      "instruction_file": "instructions/frontend-data-viz-integration.md",
+      "description": "Retrieve this expert for integrating interactive charts into product UIs with reliable state and performance behavior.",
+      "tags": [
+        "frontend",
+        "data-visualization",
+        "chart-integration",
+        "interaction-design",
+        "performance"
+      ],
+      "tool_hints": [
+        "react",
+        "d3",
+        "plotly",
+        "echarts"
+      ],
+      "examples": [
+        "Integrate interactive chart modules with application state and routing"
+      ],
+      "aliases": [
+        "fe-data-viz-integration",
+        "frontend-chart-integration"
+      ],
+      "dependencies": [
+        "react",
+        "typescript"
+      ],
+      "input_contract": {
+        "required": "chart interaction requirements and ui state model",
+        "optional": "accessibility requirements and rendering constraints"
+      },
+      "output_artifacts": [
+        "chart_integration_architecture",
+        "interaction_state_contract",
+        "render_performance_checklist"
+      ],
+      "quality_checks": [
+        "state_sync_defined",
+        "rerender_controls_applied",
+        "a11y_requirements_checked"
+      ],
+      "constraints": [
+        "no_chart_embed_without_state_contract"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "fe_data-viz-integration",
+          "description": "Retrieve this expert for integrating interactive charts into product UIs with reliable state and performance behavior.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "chart integration objective in frontend application"
+              },
+              "context": {
+                "type": "object",
+                "description": "interaction model, state sync, and performance constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
       "id": "web.rest-design",
       "title": "REST API Design and Contracts",
       "domain": "web_api",
@@ -5060,6 +7756,257 @@
               "context": {
                 "type": "object",
                 "description": "backward-compatibility constraints, target clients, and deployment environment"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "web.api-versioning-lifecycle",
+      "title": "API Versioning and Lifecycle Management",
+      "domain": "web_api",
+      "instruction_file": "instructions/web-api-versioning-lifecycle.md",
+      "description": "Retrieve this expert for API versioning policy, deprecation planning, and backward-compatibility governance.",
+      "tags": [
+        "api",
+        "versioning",
+        "deprecation",
+        "compatibility",
+        "lifecycle"
+      ],
+      "tool_hints": [
+        "openapi",
+        "fastapi",
+        "flask",
+        "api-gateway"
+      ],
+      "examples": [
+        "Define endpoint deprecation and migration policy for v1 to v2"
+      ],
+      "aliases": [
+        "web-api-versioning-lifecycle",
+        "api-versioning-policy"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "api consumer profile and compatibility requirements",
+        "optional": "sunset timeline and migration constraints"
+      },
+      "output_artifacts": [
+        "versioning_policy",
+        "deprecation_schedule",
+        "migration_checklist"
+      ],
+      "quality_checks": [
+        "compatibility_rules_explicit",
+        "sunset_notice_plan_defined",
+        "client_impact_tracking_specified"
+      ],
+      "constraints": [
+        "no_breaking_change_without_migration_path"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "web_api-versioning-lifecycle",
+          "description": "Retrieve this expert for API versioning policy, deprecation planning, and backward-compatibility governance.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "api lifecycle objective and versioning constraints"
+              },
+              "context": {
+                "type": "object",
+                "description": "consumer migration risk and timeline requirements"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "web.openapi-contract-testing",
+      "title": "OpenAPI Contract Testing",
+      "domain": "web_api",
+      "instruction_file": "instructions/web-openapi-contract-testing.md",
+      "description": "Retrieve this expert for schema-first API contract tests, compatibility checks, and CI release gates.",
+      "tags": [
+        "api",
+        "openapi",
+        "contract-testing",
+        "schema-validation",
+        "ci"
+      ],
+      "tool_hints": [
+        "openapi",
+        "pytest",
+        "schemathesis",
+        "fastapi"
+      ],
+      "examples": [
+        "Gate API releases on OpenAPI compatibility tests"
+      ],
+      "aliases": [
+        "web-openapi-contract-testing",
+        "api-contract-validation"
+      ],
+      "dependencies": [
+        "pytest",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "OpenAPI spec and release target",
+        "optional": "compatibility policy and consumer contract constraints"
+      },
+      "output_artifacts": [
+        "contract_test_suite_plan",
+        "compatibility_report",
+        "ci_gate_policy"
+      ],
+      "quality_checks": [
+        "spec_runtime_parity_reviewed",
+        "compatibility_checks_automated",
+        "release_gate_defined"
+      ],
+      "constraints": [
+        "no_release_without_contract_validation"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "web_openapi-contract-testing",
+          "description": "Retrieve this expert for schema-first API contract tests, compatibility checks, and CI release gates.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "contract testing objective and target APIs"
+              },
+              "context": {
+                "type": "object",
+                "description": "compatibility policy and pipeline constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "web.api-performance-caching",
+      "title": "API Performance and Caching",
+      "domain": "web_api",
+      "instruction_file": "instructions/web-api-performance-caching.md",
+      "description": "Retrieve this expert for API latency optimization, caching design, and throughput hardening.",
+      "tags": [
+        "api",
+        "performance",
+        "caching",
+        "latency",
+        "throughput"
+      ],
+      "tool_hints": [
+        "fastapi",
+        "flask",
+        "redis",
+        "nginx"
+      ],
+      "examples": [
+        "Design cache strategy for read-heavy API with invalidation rules"
+      ],
+      "aliases": [
+        "web-api-performance-caching",
+        "api-latency-optimization"
+      ],
+      "dependencies": [
+        "redis",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "target latency objectives and endpoint profile",
+        "optional": "cache consistency requirements and traffic patterns"
+      },
+      "output_artifacts": [
+        "performance_profile",
+        "cache_policy",
+        "load_test_comparison"
+      ],
+      "quality_checks": [
+        "tail_latency_evaluated",
+        "cache_invalidation_defined",
+        "before_after_benchmarked"
+      ],
+      "constraints": [
+        "no_cache_without_invalidation_policy"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "web_api-performance-caching",
+          "description": "Retrieve this expert for API latency optimization, caching design, and throughput hardening.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "performance objective and endpoint workload"
+              },
+              "context": {
+                "type": "object",
+                "description": "cache tiers, invalidation, and consistency constraints"
               }
             },
             "required": [
@@ -5340,6 +8287,344 @@
       }
     },
     {
+      "id": "data.ingestion-pipelines",
+      "title": "Data Ingestion Pipelines",
+      "domain": "data_engineering",
+      "instruction_file": "instructions/data-ingestion-pipelines.md",
+      "description": "Retrieve this expert for robust batch/incremental ingestion design with idempotency and replay controls.",
+      "tags": [
+        "data-engineering",
+        "ingestion",
+        "cdc",
+        "idempotency",
+        "etl"
+      ],
+      "tool_hints": [
+        "pandas",
+        "sqlalchemy",
+        "airflow",
+        "spark"
+      ],
+      "examples": [
+        "Design incremental ingestion with watermark and replay strategy"
+      ],
+      "aliases": [
+        "data-ingestion-pipelines",
+        "ingest-cdc-workflows"
+      ],
+      "dependencies": [
+        "pandas",
+        "sqlalchemy",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "source schema and freshness SLA",
+        "optional": "cdc strategy, replay windows, and failure policy"
+      },
+      "output_artifacts": [
+        "ingestion_design_spec",
+        "checkpoint_strategy",
+        "replay_runbook"
+      ],
+      "quality_checks": [
+        "idempotency_defined",
+        "checkpoint_logic_reviewed",
+        "freshness_validation_included"
+      ],
+      "constraints": [
+        "no_ingestion_without_dedup_strategy"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_ingestion-pipelines",
+          "description": "Retrieve this expert for robust batch/incremental ingestion design with idempotency and replay controls.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "ingestion objective and source profile"
+              },
+              "context": {
+                "type": "object",
+                "description": "sla, replay, and recovery constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "data.data-quality-validation",
+      "title": "Data Quality Validation Systems",
+      "domain": "data_engineering",
+      "instruction_file": "instructions/data-quality-validation.md",
+      "description": "Retrieve this expert for production-grade data quality rules, thresholds, and quality alerting workflows.",
+      "tags": [
+        "data-engineering",
+        "data-quality",
+        "validation",
+        "schema-checks",
+        "governance"
+      ],
+      "tool_hints": [
+        "dbt",
+        "pandas",
+        "sql",
+        "great-expectations"
+      ],
+      "examples": [
+        "Create quality ruleset with severity and alert routing"
+      ],
+      "aliases": [
+        "data-quality-validation",
+        "data-quality-rules"
+      ],
+      "dependencies": [
+        "pandas",
+        "pyyaml",
+        "sqlalchemy"
+      ],
+      "input_contract": {
+        "required": "quality dimensions, thresholds, and owner mapping",
+        "optional": "historical baselines and incident routing policy"
+      },
+      "output_artifacts": [
+        "quality_rule_catalog",
+        "validation_report",
+        "quality_alert_policy"
+      ],
+      "quality_checks": [
+        "thresholds_defined_with_owners",
+        "failure_severity_mapped",
+        "trend_monitoring_specified"
+      ],
+      "constraints": [
+        "no_production_without_quality_rules"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_data-quality-validation",
+          "description": "Retrieve this expert for production-grade data quality rules, thresholds, and quality alerting workflows.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "quality validation objective and dataset context"
+              },
+              "context": {
+                "type": "object",
+                "description": "thresholds, severity, and governance requirements"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "data.data-orchestration",
+      "title": "Data Workflow Orchestration",
+      "domain": "data_engineering",
+      "instruction_file": "instructions/data-orchestration-workflows.md",
+      "description": "Retrieve this expert for DAG orchestration, retry/timeouts, backfills, and dependency-aware scheduling.",
+      "tags": [
+        "data-engineering",
+        "orchestration",
+        "dag",
+        "airflow",
+        "scheduling"
+      ],
+      "tool_hints": [
+        "airflow",
+        "prefect",
+        "dagster",
+        "kubernetes"
+      ],
+      "examples": [
+        "Design orchestration DAG with backfill-safe retry semantics"
+      ],
+      "aliases": [
+        "data-orchestration",
+        "data-dag-orchestration"
+      ],
+      "dependencies": [
+        "pyyaml",
+        "pandas"
+      ],
+      "input_contract": {
+        "required": "workflow DAG and SLA requirements",
+        "optional": "backfill strategy, retries, and timeout policies"
+      },
+      "output_artifacts": [
+        "dag_specification",
+        "retry_timeout_policy",
+        "backfill_runbook"
+      ],
+      "quality_checks": [
+        "task_boundaries_idempotent",
+        "sla_alerts_defined",
+        "backfill_controls_documented"
+      ],
+      "constraints": [
+        "no_unbounded_backfill_without_controls"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_data-orchestration",
+          "description": "Retrieve this expert for DAG orchestration, retry/timeouts, backfills, and dependency-aware scheduling.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "orchestration objective and dependency graph"
+              },
+              "context": {
+                "type": "object",
+                "description": "sla, retries, and recovery requirements"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "data.warehouse-modeling",
+      "title": "Data Warehouse Modeling",
+      "domain": "data_engineering",
+      "instruction_file": "instructions/data-warehouse-modeling.md",
+      "description": "Retrieve this expert for dimensional modeling, grain design, and warehouse performance optimization.",
+      "tags": [
+        "data-engineering",
+        "warehouse",
+        "dimensional-modeling",
+        "facts-dimensions",
+        "kpi-governance"
+      ],
+      "tool_hints": [
+        "sql",
+        "dbt",
+        "bigquery",
+        "snowflake"
+      ],
+      "examples": [
+        "Design fact/dimension model with conformed dimensions and SCD rules"
+      ],
+      "aliases": [
+        "data-warehouse-modeling",
+        "dimensional-modeling"
+      ],
+      "dependencies": [
+        "sqlalchemy",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "business process grain and reporting requirements",
+        "optional": "scd policies, partitioning strategy, and semantic constraints"
+      },
+      "output_artifacts": [
+        "warehouse_schema_spec",
+        "grain_definition_document",
+        "performance_tuning_notes"
+      ],
+      "quality_checks": [
+        "grain_consistency_validated",
+        "kpi_alignment_checked",
+        "lineage_and_ownership_defined"
+      ],
+      "constraints": [
+        "no_multi_grain_fact_without_explicit_strategy"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "data_warehouse-modeling",
+          "description": "Retrieve this expert for dimensional modeling, grain design, and warehouse performance optimization.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "warehouse design objective and reporting use cases"
+              },
+              "context": {
+                "type": "object",
+                "description": "grain rules, performance constraints, and governance needs"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
       "id": "data.sql-queries",
       "title": "SQL Query Design and Optimization",
       "domain": "data_engineering",
@@ -5604,6 +8889,504 @@
       }
     },
     {
+      "id": "cloud.infrastructure-cost-optimization",
+      "title": "Cloud Infrastructure Cost Optimization",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/cloud-cost-optimization.md",
+      "description": "Retrieve this expert for cloud cost optimization, right-sizing, and FinOps control design.",
+      "tags": [
+        "cloud",
+        "cost-optimization",
+        "finops",
+        "rightsizing",
+        "budgeting"
+      ],
+      "tool_hints": [
+        "aws-cost-explorer",
+        "gcp-billing",
+        "azure-cost-management",
+        "terraform"
+      ],
+      "examples": [
+        "Build cloud right-sizing and budget alert strategy"
+      ],
+      "aliases": [
+        "cloud-infrastructure-cost-optimization",
+        "cloud-finops-controls"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "cost breakdown and workload ownership map",
+        "optional": "commitment strategy and budget policy"
+      },
+      "output_artifacts": [
+        "cost_optimization_backlog",
+        "rightsizing_plan",
+        "budget_alert_policy"
+      ],
+      "quality_checks": [
+        "cost_drivers_ranked",
+        "savings_actions_prioritized",
+        "ownership_assignments_defined"
+      ],
+      "constraints": [
+        "no_cost_action_without_impact_estimate"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_infrastructure-cost-optimization",
+          "description": "Retrieve this expert for cloud cost optimization, right-sizing, and FinOps control design.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "cloud cost optimization objective and scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "budget policy, ownership model, and commitment constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.security-posture-management",
+      "title": "Cloud Security Posture Management",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/cloud-security-posture.md",
+      "description": "Retrieve this expert for cloud security baseline hardening, posture monitoring, and misconfiguration remediation.",
+      "tags": [
+        "cloud",
+        "security-posture",
+        "misconfiguration",
+        "hardening",
+        "compliance"
+      ],
+      "tool_hints": [
+        "aws-security-hub",
+        "gcp-security-command-center",
+        "azure-defender",
+        "terraform"
+      ],
+      "examples": [
+        "Define cloud security baseline and remediation workflow"
+      ],
+      "aliases": [
+        "cloud-security-posture-management",
+        "cloud-posture-hardening"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "cloud account inventory and baseline controls",
+        "optional": "compliance framework and exception policy"
+      },
+      "output_artifacts": [
+        "security_baseline",
+        "posture_monitoring_plan",
+        "remediation_workflow"
+      ],
+      "quality_checks": [
+        "baseline_controls_mapped",
+        "continuous_checks_defined",
+        "exception_governance_present"
+      ],
+      "constraints": [
+        "no_security_exception_without_expiry_owner"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_security-posture-management",
+          "description": "Retrieve this expert for cloud security baseline hardening, posture monitoring, and misconfiguration remediation.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "cloud security posture objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "baseline controls, compliance, and remediation constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.multi-environment-strategy",
+      "title": "Cloud Multi-Environment Strategy",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/cloud-multi-environment-strategy.md",
+      "description": "Retrieve this expert for environment topology, promotion workflows, and configuration isolation across cloud environments.",
+      "tags": [
+        "cloud",
+        "environments",
+        "promotion",
+        "configuration-management",
+        "platform-ops"
+      ],
+      "tool_hints": [
+        "terraform",
+        "kubernetes",
+        "github-actions",
+        "vault"
+      ],
+      "examples": [
+        "Design dev/stage/prod promotion strategy with drift controls"
+      ],
+      "aliases": [
+        "cloud-multi-environment-strategy",
+        "cloud-environment-topology"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "environment model and deployment workflow",
+        "optional": "secret isolation policy and parity requirements"
+      },
+      "output_artifacts": [
+        "environment_topology_plan",
+        "promotion_workflow",
+        "drift_detection_checklist"
+      ],
+      "quality_checks": [
+        "environment_boundaries_clear",
+        "immutable_artifact_promotion_defined",
+        "config_isolation_documented"
+      ],
+      "constraints": [
+        "no_shared_prod_credentials_across_envs"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_multi-environment-strategy",
+          "description": "Retrieve this expert for environment topology, promotion workflows, and configuration isolation across cloud environments.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "environment strategy objective and deployment model"
+              },
+              "context": {
+                "type": "object",
+                "description": "promotion controls, isolation needs, and governance rules"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.backup-disaster-recovery",
+      "title": "Cloud Backup and Disaster Recovery",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/cloud-backup-dr.md",
+      "description": "Retrieve this expert for cloud backup strategy, restore drills, and disaster recovery architecture.",
+      "tags": [
+        "cloud",
+        "backup",
+        "disaster-recovery",
+        "rpo",
+        "rto"
+      ],
+      "tool_hints": [
+        "aws-backup",
+        "gcp-backup",
+        "database-snapshots",
+        "terraform"
+      ],
+      "examples": [
+        "Define RPO/RTO-aligned backup and failover plan"
+      ],
+      "aliases": [
+        "cloud-backup-disaster-recovery",
+        "cloud-dr-strategy"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "critical systems and recovery objectives",
+        "optional": "regional failover constraints and retention policy"
+      },
+      "output_artifacts": [
+        "backup_policy",
+        "dr_architecture",
+        "restore_drill_report"
+      ],
+      "quality_checks": [
+        "rpo_rto_explicit",
+        "restore_testing_planned",
+        "dependency_failover_paths_defined"
+      ],
+      "constraints": [
+        "no_dr_plan_without_restore_validation"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_backup-disaster-recovery",
+          "description": "Retrieve this expert for cloud backup strategy, restore drills, and disaster recovery architecture.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "backup/disaster recovery objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "rpo/rto targets and resilience constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.service-reliability-architecture",
+      "title": "Cloud Service Reliability Architecture",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/cloud-reliability-architecture.md",
+      "description": "Retrieve this expert for resilient cloud architecture, failure isolation, and graceful degradation design.",
+      "tags": [
+        "cloud",
+        "reliability",
+        "availability",
+        "resilience",
+        "fault-tolerance"
+      ],
+      "tool_hints": [
+        "kubernetes",
+        "load-balancer",
+        "autoscaling",
+        "chaos-testing"
+      ],
+      "examples": [
+        "Design highly available service architecture with failure-domain isolation"
+      ],
+      "aliases": [
+        "cloud-service-reliability-architecture",
+        "cloud-resilience-design"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "service reliability targets and architecture constraints",
+        "optional": "failure-mode assumptions and chaos testing scope"
+      },
+      "output_artifacts": [
+        "reliability_architecture_blueprint",
+        "failure_mode_matrix",
+        "resilience_validation_plan"
+      ],
+      "quality_checks": [
+        "critical_path_failure_modes_mapped",
+        "mitigations_prioritized",
+        "validation_plan_defined"
+      ],
+      "constraints": [
+        "no_high_availability_claim_without_failure_test_plan"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_service-reliability-architecture",
+          "description": "Retrieve this expert for resilient cloud architecture, failure isolation, and graceful degradation design.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "reliability architecture objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "availability targets and failure assumptions"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "cloud.platform-governance-policy",
+      "title": "Cloud Platform Governance Policies",
+      "domain": "cloud_infrastructure",
+      "instruction_file": "instructions/cloud-platform-governance.md",
+      "description": "Retrieve this expert for cloud policy governance, guardrail enforcement, and compliance operating models.",
+      "tags": [
+        "cloud",
+        "governance",
+        "policy-as-code",
+        "guardrails",
+        "compliance"
+      ],
+      "tool_hints": [
+        "opa",
+        "terraform",
+        "policy-as-code",
+        "cloud-iam"
+      ],
+      "examples": [
+        "Define policy-as-code governance and exception workflow"
+      ],
+      "aliases": [
+        "cloud-platform-governance-policy",
+        "cloud-guardrail-governance"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "governance scope and policy requirements",
+        "optional": "exception workflow and compliance reporting model"
+      },
+      "output_artifacts": [
+        "governance_policy_pack",
+        "policy_enforcement_pipeline",
+        "compliance_report_template"
+      ],
+      "quality_checks": [
+        "policy_owners_assigned",
+        "enforcement_points_defined",
+        "exception_lifecycle_documented"
+      ],
+      "constraints": [
+        "no_policy_without_enforcement_owner"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "cloud_platform-governance-policy",
+          "description": "Retrieve this expert for cloud policy governance, guardrail enforcement, and compliance operating models.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "cloud governance objective and policy scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "guardrail model, exceptions, and compliance constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
       "id": "data.time-series",
       "title": "Time Series Analysis and Forecasting",
       "domain": "data_science",
@@ -5786,7 +9569,7 @@
       "title": "Data Analyst Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/data-analyst.md",
-      "description": "Role expert that orchestrates profiling, cleaning, EDA, baseline modeling, and visualization for tabular analytics tasks.",
+      "description": "Role expert for end-to-end tabular analytics: profiling, cleaning, EDA, baseline modeling, hypothesis checks, and stakeholder-ready visual reporting.",
       "tags": [
         "role",
         "data-analyst",
@@ -5851,7 +9634,7 @@
         "type": "function",
         "function": {
           "name": "role_data-analyst",
-          "description": "Role expert that orchestrates profiling, cleaning, EDA, baseline modeling, and visualization for tabular analytics tasks.",
+          "description": "Role expert for end-to-end tabular analytics: profiling, cleaning, EDA, baseline modeling, hypothesis checks, and stakeholder-ready visual reporting.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -5878,7 +9661,7 @@
       "title": "Financial Analyst Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/financial-analyst.md",
-      "description": "Role expert for financial KPI analysis, scenario modeling, forecasting, and risk-aware recommendations.",
+      "description": "Role expert for financial analytics: KPI decomposition, forecasting, scenario modeling, sensitivity analysis, and risk-aware recommendations for business decisions.",
       "tags": [
         "role",
         "financial-analyst",
@@ -6379,7 +10162,7 @@
       "title": "Machine Learning Engineer Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/machine-learning-engineer.md",
-      "description": "Role expert for end-to-end ML delivery across feature pipelines, training, diagnostics, packaging, and deployment handoff.",
+      "description": "Role expert for end-to-end ML delivery: feature pipelines, baseline vs tuned training, calibration/error analysis, model packaging, and production handoff.",
       "tags": [
         "role",
         "machine-learning-engineer",
@@ -6413,10 +10196,28 @@
         "data.pandas-advanced",
         "ml.feature-engineering",
         "ml.sklearn-modeling",
+        "ml.sklearn-anomaly-detection",
+        "ml.sklearn-ensemble-stacking",
+        "ml.sklearn-imputation-encoding",
+        "ml.sklearn-naive-bayes",
+        "ml.sklearn-neighbors",
+        "ml.sklearn-svm",
+        "ml.sklearn-feature-selection",
+        "ml.sklearn-model-selection",
+        "ml.sklearn-dimensionality-reduction",
+        "ml.sklearn-clustering-gmm",
+        "ml.sklearn-tree-forest-models",
+        "ml.sklearn-regularized-regression",
+        "ml.sklearn-linear-models",
         "ml.sklearn-pipeline-ops",
         "ml.hyperparameter-tuning",
         "ml.gradient-boosting",
         "stats.scipy-statsmodels",
+        "stats.hypothesis-testing",
+        "stats.regression-inference",
+        "stats.nonparametric-tests",
+        "stats.power-sample-size",
+        "stats.bayesian-basics",
         "stats.experiment-design",
         "stats.model-diagnostics",
         "ml.model-export",
@@ -6460,7 +10261,7 @@
         "type": "function",
         "function": {
           "name": "role_machine-learning-engineer",
-          "description": "Role expert for end-to-end ML delivery across feature pipelines, training, diagnostics, packaging, and deployment handoff.",
+          "description": "Role expert for end-to-end ML delivery: feature pipelines, baseline vs tuned training, calibration/error analysis, model packaging, and production handoff.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -6487,7 +10288,7 @@
       "title": "Data Engineer Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/data-engineer.md",
-      "description": "Role expert for scalable data pipelines, quality enforcement, and production-ready data platform delivery.",
+      "description": "Role expert for scalable data engineering: ingestion/orchestration pipelines, quality gates, warehouse modeling, and production-ready platform operations.",
       "tags": [
         "role",
         "data-engineer",
@@ -6516,6 +10317,10 @@
       ],
       "dependencies": [
         "data.spark",
+        "data.ingestion-pipelines",
+        "data.data-quality-validation",
+        "data.data-orchestration",
+        "data.warehouse-modeling",
         "data.sql-queries",
         "data.dbt",
         "data.pandas-advanced",
@@ -6561,7 +10366,7 @@
         "type": "function",
         "function": {
           "name": "role_data-engineer",
-          "description": "Role expert for scalable data pipelines, quality enforcement, and production-ready data platform delivery.",
+          "description": "Role expert for scalable data engineering: ingestion/orchestration pipelines, quality gates, warehouse modeling, and production-ready platform operations.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -6588,7 +10393,7 @@
       "title": "ML Researcher Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/ml-researcher.md",
-      "description": "Role expert for hypothesis-driven ML research, ablations, diagnostics, and reproducible experimental reporting.",
+      "description": "Role expert for ML research workflows: hypothesis design, ablations, diagnostics, benchmark rigor, and reproducible experiment reporting.",
       "tags": [
         "role",
         "ml-researcher",
@@ -6663,7 +10468,7 @@
         "type": "function",
         "function": {
           "name": "role_ml-researcher",
-          "description": "Role expert for hypothesis-driven ML research, ablations, diagnostics, and reproducible experimental reporting.",
+          "description": "Role expert for ML research workflows: hypothesis design, ablations, diagnostics, benchmark rigor, and reproducible experiment reporting.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -6862,11 +10667,350 @@
       }
     },
     {
+      "id": "bi.kpi-governance",
+      "title": "KPI Governance and Metric Contracts",
+      "domain": "business_intelligence",
+      "instruction_file": "instructions/bi-kpi-governance.md",
+      "description": "Retrieve this expert for KPI governance, metric contracts, and cross-dashboard definition consistency.",
+      "tags": [
+        "bi",
+        "kpi-governance",
+        "metric-contracts",
+        "semantic-layer",
+        "governance"
+      ],
+      "tool_hints": [
+        "dbt",
+        "sql",
+        "looker",
+        "tableau"
+      ],
+      "examples": [
+        "Define KPI contract registry with parity checks across BI tools"
+      ],
+      "aliases": [
+        "bi-kpi-governance",
+        "metric-contract-governance"
+      ],
+      "dependencies": [
+        "dbt-core",
+        "pandas",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "kpi list with formulas, grain, and owners",
+        "optional": "change-control policy and lineage constraints"
+      },
+      "output_artifacts": [
+        "kpi_contract_registry",
+        "kpi_parity_test_plan",
+        "ownership_lineage_map"
+      ],
+      "quality_checks": [
+        "formula_and_grain_explicit",
+        "owner_assigned",
+        "cross_tool_parity_checked"
+      ],
+      "constraints": [
+        "no_kpi_publish_without_contract"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "bi_kpi-governance",
+          "description": "Retrieve this expert for KPI governance, metric contracts, and cross-dashboard definition consistency.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "kpi governance objective and metric scope"
+              },
+              "context": {
+                "type": "object",
+                "description": "owner model, lineage constraints, and change policy"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "bi.experiment-reporting",
+      "title": "BI Experiment and A/B Reporting",
+      "domain": "business_intelligence",
+      "instruction_file": "instructions/bi-experiment-reporting.md",
+      "description": "Retrieve this expert for experiment reporting dashboards with variant comparisons and uncertainty context.",
+      "tags": [
+        "bi",
+        "ab-testing",
+        "experiment-reporting",
+        "variant-analysis",
+        "decision-support"
+      ],
+      "tool_hints": [
+        "sql",
+        "pandas",
+        "tableau",
+        "powerbi"
+      ],
+      "examples": [
+        "Build experiment dashboard with primary and guardrail metric views"
+      ],
+      "aliases": [
+        "bi-experiment-reporting",
+        "ab-reporting-dashboards"
+      ],
+      "dependencies": [
+        "pandas",
+        "numpy",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "experiment design and metric definitions",
+        "optional": "cohort segmentation and readout cadence"
+      },
+      "output_artifacts": [
+        "experiment_dashboard_spec",
+        "variant_comparison_report",
+        "decision_caveat_notes"
+      ],
+      "quality_checks": [
+        "primary_vs_guardrail_metrics_present",
+        "uncertainty_context_reported",
+        "segment_bias_checks_included"
+      ],
+      "constraints": [
+        "no_variant_decision_without_uncertainty_note"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "bi_experiment-reporting",
+          "description": "Retrieve this expert for experiment reporting dashboards with variant comparisons and uncertainty context.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "experiment reporting objective and target audience"
+              },
+              "context": {
+                "type": "object",
+                "description": "metric definitions, cohorts, and decision timeline"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "bi.funnel-retention-analysis",
+      "title": "BI Funnel and Retention Analysis",
+      "domain": "business_intelligence",
+      "instruction_file": "instructions/bi-funnel-retention-analysis.md",
+      "description": "Retrieve this expert for conversion funnel diagnostics, cohort retention analysis, and stage drop-off insights.",
+      "tags": [
+        "bi",
+        "funnel-analysis",
+        "retention",
+        "cohort",
+        "conversion"
+      ],
+      "tool_hints": [
+        "sql",
+        "pandas",
+        "tableau",
+        "powerbi"
+      ],
+      "examples": [
+        "Analyze stage conversion bottlenecks by customer segment"
+      ],
+      "aliases": [
+        "bi-funnel-retention-analysis",
+        "cohort-funnel-diagnostics"
+      ],
+      "dependencies": [
+        "pandas",
+        "numpy",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "funnel stages and retention cohort definitions",
+        "optional": "segment dimensions and attribution rules"
+      },
+      "output_artifacts": [
+        "funnel_spec",
+        "retention_cohort_report",
+        "bottleneck_priority_list"
+      ],
+      "quality_checks": [
+        "stage_definition_consistent",
+        "cohort_logic_explicit",
+        "segment_breakdowns_validated"
+      ],
+      "constraints": [
+        "no_funnel_reporting_without_stage_contract"
+      ],
+      "risk_level": "medium",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "bi_funnel-retention-analysis",
+          "description": "Retrieve this expert for conversion funnel diagnostics, cohort retention analysis, and stage drop-off insights.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "funnel/retention analysis objective"
+              },
+              "context": {
+                "type": "object",
+                "description": "cohort definitions, segmentation, and business constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "bi.executive-storytelling",
+      "title": "BI Executive Storytelling",
+      "domain": "business_intelligence",
+      "instruction_file": "instructions/bi-executive-storytelling.md",
+      "description": "Retrieve this expert for executive-ready BI narrative design, insight framing, and action-focused reporting.",
+      "tags": [
+        "bi",
+        "executive-reporting",
+        "storytelling",
+        "decision-support",
+        "dashboard-narrative"
+      ],
+      "tool_hints": [
+        "tableau",
+        "powerbi",
+        "looker",
+        "pptx"
+      ],
+      "examples": [
+        "Create executive KPI narrative with clear action recommendations"
+      ],
+      "aliases": [
+        "bi-executive-storytelling",
+        "executive-bi-narrative"
+      ],
+      "dependencies": [
+        "pandas",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "decision-critical metrics and stakeholder context",
+        "optional": "narrative tone and action horizon"
+      },
+      "output_artifacts": [
+        "executive_narrative_plan",
+        "annotated_metric_story",
+        "action_recommendations"
+      ],
+      "quality_checks": [
+        "insight_to_action_mapping_clear",
+        "annotation_strategy_defined",
+        "decision_risk_caveats_present"
+      ],
+      "constraints": [
+        "no_metric_only_dump_without_narrative"
+      ],
+      "risk_level": "low",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "bi_executive-storytelling",
+          "description": "Retrieve this expert for executive-ready BI narrative design, insight framing, and action-focused reporting.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "executive reporting objective and metrics"
+              },
+              "context": {
+                "type": "object",
+                "description": "stakeholder profile and decision timeline"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
       "id": "role.bi-analyst",
       "title": "BI Analyst Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/bi-analyst.md",
-      "description": "Role expert for KPI-centric business analysis, dashboard planning, and governed reporting outputs for stakeholders.",
+      "description": "Role expert for KPI-centric BI delivery: metric definition, dashboard planning, narrative insights, and governed reporting for executive stakeholders.",
       "tags": [
         "role",
         "bi-analyst",
@@ -6895,6 +11039,10 @@
       "dependencies": [
         "bi.dashboard-design",
         "bi.metric-semantic-modeling",
+        "bi.kpi-governance",
+        "bi.experiment-reporting",
+        "bi.funnel-retention-analysis",
+        "bi.executive-storytelling",
         "data.sql-queries",
         "data.dbt",
         "data.pandas-advanced",
@@ -6937,7 +11085,7 @@
         "type": "function",
         "function": {
           "name": "role_bi-analyst",
-          "description": "Role expert for KPI-centric business analysis, dashboard planning, and governed reporting outputs for stakeholders.",
+          "description": "Role expert for KPI-centric BI delivery: metric definition, dashboard planning, narrative insights, and governed reporting for executive stakeholders.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -7228,7 +11376,7 @@
       "title": "Analytics Engineer Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/analytics-engineer.md",
-      "description": "Role expert for governed analytics delivery across semantic modeling, tested transformations, and BI platform implementation.",
+      "description": "Role expert for analytics engineering: semantic modeling, tested dbt transformations, metric governance, and BI platform implementation across teams.",
       "tags": [
         "role",
         "analytics-engineer",
@@ -7259,6 +11407,10 @@
       ],
       "dependencies": [
         "bi.metric-semantic-modeling",
+        "bi.kpi-governance",
+        "bi.experiment-reporting",
+        "bi.funnel-retention-analysis",
+        "bi.executive-storytelling",
         "bi.dashboard-design",
         "bi.tableau-authoring",
         "bi.powerbi-modeling",
@@ -7267,7 +11419,12 @@
         "data.sql-queries",
         "data.pandas-advanced",
         "stats.scipy-statsmodels",
-        "viz.matplotlib-seaborn"
+        "viz.matplotlib-seaborn",
+        "viz.geo-timeline",
+        "viz.hierarchy-flow",
+        "viz.relationship-plots",
+        "viz.distribution-diagnostics",
+        "viz.chart-selection"
       ],
       "input_contract": {
         "required": "business metric scope, source systems, and target BI platform",
@@ -7305,7 +11462,7 @@
         "type": "function",
         "function": {
           "name": "role_analytics-engineer",
-          "description": "Role expert for governed analytics delivery across semantic modeling, tested transformations, and BI platform implementation.",
+          "description": "Role expert for analytics engineering: semantic modeling, tested dbt transformations, metric governance, and BI platform implementation across teams.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -8102,6 +12259,257 @@
               "context": {
                 "type": "object",
                 "description": "rollback criteria, traffic split percentages, and feature flag system"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "devops.release-strategies",
+      "title": "Release Strategies and Progressive Delivery",
+      "domain": "devops",
+      "instruction_file": "instructions/devops-release-strategies.md",
+      "description": "Retrieve this expert for blue-green, canary, rolling, and feature-flag rollout strategy design.",
+      "tags": [
+        "devops",
+        "release",
+        "canary",
+        "blue-green",
+        "rollback"
+      ],
+      "tool_hints": [
+        "kubernetes",
+        "github-actions",
+        "argo-rollouts",
+        "terraform"
+      ],
+      "examples": [
+        "Design canary rollout with automated rollback thresholds"
+      ],
+      "aliases": [
+        "devops-release-strategies",
+        "progressive-delivery"
+      ],
+      "dependencies": [
+        "kubernetes",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "release risk profile and target environment",
+        "optional": "traffic segmentation and rollback policy"
+      },
+      "output_artifacts": [
+        "release_strategy_plan",
+        "rollout_gates",
+        "rollback_policy"
+      ],
+      "quality_checks": [
+        "rollback_criteria_defined",
+        "health_gates_specified",
+        "post_release_verification_included"
+      ],
+      "constraints": [
+        "no_release_without_rollback_path"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_release-strategies",
+          "description": "Retrieve this expert for blue-green, canary, rolling, and feature-flag rollout strategy design.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "release objective and deployment risk profile"
+              },
+              "context": {
+                "type": "object",
+                "description": "traffic controls, rollback, and observability constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "devops.sli-slo-observability",
+      "title": "SLI/SLO and Error Budget Observability",
+      "domain": "devops",
+      "instruction_file": "instructions/devops-sli-slo-observability.md",
+      "description": "Retrieve this expert for service-level indicators, objectives, error budgets, and burn-rate alert design.",
+      "tags": [
+        "devops",
+        "sli",
+        "slo",
+        "error-budget",
+        "observability"
+      ],
+      "tool_hints": [
+        "prometheus",
+        "grafana",
+        "alertmanager",
+        "opentelemetry"
+      ],
+      "examples": [
+        "Define user-centric SLIs and burn-rate alert policy"
+      ],
+      "aliases": [
+        "devops-sli-slo-observability",
+        "error-budget-ops"
+      ],
+      "dependencies": [
+        "prometheus-client",
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "service objectives and user-impact metrics",
+        "optional": "alert routing and incident policy"
+      },
+      "output_artifacts": [
+        "sli_slo_catalog",
+        "error_budget_policy",
+        "burn_rate_alert_spec"
+      ],
+      "quality_checks": [
+        "sli_user_impact_aligned",
+        "error_budget_defined",
+        "alert_noise_controls_present"
+      ],
+      "constraints": [
+        "no_slo_without_owner_and_remediation"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_sli-slo-observability",
+          "description": "Retrieve this expert for service-level indicators, objectives, error budgets, and burn-rate alert design.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "sli/slo objective and target services"
+              },
+              "context": {
+                "type": "object",
+                "description": "alert routing, error budget policy, and incident constraints"
+              }
+            },
+            "required": [
+              "task"
+            ],
+            "additionalProperties": true
+          },
+          "strict": false
+        }
+      }
+    },
+    {
+      "id": "devops.incident-response",
+      "title": "Incident Response and On-Call Operations",
+      "domain": "devops",
+      "instruction_file": "instructions/devops-incident-response.md",
+      "description": "Retrieve this expert for incident triage, escalation, mitigation, and postmortem improvement workflows.",
+      "tags": [
+        "devops",
+        "incident-response",
+        "on-call",
+        "postmortem",
+        "reliability"
+      ],
+      "tool_hints": [
+        "pagerduty",
+        "slack",
+        "grafana",
+        "prometheus"
+      ],
+      "examples": [
+        "Run incident triage and mitigation workflow with severity policy"
+      ],
+      "aliases": [
+        "devops-incident-response",
+        "oncall-operations"
+      ],
+      "dependencies": [
+        "pyyaml"
+      ],
+      "input_contract": {
+        "required": "incident severity policy and service ownership map",
+        "optional": "communication templates and escalation contacts"
+      },
+      "output_artifacts": [
+        "incident_timeline",
+        "mitigation_runbook",
+        "postmortem_action_plan"
+      ],
+      "quality_checks": [
+        "stabilization_first",
+        "escalation_paths_defined",
+        "followup_actions_owned"
+      ],
+      "constraints": [
+        "no_incident_closure_without_action_tracking"
+      ],
+      "risk_level": "high",
+      "maturity": "beta",
+      "metadata": {
+        "provider_support": [
+          "codex",
+          "claude"
+        ],
+        "owner": "community",
+        "catalog_tier": "expanded",
+        "instruction_version": "v1"
+      },
+      "invocation": {
+        "type": "function",
+        "function": {
+          "name": "devops_incident-response",
+          "description": "Retrieve this expert for incident triage, escalation, mitigation, and postmortem improvement workflows.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "incident response objective and impacted services"
+              },
+              "context": {
+                "type": "object",
+                "description": "severity policy, escalation paths, and communication constraints"
               }
             },
             "required": [
@@ -9151,7 +13559,7 @@
       "title": "DevOps Engineer Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/devops-engineer.md",
-      "description": "Role expert for infrastructure automation, CI/CD pipelines, monitoring, and production operations across DevOps tooling.",
+      "description": "Role expert for DevOps delivery: CI/CD pipeline design with deployment gates, canary/rollback strategy, production health checks, observability/alerts, and incident response operations.",
       "tags": [
         "role",
         "devops-engineer",
@@ -9174,7 +13582,22 @@
         "devops-role",
         "infrastructure-engineer"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "devops.ansible",
+        "devops.nginx",
+        "devops.systemd",
+        "devops.prometheus-grafana",
+        "devops.elk-logging",
+        "devops.cicd-patterns",
+        "devops.release-strategies",
+        "devops.sli-slo-observability",
+        "devops.incident-response",
+        "devops.linux-admin",
+        "cloud.docker",
+        "cloud.kubernetes",
+        "cloud.terraform",
+        "sec.identity-access-hardening"
+      ],
       "input_contract": {
         "required": "infrastructure requirements, deployment targets, and SLA targets",
         "optional": "compliance constraints, team size, and existing tooling"
@@ -9209,7 +13632,7 @@
         "type": "function",
         "function": {
           "name": "role_devops-engineer",
-          "description": "Role expert for infrastructure automation, CI/CD pipelines, monitoring, and production operations across DevOps tooling.",
+          "description": "Role expert for DevOps delivery: CI/CD design, canary and rollback strategy, observability/alerts, incident response, and production operations.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -9236,7 +13659,7 @@
       "title": "API Architect Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/api-architect.md",
-      "description": "Role expert for API design, integration architecture, and backend service communication patterns across REST, GraphQL, and event-driven systems.",
+      "description": "Role expert for API architecture: contract-first REST/GraphQL design, versioning, auth, integration patterns, and event-driven backend communication.",
       "tags": [
         "role",
         "api-architect",
@@ -9258,7 +13681,22 @@
         "api-design-role",
         "integration-architect"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "web.rest-design",
+        "web.fastapi",
+        "web.flask",
+        "web.auth-jwt",
+        "web.auth-oauth",
+        "webapi.graphql",
+        "webapi.api-gateway",
+        "webapi.rate-limiting",
+        "webapi.api-auth-patterns",
+        "web.api-versioning-lifecycle",
+        "web.openapi-contract-testing",
+        "web.api-performance-caching",
+        "webapi.websockets-sse",
+        "sec.threat-modeling"
+      ],
       "input_contract": {
         "required": "API consumers, data contracts, and latency requirements",
         "optional": "versioning strategy, federation boundaries, and compliance needs"
@@ -9293,7 +13731,7 @@
         "type": "function",
         "function": {
           "name": "role_api-architect",
-          "description": "Role expert for API design, integration architecture, and backend service communication patterns across REST, GraphQL, and event-driven systems.",
+          "description": "Role expert for API architecture: contract-first REST/GraphQL design, versioning, auth, integration patterns, and event-driven backend communication.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -9320,7 +13758,7 @@
       "title": "AWS Engineer Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/aws-engineer.md",
-      "description": "Role expert for Amazon Web Services architecture, deployment, and operations across compute, storage, networking, and security services.",
+      "description": "Role expert for AWS platform delivery: architecture, deployment, security hardening, observability, and operations across compute, storage, and networking.",
       "tags": [
         "role",
         "aws-engineer",
@@ -9341,7 +13779,34 @@
         "aws-role",
         "amazon-web-services-engineer"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "cloud.aws-ec2",
+        "cloud.aws-eks",
+        "cloud.aws-rds",
+        "cloud.aws-dynamodb",
+        "cloud.aws-api-gateway",
+        "cloud.aws-cloudfront",
+        "cloud.aws-sqs-sns-eventbridge",
+        "cloud.aws-cloudwatch-observability",
+        "cloud.aws-iam-identity-center",
+        "cloud.aws-kms",
+        "cloud.aws-s3",
+        "cloud.aws-lambda",
+        "cloud.aws-vpc",
+        "cloud.infrastructure-cost-optimization",
+        "cloud.security-posture-management",
+        "cloud.multi-environment-strategy",
+        "cloud.backup-disaster-recovery",
+        "cloud.service-reliability-architecture",
+        "cloud.platform-governance-policy",
+        "sec.iam-policies",
+        "sec.secrets-management",
+        "sec.identity-access-hardening",
+        "sec.threat-modeling",
+        "cloud.docker",
+        "cloud.kubernetes",
+        "cloud.terraform"
+      ],
       "input_contract": {
         "required": "workload type, availability target, and cost budget",
         "optional": "data residency requirements, compliance framework, and team structure"
@@ -9376,7 +13841,7 @@
         "type": "function",
         "function": {
           "name": "role_aws-engineer",
-          "description": "Role expert for Amazon Web Services architecture, deployment, and operations across compute, storage, networking, and security services.",
+          "description": "Role expert for AWS platform delivery: architecture, deployment, security hardening, observability, and operations across compute, storage, and networking.",
           "parameters": {
             "type": "object",
             "properties": {
@@ -9403,7 +13868,7 @@
       "title": "GCP Engineer Role Orchestrator",
       "domain": "role_orchestrator",
       "instruction_file": "roles/gcp-engineer.md",
-      "description": "Role expert for Google Cloud Platform architecture, deployment, and operations across compute, storage, data, and messaging services.",
+      "description": "Role expert for GCP platform delivery: architecture, deployment, IAM/security, data and messaging pipelines, and production operations at scale.",
       "tags": [
         "role",
         "gcp-engineer",
@@ -9424,7 +13889,24 @@
         "gcp-role",
         "google-cloud-engineer"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "cloud.gcp-gcs",
+        "cloud.gcp-bigquery",
+        "cloud.gcp-cloud-run",
+        "cloud.gcp-cloud-functions",
+        "cloud.gcp-pubsub",
+        "cloud.gcp-gke",
+        "cloud.infrastructure-cost-optimization",
+        "cloud.security-posture-management",
+        "cloud.multi-environment-strategy",
+        "cloud.backup-disaster-recovery",
+        "cloud.service-reliability-architecture",
+        "cloud.platform-governance-policy",
+        "sec.identity-access-hardening",
+        "sec.threat-modeling",
+        "cloud.docker",
+        "cloud.terraform"
+      ],
       "input_contract": {
         "required": "workload type, availability target, and cost budget",
         "optional": "data residency requirements, compliance framework, and team structure"
@@ -9459,7 +13941,7 @@
         "type": "function",
         "function": {
           "name": "role_gcp-engineer",
-          "description": "Role expert for Google Cloud Platform architecture, deployment, and operations across compute, storage, data, and messaging services.",
+          "description": "Role expert for GCP platform delivery: architecture, deployment, IAM/security, data and messaging pipelines, and production operations at scale.",
           "parameters": {
             "type": "object",
             "properties": {

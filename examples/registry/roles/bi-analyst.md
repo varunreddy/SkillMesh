@@ -6,6 +6,10 @@ Use this role for business reporting workflows: metric definition, SQL-based ana
 
 - `bi.dashboard-design`
 - `bi.metric-semantic-modeling`
+- `bi.kpi-governance`
+- `bi.experiment-reporting`
+- `bi.funnel-retention-analysis`
+- `bi.executive-storytelling`
 - `data.sql-queries`
 - `data.dbt`
 - `data.pandas-advanced`

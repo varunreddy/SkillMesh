@@ -5,6 +5,10 @@ Use this role for data platform work: ingestion, transformation, quality control
 ## Allowed expert dependencies
 
 - `data.spark`
+- `data.ingestion-pipelines`
+- `data.data-quality-validation`
+- `data.data-orchestration`
+- `data.warehouse-modeling`
 - `data.sql-queries`
 - `data.dbt`
 - `data.pandas-advanced`

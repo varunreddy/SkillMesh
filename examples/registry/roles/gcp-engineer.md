@@ -10,6 +10,14 @@ Use this role for Google Cloud Platform architecture, deployment, and operations
 - `cloud.gcp-cloud-functions`
 - `cloud.gcp-pubsub`
 - `cloud.gcp-gke`
+- `cloud.infrastructure-cost-optimization`
+- `cloud.security-posture-management`
+- `cloud.multi-environment-strategy`
+- `cloud.backup-disaster-recovery`
+- `cloud.service-reliability-architecture`
+- `cloud.platform-governance-policy`
+- `sec.identity-access-hardening`
+- `sec.threat-modeling`
 - `cloud.docker`
 - `cloud.terraform`
 

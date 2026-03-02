@@ -1,6 +1,6 @@
 registry_name: skillmesh-web-apis-catalog
 version: 0.1.0
-updated_at: '2026-03-01'
+updated_at: '2026-03-02'
 tools:
 - id: role.api-architect
   title: API Architect Role Orchestrator
@@ -14,8 +14,8 @@ tools:
     type: function
     function:
       name: role_api-architect
-      description: Role expert for API design, integration architecture, and backend
-        service communication patterns across REST, GraphQL, and event-driven systems.
+      description: Role expert for API design, integration architecture, and backend service communication patterns 
+        across REST, GraphQL, and event-driven systems.
       parameters:
         type: object
         properties:
@@ -24,8 +24,7 @@ tools:
             description: API consumers, data contracts, and latency requirements
           context:
             type: object
-            description: versioning strategy, federation boundaries, and compliance
-              needs
+            description: versioning strategy, federation boundaries, and compliance needs
         required:
         - task
         additionalProperties: true
@@ -42,19 +41,122 @@ tools:
     type: function
     function:
       name: web_rest-design
-      description: Retrieve this expert for resource-oriented API design, pagination/error
-        contracts, and durable REST interface conventions.
+      description: Retrieve this expert for resource-oriented API design, pagination/error contracts, and durable REST 
+        interface conventions.
       parameters:
         type: object
         properties:
           task:
             type: string
-            description: API/auth objective, request-response expectations, and security
-              requirements
+            description: API/auth objective, request-response expectations, and security requirements
           context:
             type: object
-            description: backward-compatibility constraints, target clients, and deployment
-              environment
+            description: backward-compatibility constraints, target clients, and deployment environment
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: web.api-versioning-lifecycle
+  title: API Versioning and Lifecycle Management
+  domain: web_api
+  instruction_file: instructions/web-api-versioning-lifecycle.md
+  tags:
+  - api
+  - versioning
+  - deprecation
+  invocation:
+    type: function
+    function:
+      name: web_api-versioning-lifecycle
+      description: Retrieve this expert for API versioning policy, deprecation planning, and backward-compatibility 
+        governance.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: api lifecycle objective and versioning constraints
+          context:
+            type: object
+            description: consumer migration risk and timeline requirements
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: web.openapi-contract-testing
+  title: OpenAPI Contract Testing
+  domain: web_api
+  instruction_file: instructions/web-openapi-contract-testing.md
+  tags:
+  - api
+  - openapi
+  - contract-testing
+  invocation:
+    type: function
+    function:
+      name: web_openapi-contract-testing
+      description: Retrieve this expert for schema-first API contract tests, compatibility checks, and CI release gates.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: contract testing objective and target APIs
+          context:
+            type: object
+            description: compatibility policy and pipeline constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: web.api-performance-caching
+  title: API Performance and Caching
+  domain: web_api
+  instruction_file: instructions/web-api-performance-caching.md
+  tags:
+  - api
+  - performance
+  - caching
+  invocation:
+    type: function
+    function:
+      name: web_api-performance-caching
+      description: Retrieve this expert for API latency optimization, caching design, and throughput hardening.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: performance objective and endpoint workload
+          context:
+            type: object
+            description: cache tiers, invalidation, and consistency constraints
+        required:
+        - task
+        additionalProperties: true
+      strict: false
+- id: sec.threat-modeling
+  title: Threat Modeling and Risk Prioritization
+  domain: security
+  instruction_file: instructions/sec-threat-modeling.md
+  tags:
+  - security
+  - threat-modeling
+  - risk-analysis
+  invocation:
+    type: function
+    function:
+      name: sec_threat-modeling
+      description: Retrieve this expert for structured threat modeling, risk ranking, and mitigation planning.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: threat modeling objective and architecture scope
+          context:
+            type: object
+            description: risk tolerance, attacker model, and compliance context
         required:
         - task
         additionalProperties: true
@@ -72,8 +174,8 @@ tools:
     type: function
     function:
       name: webapi_graphql
-      description: Retrieve this expert for GraphQL schema design, resolver implementation,
-        N+1 prevention with DataLoader, and federation architecture.
+      description: Retrieve this expert for GraphQL schema design, resolver implementation, N+1 prevention with 
+        DataLoader, and federation architecture.
       parameters:
         type: object
         properties:
@@ -82,8 +184,7 @@ tools:
             description: domain entities, relationships, and query patterns
           context:
             type: object
-            description: federation boundaries, subscription requirements, and caching
-              strategy
+            description: federation boundaries, subscription requirements, and caching strategy
         required:
         - task
         additionalProperties: true
@@ -100,8 +201,8 @@ tools:
     type: function
     function:
       name: webapi_api-gateway
-      description: Retrieve this expert for API gateway configuration, service mesh
-        patterns, circuit breakers, distributed tracing, and request routing.
+      description: Retrieve this expert for API gateway configuration, service mesh patterns, circuit breakers, 
+        distributed tracing, and request routing.
       parameters:
         type: object
         properties:
@@ -127,15 +228,14 @@ tools:
     type: function
     function:
       name: webapi_rate-limiting
-      description: Retrieve this expert for rate limiting strategies including token
-        bucket, sliding window, Redis-backed limiters, and backpressure patterns.
+      description: Retrieve this expert for rate limiting strategies including token bucket, sliding window, 
+        Redis-backed limiters, and backpressure patterns.
       parameters:
         type: object
         properties:
           task:
             type: string
-            description: rate limit thresholds, key strategy (IP, user, API key),
-              and storage backend
+            description: rate limit thresholds, key strategy (IP, user, API key), and storage backend
           context:
             type: object
             description: burst allowance, retry-after headers, and quota tiers
@@ -156,19 +256,17 @@ tools:
     type: function
     function:
       name: webapi_api-auth-patterns
-      description: Retrieve this expert for API key management, mTLS, HMAC signatures,
-        webhook verification, and service-to-service authentication.
+      description: Retrieve this expert for API key management, mTLS, HMAC signatures, webhook verification, and 
+        service-to-service authentication.
       parameters:
         type: object
         properties:
           task:
             type: string
-            description: authentication method, trust boundaries, and key management
-              strategy
+            description: authentication method, trust boundaries, and key management strategy
           context:
             type: object
-            description: certificate authority, rotation schedule, and revocation
-              policy
+            description: certificate authority, rotation schedule, and revocation policy
         required:
         - task
         additionalProperties: true
@@ -186,8 +284,8 @@ tools:
     type: function
     function:
       name: webapi_websockets-sse
-      description: Retrieve this expert for real-time communication with WebSockets
-        and SSE including connection lifecycle, reconnection, heartbeats, and scaling.
+      description: Retrieve this expert for real-time communication with WebSockets and SSE including connection 
+        lifecycle, reconnection, heartbeats, and scaling.
       parameters:
         type: object
         properties:
@@ -196,8 +294,7 @@ tools:
             description: event types, message format, and connection requirements
           context:
             type: object
-            description: scaling strategy, authentication for connections, and message
-              ordering
+            description: scaling strategy, authentication for connections, and message ordering
         required:
         - task
         additionalProperties: true

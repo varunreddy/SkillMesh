@@ -13,7 +13,11 @@ Use this role for API design, integration architecture, and backend service comm
 - `webapi.api-gateway`
 - `webapi.rate-limiting`
 - `webapi.api-auth-patterns`
+- `web.api-versioning-lifecycle`
+- `web.openapi-contract-testing`
+- `web.api-performance-caching`
 - `webapi.websockets-sse`
+- `sec.threat-modeling`
 
 ## Execution behavior
 

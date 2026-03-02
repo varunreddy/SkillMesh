@@ -213,19 +213,50 @@ skillmesh emit \
   --top-k 5
 ```
 
+### Role Quickstart
+
+List available role cards:
+
+```bash
+skillmesh roles list --catalog examples/registry/tools.json
+```
+
+Install a role by friendly name (adds missing dependencies):
+
+```bash
+skillmesh roles install Data-Analyst \
+  --catalog examples/registry/tools.json \
+  --registry ~/.codex/skills/skillmesh/installed.registry.yaml
+```
+
+Dry-run an install to preview what will be added:
+
+```bash
+skillmesh roles install AWS-Engineer \
+  --catalog examples/registry/tools.json \
+  --registry ~/.codex/skills/skillmesh/installed.registry.yaml \
+  --dry-run
+```
+
+MCP equivalent (tool call):
+
+```text
+install_skillmesh_role(role="Data-Analyst", catalog="examples/registry/tools.json", dry_run=false)
+```
+
 ## Curated Registries
 
 Use domain-specific registries for tighter routing:
 
 | Registry | Domain | Cards |
 |---|---|---|
-| `tools.json` / `tools.yaml` | Full catalog | 103 |
-| `ml-engineering.registry.yaml` | ML training & evaluation | 15 |
-| `data-engineering.registry.yaml` | Pipelines & data platforms | 10 |
-| `bi-analytics.registry.yaml` | BI & dashboards | 12 |
-| `devops.registry.yaml` | DevOps & infrastructure | 8 |
-| `web-apis.registry.yaml` | API design & patterns | 7 |
-| `cloud-gcp.registry.yaml` | Google Cloud Platform | 7 |
+| `tools.json` / `tools.yaml` | Full catalog | 154 |
+| `ml-engineering.registry.yaml` | ML training & evaluation | 33 |
+| `data-engineering.registry.yaml` | Pipelines & data platforms | 14 |
+| `bi-analytics.registry.yaml` | BI & dashboards | 21 |
+| `devops.registry.yaml` | DevOps & infrastructure | 18 |
+| `web-apis.registry.yaml` | API design & patterns | 11 |
+| `cloud-gcp.registry.yaml` | Google Cloud Platform | 13 |
 | `cloud-bi.registry.yaml` | Cloud BI | 17 |
 | `roles.registry.yaml` | Role orchestrators | 11 |
 

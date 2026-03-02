@@ -17,8 +17,16 @@ Use this role for Amazon Web Services architecture, deployment, and operations a
 - `cloud.aws-s3`
 - `cloud.aws-lambda`
 - `cloud.aws-vpc`
+- `cloud.infrastructure-cost-optimization`
+- `cloud.security-posture-management`
+- `cloud.multi-environment-strategy`
+- `cloud.backup-disaster-recovery`
+- `cloud.service-reliability-architecture`
+- `cloud.platform-governance-policy`
 - `sec.iam-policies`
 - `sec.secrets-management`
+- `sec.identity-access-hardening`
+- `sec.threat-modeling`
 - `cloud.docker`
 - `cloud.kubernetes`
 - `cloud.terraform`

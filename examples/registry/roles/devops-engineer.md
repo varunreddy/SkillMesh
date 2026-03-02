@@ -10,7 +10,11 @@ Use this role for infrastructure automation, CI/CD pipelines, monitoring, and pr
 - `devops.prometheus-grafana`
 - `devops.elk-logging`
 - `devops.cicd-patterns`
+- `devops.release-strategies`
+- `devops.sli-slo-observability`
+- `devops.incident-response`
 - `devops.linux-admin`
+- `sec.identity-access-hardening`
 - `cloud.docker`
 - `cloud.kubernetes`
 - `cloud.terraform`

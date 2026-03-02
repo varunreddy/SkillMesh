@@ -5,7 +5,11 @@ Use this role for governed analytics delivery between data engineering and BI: s
 ## Allowed expert dependencies
 
 - `bi.metric-semantic-modeling`
+- `bi.kpi-governance`
 - `bi.dashboard-design`
+- `bi.experiment-reporting`
+- `bi.funnel-retention-analysis`
+- `bi.executive-storytelling`
 - `bi.tableau-authoring`
 - `bi.powerbi-modeling`
 - `bi.looker-modeling`
@@ -14,6 +18,11 @@ Use this role for governed analytics delivery between data engineering and BI: s
 - `data.pandas-advanced`
 - `stats.scipy-statsmodels`
 - `viz.matplotlib-seaborn`
+- `viz.chart-selection`
+- `viz.distribution-diagnostics`
+- `viz.relationship-plots`
+- `viz.hierarchy-flow`
+- `viz.geo-timeline`
 
 ## Execution behavior
 
