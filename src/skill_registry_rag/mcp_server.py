@@ -4,6 +4,7 @@ import os
 import sys
 from pathlib import Path
 from typing import Any
+from functools import lru_cache
 
 from ._resolve import resolve_registry_path
 from .adapters import render_claude_context, render_codex_context
@@ -90,6 +91,20 @@ def _normalize_backend(backend: str) -> str:
     return normalized
 
 
+@lru_cache(maxsize=1)
+def __cached_retriever(registry_path: Path, mtime: float, backend: str, dense: bool):
+    try:
+        cards = load_registry(registry_path)
+    except RegistryError as exc:
+        raise ValueError(f"Invalid registry: {exc}") from exc
+
+    return SkillRetriever(
+        cards,
+        use_dense=bool(dense),
+        backend=backend,
+    )
+
+
 def _retrieve_hits(
     *,
     query: str,
@@ -104,15 +119,11 @@ def _retrieve_hits(
     registry_path = resolve_registry_path(registry)
 
     try:
-        cards = load_registry(registry_path)
-    except RegistryError as exc:
-        raise ValueError(f"Invalid registry: {exc}") from exc
+        mtime = registry_path.stat().st_mtime
+    except FileNotFoundError:
+        mtime = 0.0
 
-    retriever = SkillRetriever(
-        cards,
-        use_dense=bool(dense),
-        backend=resolved_backend,
-    )
+    retriever = __cached_retriever(registry_path, mtime, resolved_backend, bool(dense))
     hits = retriever.retrieve(resolved_query, top_k=resolved_top_k)
     return resolved_query, registry_path, hits
 

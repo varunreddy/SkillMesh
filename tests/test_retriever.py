@@ -190,3 +190,20 @@ def test_retriever_passes_dense_and_hybrid_defaults_to_chroma(monkeypatch):
     assert captured["dense_weight"] == 0.2
     assert captured["min_dense_candidates"] == 100
     assert captured["dense_candidates_multiplier"] == 10
+
+def test_retriever_dense_mode_e2e():
+    """Test dense mode retrieval end-to-end to ensure inference and schema alignment works."""
+    cards = _load_json_cards()
+    # We slice to a small number of cards so the dense embedding test runs quickly.
+    small_catalog = cards[:10]
+    
+    # Force use dense mode with chroma.
+    # Note: this requires sentence-transformers and chromadb to be installed.
+    retriever = SkillRetriever(small_catalog, use_dense=True, backend="chroma")
+    hits = retriever.retrieve("matplotlib charting and visualization", top_k=2)
+    
+    # We should get back results; we just care that the dense pipeline doesn't crash 
+    # and returns formatted hits.
+    assert len(hits) > 0
+    assert hasattr(hits[0], "score")
+    assert hasattr(hits[0], "dense_score")

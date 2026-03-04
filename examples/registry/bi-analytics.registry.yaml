@@ -14,8 +14,8 @@ tools:
     type: function
     function:
       name: role_bi-analyst
-      description: Role expert for KPI-centric business analysis, dashboard planning, and governed reporting outputs for
-        stakeholders.
+      description: Role expert for KPI-centric business analysis, dashboard planning,
+        and governed reporting outputs for stakeholders.
       parameters:
         type: object
         properties:
@@ -41,8 +41,8 @@ tools:
     type: function
     function:
       name: role_analytics-engineer
-      description: Role expert for governed analytics delivery across semantic modeling, tested transformations, and BI 
-        platform implementation.
+      description: Role expert for governed analytics delivery across semantic modeling,
+        tested transformations, and BI platform implementation.
       parameters:
         type: object
         properties:
@@ -68,8 +68,8 @@ tools:
     type: function
     function:
       name: bi_dashboard-design
-      description: Retrieve this expert for KPI-driven dashboard architecture, chart selection, stakeholder 
-        communication, and adoption-focused BI reporting.
+      description: Retrieve this expert for KPI-driven dashboard architecture, chart
+        selection, stakeholder communication, and adoption-focused BI reporting.
       parameters:
         type: object
         properties:
@@ -95,8 +95,8 @@ tools:
     type: function
     function:
       name: bi_metric-semantic-modeling
-      description: Retrieve this expert for semantic layer design, metric governance, dimensional modeling, and trusted 
-        KPI standardization.
+      description: Retrieve this expert for semantic layer design, metric governance,
+        dimensional modeling, and trusted KPI standardization.
       parameters:
         type: object
         properties:
@@ -106,114 +106,6 @@ tools:
           context:
             type: object
             description: lineage tool, SCD policy, and ownership model
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: bi.kpi-governance
-  title: KPI Governance and Metric Contracts
-  domain: business_intelligence
-  instruction_file: instructions/bi-kpi-governance.md
-  tags:
-  - bi
-  - kpi-governance
-  - metric-contracts
-  invocation:
-    type: function
-    function:
-      name: bi_kpi-governance
-      description: Retrieve this expert for KPI governance, metric contracts, and cross-dashboard definition 
-        consistency.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: kpi governance objective and metric scope
-          context:
-            type: object
-            description: owner model, lineage constraints, and change policy
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: bi.experiment-reporting
-  title: BI Experiment and A/B Reporting
-  domain: business_intelligence
-  instruction_file: instructions/bi-experiment-reporting.md
-  tags:
-  - bi
-  - ab-testing
-  - experiment-reporting
-  invocation:
-    type: function
-    function:
-      name: bi_experiment-reporting
-      description: Retrieve this expert for experiment reporting dashboards with variant comparisons and uncertainty 
-        context.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: experiment reporting objective and target audience
-          context:
-            type: object
-            description: metric definitions, cohorts, and decision timeline
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: bi.funnel-retention-analysis
-  title: BI Funnel and Retention Analysis
-  domain: business_intelligence
-  instruction_file: instructions/bi-funnel-retention-analysis.md
-  tags:
-  - bi
-  - funnel-analysis
-  - retention
-  invocation:
-    type: function
-    function:
-      name: bi_funnel-retention-analysis
-      description: Retrieve this expert for conversion funnel diagnostics, cohort retention analysis, and stage drop-off
-        insights.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: funnel/retention analysis objective
-          context:
-            type: object
-            description: cohort definitions, segmentation, and business constraints
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: bi.executive-storytelling
-  title: BI Executive Storytelling
-  domain: business_intelligence
-  instruction_file: instructions/bi-executive-storytelling.md
-  tags:
-  - bi
-  - executive-reporting
-  - storytelling
-  invocation:
-    type: function
-    function:
-      name: bi_executive-storytelling
-      description: Retrieve this expert for executive-ready BI narrative design, insight framing, and action-focused 
-        reporting.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: executive reporting objective and metrics
-          context:
-            type: object
-            description: stakeholder profile and decision timeline
         required:
         - task
         additionalProperties: true
@@ -230,8 +122,8 @@ tools:
     type: function
     function:
       name: bi_tableau-authoring
-      description: Retrieve this expert for Tableau dashboard design, interaction patterns, performance tuning, and 
-        governed publishing workflows.
+      description: Retrieve this expert for Tableau dashboard design, interaction
+        patterns, performance tuning, and governed publishing workflows.
       parameters:
         type: object
         properties:
@@ -257,8 +149,8 @@ tools:
     type: function
     function:
       name: bi_powerbi-modeling
-      description: Retrieve this expert for Power BI data modeling, DAX measure design, row-level security, and refresh 
-        strategy.
+      description: Retrieve this expert for Power BI data modeling, DAX measure design,
+        row-level security, and refresh strategy.
       parameters:
         type: object
         properties:
@@ -284,8 +176,8 @@ tools:
     type: function
     function:
       name: bi_looker-modeling
-      description: Retrieve this expert for LookML model design, explore governance, and performant semantic delivery in
-        Looker.
+      description: Retrieve this expert for LookML model design, explore governance,
+        and performant semantic delivery in Looker.
       parameters:
         type: object
         properties:
@@ -311,8 +203,8 @@ tools:
     type: function
     function:
       name: data_sql-queries
-      description: Retrieve this expert for advanced SQL joins, CTE/window logic, query optimization, and analytical 
-        data retrieval patterns.
+      description: Retrieve this expert for advanced SQL joins, CTE/window logic,
+        query optimization, and analytical data retrieval patterns.
       parameters:
         type: object
         properties:
@@ -321,7 +213,8 @@ tools:
             description: source schema/data samples and transformation objectives
           context:
             type: object
-            description: data volume profile, latency/SLA constraints, and governance rules
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
         required:
         - task
         additionalProperties: true
@@ -338,8 +231,8 @@ tools:
     type: function
     function:
       name: data_dbt
-      description: Retrieve this expert for dbt model layering, testing, documentation, and incremental transformation 
-        workflows.
+      description: Retrieve this expert for dbt model layering, testing, documentation,
+        and incremental transformation workflows.
       parameters:
         type: object
         properties:
@@ -348,7 +241,8 @@ tools:
             description: source schema/data samples and transformation objectives
           context:
             type: object
-            description: data volume profile, latency/SLA constraints, and governance rules
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
         required:
         - task
         additionalProperties: true
@@ -365,8 +259,8 @@ tools:
     type: function
     function:
       name: data_pandas-advanced
-      description: Retrieve this expert for high-performance pandas transformations, memory optimization, and robust 
-        dataframe pipeline design.
+      description: Retrieve this expert for high-performance pandas transformations,
+        memory optimization, and robust dataframe pipeline design.
       parameters:
         type: object
         properties:
@@ -375,7 +269,8 @@ tools:
             description: source schema/data samples and transformation objectives
           context:
             type: object
-            description: data volume profile, latency/SLA constraints, and governance rules
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
         required:
         - task
         additionalProperties: true
@@ -444,8 +339,8 @@ tools:
     type: function
     function:
       name: viz_chart-selection
-      description: Retrieve this expert for selecting the right chart type based on analytical intent, audience, and 
-        data shape.
+      description: Retrieve this expert for selecting the right chart type based on
+        analytical intent, audience, and data shape.
       parameters:
         type: object
         properties:
@@ -471,8 +366,8 @@ tools:
     type: function
     function:
       name: viz_distribution-diagnostics
-      description: Retrieve this expert for histogram, KDE, box, violin, and outlier-focused visuals used in analysis 
-        and diagnostics.
+      description: Retrieve this expert for histogram, KDE, box, violin, and outlier-focused
+        visuals used in analysis and diagnostics.
       parameters:
         type: object
         properties:
@@ -498,8 +393,8 @@ tools:
     type: function
     function:
       name: viz_relationship-plots
-      description: Retrieve this expert for scatter, bubble, and hexbin-style visuals that explain variable 
-        relationships and interactions.
+      description: Retrieve this expert for scatter, bubble, and hexbin-style visuals
+        that explain variable relationships and interactions.
       parameters:
         type: object
         properties:
@@ -525,8 +420,8 @@ tools:
     type: function
     function:
       name: viz_hierarchy-flow
-      description: Retrieve this expert for treemap, sunburst, funnel, waterfall, sankey, and network-style visual 
-        narratives.
+      description: Retrieve this expert for treemap, sunburst, funnel, waterfall,
+        sankey, and network-style visual narratives.
       parameters:
         type: object
         properties:
@@ -535,7 +430,8 @@ tools:
             description: hierarchy or flow analysis objective
           context:
             type: object
-            description: aggregation level, readability constraints, and audience focus
+            description: aggregation level, readability constraints, and audience
+              focus
         required:
         - task
         additionalProperties: true
@@ -552,8 +448,8 @@ tools:
     type: function
     function:
       name: viz_geo-timeline
-      description: Retrieve this expert for choropleth, proportional-symbol maps, timeline, and Gantt-style schedule 
-        visualizations.
+      description: Retrieve this expert for choropleth, proportional-symbol maps,
+        timeline, and Gantt-style schedule visualizations.
       parameters:
         type: object
         properties:

@@ -14,8 +14,8 @@ tools:
     type: function
     function:
       name: role_data-engineer
-      description: Role expert for scalable data pipelines, quality enforcement, and production-ready data platform 
-        delivery.
+      description: Role expert for scalable data pipelines, quality enforcement, and
+        production-ready data platform delivery.
       parameters:
         type: object
         properties:
@@ -41,8 +41,8 @@ tools:
     type: function
     function:
       name: data_spark
-      description: Retrieve this expert for Spark data pipelines, partitioning strategy, performance tuning, and 
-        resilient distributed processing.
+      description: Retrieve this expert for Spark data pipelines, partitioning strategy,
+        performance tuning, and resilient distributed processing.
       parameters:
         type: object
         properties:
@@ -51,7 +51,8 @@ tools:
             description: source schema/data samples and transformation objectives
           context:
             type: object
-            description: data volume profile, latency/SLA constraints, and governance rules
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
         required:
         - task
         additionalProperties: true
@@ -68,8 +69,8 @@ tools:
     type: function
     function:
       name: data_ingestion-pipelines
-      description: Retrieve this expert for robust batch/incremental ingestion design with idempotency and replay 
-        controls.
+      description: Retrieve this expert for robust batch/incremental ingestion design
+        with idempotency and replay controls.
       parameters:
         type: object
         properties:
@@ -95,8 +96,8 @@ tools:
     type: function
     function:
       name: data_data-quality-validation
-      description: Retrieve this expert for production-grade data quality rules, thresholds, and quality alerting 
-        workflows.
+      description: Retrieve this expert for production-grade data quality rules, thresholds,
+        and quality alerting workflows.
       parameters:
         type: object
         properties:
@@ -122,8 +123,8 @@ tools:
     type: function
     function:
       name: data_data-orchestration
-      description: Retrieve this expert for DAG orchestration, retry/timeouts, backfills, and dependency-aware 
-        scheduling.
+      description: Retrieve this expert for DAG orchestration, retry/timeouts, backfills,
+        and dependency-aware scheduling.
       parameters:
         type: object
         properties:
@@ -149,7 +150,8 @@ tools:
     type: function
     function:
       name: data_warehouse-modeling
-      description: Retrieve this expert for dimensional modeling, grain design, and warehouse performance optimization.
+      description: Retrieve this expert for dimensional modeling, grain design, and
+        warehouse performance optimization.
       parameters:
         type: object
         properties:
@@ -175,8 +177,8 @@ tools:
     type: function
     function:
       name: data_sql-queries
-      description: Retrieve this expert for advanced SQL joins, CTE/window logic, query optimization, and analytical 
-        data retrieval patterns.
+      description: Retrieve this expert for advanced SQL joins, CTE/window logic,
+        query optimization, and analytical data retrieval patterns.
       parameters:
         type: object
         properties:
@@ -185,7 +187,8 @@ tools:
             description: source schema/data samples and transformation objectives
           context:
             type: object
-            description: data volume profile, latency/SLA constraints, and governance rules
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
         required:
         - task
         additionalProperties: true
@@ -202,8 +205,8 @@ tools:
     type: function
     function:
       name: data_dbt
-      description: Retrieve this expert for dbt model layering, testing, documentation, and incremental transformation 
-        workflows.
+      description: Retrieve this expert for dbt model layering, testing, documentation,
+        and incremental transformation workflows.
       parameters:
         type: object
         properties:
@@ -212,33 +215,8 @@ tools:
             description: source schema/data samples and transformation objectives
           context:
             type: object
-            description: data volume profile, latency/SLA constraints, and governance rules
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: data.schema-normalization
-  title: Data Cleaning and Schema Normalization
-  domain: data_engineering
-  instruction_file: instructions/data-cleaning.md
-  tags:
-  - data-cleaning
-  - schema
-  - normalization
-  invocation:
-    type: function
-    function:
-      name: data_schema-normalization
-      description: Retrieve this expert for payload normalization, dataframe conversion, and quarter/date alignment.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: raw payload/schema examples and expected canonical schema
-          context:
-            type: object
-            description: null-handling rules, date/quarter alignment policy, and quality thresholds
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
         required:
         - task
         additionalProperties: true
@@ -255,8 +233,8 @@ tools:
     type: function
     function:
       name: data_pandas-advanced
-      description: Retrieve this expert for high-performance pandas transformations, memory optimization, and robust 
-        dataframe pipeline design.
+      description: Retrieve this expert for high-performance pandas transformations,
+        memory optimization, and robust dataframe pipeline design.
       parameters:
         type: object
         properties:
@@ -265,7 +243,8 @@ tools:
             description: source schema/data samples and transformation objectives
           context:
             type: object
-            description: data volume profile, latency/SLA constraints, and governance rules
+            description: data volume profile, latency/SLA constraints, and governance
+              rules
         required:
         - task
         additionalProperties: true
@@ -282,17 +261,19 @@ tools:
     type: function
     function:
       name: web_sqlalchemy
-      description: Retrieve this expert for SQLAlchemy model design, session lifecycle management, migrations, and ORM 
-        query correctness.
+      description: Retrieve this expert for SQLAlchemy model design, session lifecycle
+        management, migrations, and ORM query correctness.
       parameters:
         type: object
         properties:
           task:
             type: string
-            description: API/auth objective, request-response expectations, and security requirements
+            description: API/auth objective, request-response expectations, and security
+              requirements
           context:
             type: object
-            description: backward-compatibility constraints, target clients, and deployment environment
+            description: backward-compatibility constraints, target clients, and deployment
+              environment
         required:
         - task
         additionalProperties: true
@@ -309,17 +290,19 @@ tools:
     type: function
     function:
       name: cloud_docker
-      description: Retrieve this expert for production Dockerfiles, multi-stage builds, secure runtime configs, and 
-        container image optimization.
+      description: Retrieve this expert for production Dockerfiles, multi-stage builds,
+        secure runtime configs, and container image optimization.
       parameters:
         type: object
         properties:
           task:
             type: string
-            description: target cloud environment, intended workload behavior, and resource scope
+            description: target cloud environment, intended workload behavior, and
+              resource scope
           context:
             type: object
-            description: existing topology, compliance controls, cost and rollback constraints
+            description: existing topology, compliance controls, cost and rollback
+              constraints
         required:
         - task
         additionalProperties: true
@@ -336,17 +319,19 @@ tools:
     type: function
     function:
       name: cloud_kubernetes
-      description: Retrieve this expert for Kubernetes deployments, scaling, networking, RBAC, and production-grade 
-        cluster operations.
+      description: Retrieve this expert for Kubernetes deployments, scaling, networking,
+        RBAC, and production-grade cluster operations.
       parameters:
         type: object
         properties:
           task:
             type: string
-            description: target cloud environment, intended workload behavior, and resource scope
+            description: target cloud environment, intended workload behavior, and
+              resource scope
           context:
             type: object
-            description: existing topology, compliance controls, cost and rollback constraints
+            description: existing topology, compliance controls, cost and rollback
+              constraints
         required:
         - task
         additionalProperties: true
@@ -363,17 +348,19 @@ tools:
     type: function
     function:
       name: cloud_terraform
-      description: Retrieve this expert for Terraform module design, remote state safety, drift detection, and cloud IaC
-        delivery workflows.
+      description: Retrieve this expert for Terraform module design, remote state
+        safety, drift detection, and cloud IaC delivery workflows.
       parameters:
         type: object
         properties:
           task:
             type: string
-            description: target cloud environment, intended workload behavior, and resource scope
+            description: target cloud environment, intended workload behavior, and
+              resource scope
           context:
             type: object
-            description: existing topology, compliance controls, cost and rollback constraints
+            description: existing topology, compliance controls, cost and rollback
+              constraints
         required:
         - task
         additionalProperties: true

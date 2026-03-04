@@ -14,8 +14,8 @@ tools:
     type: function
     function:
       name: role_gcp-engineer
-      description: Role expert for Google Cloud Platform architecture, deployment, and operations across compute, 
-        storage, data, and messaging services.
+      description: Role expert for Google Cloud Platform architecture, deployment,
+        and operations across compute, storage, data, and messaging services.
       parameters:
         type: object
         properties:
@@ -24,7 +24,8 @@ tools:
             description: workload type, availability target, and cost budget
           context:
             type: object
-            description: data residency requirements, compliance framework, and team structure
+            description: data residency requirements, compliance framework, and team
+              structure
         required:
         - task
         additionalProperties: true
@@ -42,8 +43,8 @@ tools:
     type: function
     function:
       name: cloud_gcp-gcs
-      description: Retrieve this expert for Google Cloud Storage bucket management, lifecycle policies, signed URLs, 
-        IAM, and data transfer.
+      description: Retrieve this expert for Google Cloud Storage bucket management,
+        lifecycle policies, signed URLs, IAM, and data transfer.
       parameters:
         type: object
         properties:
@@ -70,8 +71,8 @@ tools:
     type: function
     function:
       name: cloud_gcp-bigquery
-      description: Retrieve this expert for BigQuery table design, partitioning, clustering, cost optimization, BQML, 
-        and query performance tuning.
+      description: Retrieve this expert for BigQuery table design, partitioning, clustering,
+        cost optimization, BQML, and query performance tuning.
       parameters:
         type: object
         properties:
@@ -80,7 +81,8 @@ tools:
             description: data schema, query patterns, and cost constraints
           context:
             type: object
-            description: partitioning strategy, clustering columns, and materialized view candidates
+            description: partitioning strategy, clustering columns, and materialized
+              view candidates
         required:
         - task
         additionalProperties: true
@@ -98,8 +100,8 @@ tools:
     type: function
     function:
       name: cloud_gcp-cloud-run
-      description: Retrieve this expert for deploying containers on Cloud Run with autoscaling, traffic splitting, VPC 
-        connectors, and revision management.
+      description: Retrieve this expert for deploying containers on Cloud Run with
+        autoscaling, traffic splitting, VPC connectors, and revision management.
       parameters:
         type: object
         properties:
@@ -126,8 +128,8 @@ tools:
     type: function
     function:
       name: cloud_gcp-cloud-functions
-      description: Retrieve this expert for GCP Cloud Functions including event triggers, gen2 functions, cold start 
-        optimization, and connection pooling.
+      description: Retrieve this expert for GCP Cloud Functions including event triggers,
+        gen2 functions, cold start optimization, and connection pooling.
       parameters:
         type: object
         properties:
@@ -136,7 +138,8 @@ tools:
             description: trigger type, runtime, and function entry point
           context:
             type: object
-            description: environment variables, VPC connector, and memory/timeout settings
+            description: environment variables, VPC connector, and memory/timeout
+              settings
         required:
         - task
         additionalProperties: true
@@ -154,8 +157,8 @@ tools:
     type: function
     function:
       name: cloud_gcp-pubsub
-      description: Retrieve this expert for Pub/Sub messaging including push/pull subscriptions, dead-letter queues, 
-        ordering keys, and exactly-once delivery.
+      description: Retrieve this expert for Pub/Sub messaging including push/pull
+        subscriptions, dead-letter queues, ordering keys, and exactly-once delivery.
       parameters:
         type: object
         properties:
@@ -182,8 +185,8 @@ tools:
     type: function
     function:
       name: cloud_gcp-gke
-      description: Retrieve this expert for GKE cluster management including Autopilot vs Standard, workload identity, 
-        node pools, and service mesh integration.
+      description: Retrieve this expert for GKE cluster management including Autopilot
+        vs Standard, workload identity, node pools, and service mesh integration.
       parameters:
         type: object
         properties:
@@ -193,166 +196,6 @@ tools:
           context:
             type: object
             description: node pool config, service mesh, and multi-cluster strategy
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: cloud.infrastructure-cost-optimization
-  title: Cloud Infrastructure Cost Optimization
-  domain: cloud_infrastructure
-  instruction_file: instructions/cloud-cost-optimization.md
-  tags:
-  - cloud
-  - cost-optimization
-  - finops
-  invocation:
-    type: function
-    function:
-      name: cloud_infrastructure-cost-optimization
-      description: Retrieve this expert for cloud cost optimization, right-sizing, and FinOps control design.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: cloud cost optimization objective and scope
-          context:
-            type: object
-            description: budget policy, ownership model, and commitment constraints
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: cloud.security-posture-management
-  title: Cloud Security Posture Management
-  domain: cloud_infrastructure
-  instruction_file: instructions/cloud-security-posture.md
-  tags:
-  - cloud
-  - security-posture
-  - misconfiguration
-  invocation:
-    type: function
-    function:
-      name: cloud_security-posture-management
-      description: Retrieve this expert for cloud security baseline hardening, posture monitoring, and misconfiguration 
-        remediation.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: cloud security posture objective
-          context:
-            type: object
-            description: baseline controls, compliance, and remediation constraints
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: cloud.multi-environment-strategy
-  title: Cloud Multi-Environment Strategy
-  domain: cloud_infrastructure
-  instruction_file: instructions/cloud-multi-environment-strategy.md
-  tags:
-  - cloud
-  - environments
-  - promotion
-  invocation:
-    type: function
-    function:
-      name: cloud_multi-environment-strategy
-      description: Retrieve this expert for environment topology, promotion workflows, and configuration isolation 
-        across cloud environments.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: environment strategy objective and deployment model
-          context:
-            type: object
-            description: promotion controls, isolation needs, and governance rules
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: cloud.backup-disaster-recovery
-  title: Cloud Backup and Disaster Recovery
-  domain: cloud_infrastructure
-  instruction_file: instructions/cloud-backup-dr.md
-  tags:
-  - cloud
-  - backup
-  - disaster-recovery
-  invocation:
-    type: function
-    function:
-      name: cloud_backup-disaster-recovery
-      description: Retrieve this expert for cloud backup strategy, restore drills, and disaster recovery architecture.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: backup/disaster recovery objective
-          context:
-            type: object
-            description: rpo/rto targets and resilience constraints
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: cloud.service-reliability-architecture
-  title: Cloud Service Reliability Architecture
-  domain: cloud_infrastructure
-  instruction_file: instructions/cloud-reliability-architecture.md
-  tags:
-  - cloud
-  - reliability
-  - availability
-  invocation:
-    type: function
-    function:
-      name: cloud_service-reliability-architecture
-      description: Retrieve this expert for resilient cloud architecture, failure isolation, and graceful degradation 
-        design.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: reliability architecture objective
-          context:
-            type: object
-            description: availability targets and failure assumptions
-        required:
-        - task
-        additionalProperties: true
-      strict: false
-- id: cloud.platform-governance-policy
-  title: Cloud Platform Governance Policies
-  domain: cloud_infrastructure
-  instruction_file: instructions/cloud-platform-governance.md
-  tags:
-  - cloud
-  - governance
-  - policy-as-code
-  invocation:
-    type: function
-    function:
-      name: cloud_platform-governance-policy
-      description: Retrieve this expert for cloud policy governance, guardrail enforcement, and compliance operating 
-        models.
-      parameters:
-        type: object
-        properties:
-          task:
-            type: string
-            description: cloud governance objective and policy scope
-          context:
-            type: object
-            description: guardrail model, exceptions, and compliance constraints
         required:
         - task
         additionalProperties: true

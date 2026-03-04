@@ -67,7 +67,6 @@ examples/registry/instructions/concurrency.md
 examples/registry/instructions/container-security.md
 examples/registry/instructions/cpp-modern.md
 examples/registry/instructions/css-architecture.md
-examples/registry/instructions/data-cleaning.md
 examples/registry/instructions/dbt.md
 examples/registry/instructions/dependency-scanning.md
 examples/registry/instructions/docker.md
@@ -95,11 +94,9 @@ examples/registry/instructions/linux-administration.md
 examples/registry/instructions/machine-learning-export.md
 examples/registry/instructions/nextjs.md
 examples/registry/instructions/nginx.md
-examples/registry/instructions/nlp-spacy-transformers.md
 examples/registry/instructions/opencv-image-processing.md
 examples/registry/instructions/owasp-web.md
 examples/registry/instructions/pandas-advanced.md
-examples/registry/instructions/pdf-creation.md
 examples/registry/instructions/penetration-testing.md
 examples/registry/instructions/prometheus-grafana.md
 examples/registry/instructions/pytorch-training.md
@@ -113,7 +110,6 @@ examples/registry/instructions/scipy-optimization-signal.md
 examples/registry/instructions/secrets-management.md
 examples/registry/instructions/sklearn-modeling.md
 examples/registry/instructions/sklearn-pipeline-ops.md
-examples/registry/instructions/slide-creation.md
 examples/registry/instructions/spark.md
 examples/registry/instructions/sql-queries.md
 examples/registry/instructions/sqlalchemy.md

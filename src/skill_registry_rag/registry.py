@@ -114,7 +114,8 @@ def _to_any_map(value: Any, field: str, card_id: str) -> dict[str, Any]:
 
 def _sanitize_function_name(raw: str) -> str:
     # OpenAI function names: alnum, underscore, dash, max length 64.
-    cleaned = re.sub(r"[^A-Za-z0-9_-]", "_", raw.strip())
+    # Anthropic function names: alnum, underscore, max length 64.
+    cleaned = re.sub(r"[^A-Za-z0-9_]", "_", raw.strip())
     cleaned = re.sub(r"_+", "_", cleaned).strip("_")
     if not cleaned:
         cleaned = "tool"
@@ -256,6 +257,8 @@ def load_registry(
         instruction_text = str(row.get("instruction_text", "")).strip()
         if not instruction_text:
             instruction_path = (root / instruction_file).resolve()
+            if not instruction_path.is_relative_to(root.resolve()):
+                raise RegistryError(f"Path traversal detected: {instruction_path} is outside of {root.resolve()}")
             if not instruction_path.exists():
                 raise RegistryError(
                     f"Instruction file missing for '{card_id}': {instruction_path}"

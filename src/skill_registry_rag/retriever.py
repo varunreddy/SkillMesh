@@ -8,7 +8,7 @@ from .models import ExpertCard, RetrievalHit
 
 class SkillRetriever:
     def __init__(self, cards: list[ExpertCard], *, use_dense: bool = False, backend: str = "chroma"):
-        if backend == "memory" or (backend == "auto" and len(cards) < 100):
+        if backend == "memory" or (backend == "auto" and len(cards) < (100 if use_dense else 1000)):
             self._backend = InMemoryBackend(use_dense=use_dense)
         else:
             try:
