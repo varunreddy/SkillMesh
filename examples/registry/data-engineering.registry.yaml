@@ -365,3 +365,29 @@ tools:
         - task
         additionalProperties: true
       strict: false
+- id: data.airflow
+  title: Apache Airflow Orchestration
+  domain: data_engineering
+  instruction_file: instructions/airflow.md
+  tags:
+  - airflow
+  - orchestration
+  - dag
+  invocation:
+    type: function
+    function:
+      name: data_airflow
+      description: Retrieve this expert for Airflow DAG design, idempotency, retries, and scalable declarative pipelines.
+      parameters:
+        type: object
+        properties:
+          task:
+            type: string
+            description: orchestration objective and dependency graph
+          context:
+            type: object
+            description: sla, retries, and recovery requirements
+        required:
+        - task
+        additionalProperties: true
+      strict: false

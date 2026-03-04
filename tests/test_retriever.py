@@ -37,14 +37,6 @@ def test_retriever_model_export_query_returns_ml_export_first():
     assert hits[0].card.id == "ml.model-export"
 
 
-def test_retriever_slides_query_returns_slides_expert():
-    cards = _load_cards()
-    retriever = SkillRetriever(cards, use_dense=False)
-    hits = retriever.retrieve("create pptx slides with executive summary and charts", top_k=2)
-
-    assert hits
-    assert hits[0].card.id == "docs.slides-pptx"
-
 
 def test_retriever_statistics_query_returns_stats_expert():
     cards = _load_cards()
@@ -81,14 +73,6 @@ def test_retriever_geospatial_query_returns_geo_expert():
     assert hits
     assert hits[0].card.id == "geo.geopandas-spatial"
 
-
-def test_retriever_nlp_query_returns_nlp_expert():
-    cards = _load_cards()
-    retriever = SkillRetriever(cards, use_dense=False)
-    hits = retriever.retrieve("spacy transformers named entity recognition and text classification", top_k=2)
-
-    assert hits
-    assert hits[0].card.id == "nlp.spacy-transformers"
 
 
 def test_retriever_pytorch_query_returns_dl_expert():

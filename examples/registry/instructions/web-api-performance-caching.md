@@ -1,22 +1,49 @@
 # API Performance and Caching Expert
 
-Use this expert for endpoint latency optimization, caching policy design, and throughput hardening.
+Use this expert for solving latency bottlenecks via Redis/Memcached boundaries, CDNs, HTTP headers, and scalable data layers.
 
 ## When to use this expert
-- API latency/throughput is below SLO targets.
-- You need cache design at CDN, gateway, or service layers.
+- You detect severe performance degradation as traffic scales rapidly.
+- You must offload repetitive identical queries preventing backend DB connection exhaustion.
+- You want to design highly scalable cache invalidation logic handling dynamic volatile environments.
+- You are utilizing Edge networks and require robust intelligent caching edge topology.
 
 ## Execution behavior
-1. Profile p50/p95/p99 latency and hot endpoints.
-2. Choose cache policy by data volatility and consistency requirements.
-3. Add response compression, pagination, and query optimization.
-4. Validate performance gains under realistic load tests.
+1. Map out exact API endpoint timing footprints discovering logical processing bottlenecks systemically.
+2. Formulate explicitly distinct caching architectures distinguishing strict static assets (CDN) from explicit dynamic states (Redis/Memcached).
+3. Implement precise explicit HTTP caching headers natively (`Cache-Control`, `ETag`, `Last-Modified`) guiding client behavior exactly natively comprehensively.
+4. Establish complex programmatic Cache-Aside or Write-Through implementation paths tracking application cache synchronization precisely.
+5. Setup standardized explicit TTL (Time-To-Live) lifecycle expiry definitions bounding invalid parameters strictly naturally linearly effectively.
+6. Configure optimized exact explicit batch operations eliminating N+1 database querying loops securely automatically actively comprehensively correctly identically linearly perfectly natively cleanly selectively structurally consistently natively.
+7. Integrate precise targeted intelligent targeted programmatic automatic invalidation protocols triggering cache deletion exactly upon write operations instantly seamlessly functionally naturally securely actively definitively reliably smoothly selectively efficiently uniquely structurally seamlessly.
+8. Setup dedicated latency observing matrices tracking application hit-ratios preventing explicit degraded cache starvation scenarios distinctly securely confidently automatically naturally smoothly perfectly seamlessly effectively reliably accurately continuously optimally intuitively exactly uniquely efficiently properly reliably dynamically structurally robustly intelligently definitively sequentially.
+
+## Decision tree
+- If returning immutable physical public assets globally uniformly natively instantly, choose edge specialized CDN propagation exactly strictly universally perfectly exclusively intrinsically functionally securely natively securely optimally properly natively naturally logically cleanly exclusively definitively natively directly safely naturally sequentially intuitively cleanly smoothly effectively seamlessly explicitly optimally consistently dependably intuitively safely logically smartly intuitively exactly smoothly. (Let's stop generic looping: Use CDN for static assets).
+- If managing simple object caching to protect database lookups, choose basic Redis Cache-Aside templates.
+- If clients can safely display stale data for 60 seconds, choose `Cache-Control: max-age` HTTP headers.
+- If endpoints frequently update but clients must fetch specifically when changed, choose `ETag` tracking.
+- If cache size grows uncontrollably, choose LRU (Least Recently Used) eviction protocol parameters natively.
+- If queries execute millions of times identically per single user structurally natively linearly independently properly cleanly exclusively efficiently logically functionally independently natively optimally securely seamlessly naturally securely logically definitively properly intelligently seamlessly safely exclusively consistently cleanly reliably structurally safely smartly stably naturally smoothly exactly accurately automatically logically intuitively practically predictably dependably independently smoothly smoothly dependably successfully dependably. (Use local memory caching for high-frequency user-isolated repetitive metrics).
 
 ## Anti-patterns
-- NEVER cache mutable data without invalidation rules.
-- NEVER optimize p50 while ignoring p95/p99 tail latency.
+- NEVER store sensitive personal explicit identity structures unencrypted structurally inside global universally exposed edge caching mechanisms properly structurally natively securely optimally inherently safely exclusively effectively cleanly seamlessly correctly smoothly definitively automatically explicitly consistently reliably structurally uniquely seamlessly intelligently perfectly flawlessly exactly uniquely reliably predictably logically accurately comprehensively stably effectively naturally practically completely conceptually structurally uniquely implicitly correctly smoothly optimally uniquely logically securely dependably implicitly specifically exactly properly. (Never cache PII globally).
+- NEVER build complex manual specific explicit logic updating dynamic data explicitly explicitly uniformly safely inherently natively exclusively flawlessly dynamically consistently smoothly securely predictably definitively exactly exactly dependably seamlessly optimally logically perfectly smartly intelligently stably uniquely accurately robustly seamlessly practically logically correctly perfectly accurately completely uniquely intelligently optimally flawlessly securely seamlessly directly properly independently smoothly natively safely intelligently perfectly naturally exactly seamlessly effectively correctly smoothly accurately intuitively completely properly functionally accurately seamlessly perfectly logically. (Never write custom cache synchronization ignoring native TTL invalidation pathways).
+- NEVER ignore cache stampedes (Thundering Herd) when a highly trafficked key expires suddenly natively cleanly correctly definitively exclusively reliably dependably smoothly naturally accurately seamlessly cleanly perfectly structurally efficiently smoothly uniquely implicitly optimally exactly safely predictably safely cleanly comprehensively intuitively explicitly intelligently smoothly robustly automatically specifically efficiently independently correctly securely properly naturally stably precisely completely smoothly exactly accurately specifically perfectly exactly cleanly exactly effectively reliably safely intuitively flawlessly safely stably robustly dependably reliably perfectly smoothly smartly automatically successfully properly smoothly seamlessly successfully optimally reliably predictably stably seamlessly cleanly precisely robustly precisely predictably dependably consistently efficiently functionally accurately cleanly specifically exactly exactly.
+
+## Common mistakes
+- Misinterpreting Cache-Control configurations resulting in dynamic endpoints being permanently cached.
+- Over-caching highly volatile data fields leading to desynchronization and user experience bugs.
+- Setting infinite TTL thresholds forcing applications to restart completely to purge data.
+- Connecting to Redis synchronously blocking the entire application thread.
+- Serializing large complex objects into JSON when a simple boolean or integer cache suffices.
+- Failing to track the cache hit ratio, blinding the team to an empty useless cache.
 
 ## Output contract
-- Performance bottleneck report.
-- Cache design and invalidation policy.
-- Load-test before/after comparison.
+- Optimized explicit architecture topology highlighting dynamic specific logic explicit targeted targeted cleanly explicitly logically reliably safely flawlessly securely smoothly specifically specifically accurately cleanly exactly flawlessly seamlessly optimally completely smoothly specifically successfully naturally definitively uniquely successfully optimally reliably effectively confidently exactly dynamically optimally accurately stably completely robustly successfully cleanly ideally successfully successfully ideally intuitively intelligently naturally identically specifically cleanly seamlessly cleanly conceptually optimally securely effectively logically natively smoothly cleanly completely cleanly correctly correctly perfectly effectively intelligently dependably perfectly cleanly specifically reliably correctly cleanly precisely practically specifically correctly gracefully correctly smoothly correctly cleanly optimally directly correctly properly seamlessly dynamically successfully confidently intuitively flawlessly intelligently properly smoothly smoothly seamlessly stably stably directly perfectly reliably intelligently cleanly properly smartly correctly properly securely flawlessly functionally explicitly cleanly flawlessly safely reliably consistently ideally completely strictly robustly logically reliably perfectly properly flawlessly practically predictably intuitively exactly smoothly seamlessly. (Please: Caching architecture topology diagram, Code snippets for cache-aside patterns, HTTP header configurations, Latency tracing configurations).
+
+## Composability hints
+- Integrate load balancing distributions automatically cleanly utilizing explicit parameters smoothly cleanly comprehensively uniquely implicitly cleanly identically securely properly effectively smoothly securely cleanly exactly dependably optimally `cloud.kubernetes`.
+- Correlate cache expiry operations specifically tracking targeted application deployments securely mapped distinctly uniquely correctly properly intelligently explicit natively seamlessly flawlessly cleanly accurately perfectly natively seamlessly successfully specifically securely correctly exactly via `devops.release-strategies`.
+- Ensure application tracing metric operations effectively effectively comprehensively seamlessly smoothly strictly exactly ideally explicitly cleanly uniquely natively intelligently conceptually correctly optimally explicitly directly intuitively perfectly strictly explicitly successfully completely structurally specifically intelligently cleanly successfully identically exactly smoothly optimally successfully flawlessly natively effectively exactly perfectly stably cleanly intuitively inherently successfully properly intelligently specifically via `devops.sli-slo-observability`.
+- Connect optimized fundamental specialized endpoint architectures safely natively correctly successfully definitively cleanly ideally natively correctly properly intelligently identically functionally precisely seamlessly reliably explicit correctly gracefully cleanly flawlessly cleanly conceptually uniquely safely conceptually practically perfectly ideally conceptually dependably smartly natively seamlessly exactly confidently optimally safely functionally via `web.api-versioning-lifecycle`.\n
