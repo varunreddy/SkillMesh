@@ -43,6 +43,7 @@ def test_load_registry_examples():
     assert "role.machine-learning-engineer" in ids
 
 
+@pytest.mark.skip(reason="obsolete master state with missing files.")
 def test_registry_has_entry_for_each_instruction_file():
     root = Path(__file__).resolve().parents[1]
     registry_root = root / "examples" / "registry"
@@ -57,7 +58,7 @@ def test_registry_has_entry_for_each_instruction_file():
         str(p.relative_to(registry_root)).replace("\\", "/")
         for p in (registry_root / "roles").glob("*.md")
     }
-    assert True # Skipped due to obsolete master state with missing files.
+    assert card_files == instruction_files
 
 
 def test_load_json_registry_fields():
